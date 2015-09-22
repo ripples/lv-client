@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello React</title>
+    <!-- Not present in the tutorial. Just for basic styling. -->
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="content" title="Login to Lecture Viewer"><p>Enter NetID and Password to login</p>
+	<hr />
+	<div id="loginFormContainer"></div>
+	</div>
+	<script type="text/jsx">
+	  var LoginForm = React.createClass({
+		handleOnSubmit : function(e){
+				e.preventDefault();
+				var NetID = React.findDOMNode(this.refs.NetID).value.trim();
+				var password = React.findDOMNode(this.refs.NetID).value.trim();
+				if (!NetID || !password)
+					return;
+				// TODO : Build route to actually authenticate
+		},
+		render : function(){
+			return (
+				<form className="loginForm" onSubmit={this.handleOnSubmit}>
+				  <input type = "text" placeholder="NetID" ref="NetID" />
+				  <br />
+				  <input type = "password" placeholder="Password" ref = "password" />
+				  <input type="submit" value = "Post" />
+				</form>
+			)
+		}
+	  });
+	  React.render(
+		<LoginForm />,
+		document.getElementById('loginFormContainer')
+	  );
+	</script>
+ </body>
+</html>
