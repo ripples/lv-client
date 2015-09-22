@@ -23,7 +23,8 @@
 			  data : data,
 			  success : function(data){
 				// for now, use the webtoken as URL
-				window.location += "/"+data;
+				console.log(window.location+data.token);
+				window.location += data.token;
 			  }.bind(this),
 			  error : function(xhr, status, err) {
 				console.error(this.props.loginURL, status, err.toString());
