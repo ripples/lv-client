@@ -15,27 +15,51 @@
 	</div>
 	<script type="text/jsx">
 	  var LoginForm = React.createClass({
+		login : function(data){
+			$.ajax({
+			  url : this.props.loginURL,
+			  dataType : 'json',
+			  type : 'GET',
+			  data : data,
+			  success : function(data){
+				// for now, use the webtoken as URL
+				window.location += "/"+data;
+			  }.bind(this),
+			  error : function(xhr, status, err) {
+				console.error(this.props.loginURL, status, err.toString());
+			  }.bind(this)
+			});
+		},
 		handleOnSubmit : function(e){
 				e.preventDefault();
 				var NetID = React.findDOMNode(this.refs.NetID).value.trim();
 				var password = React.findDOMNode(this.refs.NetID).value.trim();
-				if (!NetID || !password)
+				if (!NetID || !password){
+					// TODO : Add reminder to highlight unfilled fields
+					this.setState({prompt : "Please enter NetID and Password."})
 					return;
+				}
+				this.setState({prompt : ""});
+				this.login({NetID : NetID, password : password});
 				// TODO : Build route to actually authenticate
+		},
+		getInitialState : function(){
+			return {prompt : ""};
 		},
 		render : function(){
 			return (
 				<form className="loginForm" onSubmit={this.handleOnSubmit}>
+				  <p className="prompt">{this.state.prompt}</p>
 				  <input type = "text" placeholder="NetID" ref="NetID" />
 				  <br />
 				  <input type = "password" placeholder="Password" ref = "password" />
-				  <input type="submit" value = "Post" />
+				  <input type="submit" value = "Login" />
 				</form>
 			)
 		}
 	  });
 	  React.render(
-		<LoginForm />,
+		<LoginForm loginURL = "/auth/"/>,
 		document.getElementById('loginFormContainer')
 	  );
 	</script>
