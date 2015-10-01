@@ -18,8 +18,8 @@
 		login : function(data){
 			$.ajax({
 			  url : this.props.loginURL,
-			  dataType : 'json',
-			  type : 'GET',
+			  contentType: 'application/x-www-form-urlencoded',
+			  type : 'POST',
 			  data : data,
 			  success : function(data){
 				// for now, use the webtoken as URL
@@ -34,7 +34,7 @@
 		handleOnSubmit : function(e){
 				e.preventDefault();
 				var NetID = React.findDOMNode(this.refs.NetID).value.trim();
-				var password = React.findDOMNode(this.refs.NetID).value.trim();
+				var password = React.findDOMNode(this.refs.password).value.trim();
 				if (!NetID || !password){
 					// TODO : Add reminder to highlight unfilled fields
 					this.setState({prompt : "Please enter NetID and Password."})
@@ -60,7 +60,7 @@
 		}
 	  });
 	  React.render(
-		<LoginForm loginURL = "/auth/"/>,
+		<LoginForm loginURL = "http://localhost:8080/api/authenticate"/>,
 		document.getElementById('loginFormContainer')
 	  );
 	</script>
