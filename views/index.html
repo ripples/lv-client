@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hello React</title>
+    <title>Lecture Viewer - Login</title>
     <!-- Not present in the tutorial. Just for basic styling. -->
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/react.js"></script>
@@ -17,14 +17,15 @@
 	  var LoginForm = React.createClass({
 		login : function(data){
 			$.ajax({
-			  url : this.props.loginURL,
+			  url : this.props.loginURL+'api',
 			  dataType : 'json',
 			  type : 'GET',
 			  data : data,
 			  success : function(data){
 				// for now, use the webtoken as URL
-				console.log(window.location+data.token);
-				window.location += data.token;
+				console.log(window);
+				console.log(window.location.host+ this.props.loginURL + data.token);
+				window.location += (this.props.loginURL + data.token);
 			  }.bind(this),
 			  error : function(xhr, status, err) {
 				console.error(this.props.loginURL, status, err.toString());
@@ -34,7 +35,7 @@
 		handleOnSubmit : function(e){
 				e.preventDefault();
 				var NetID = React.findDOMNode(this.refs.NetID).value.trim();
-				var password = React.findDOMNode(this.refs.NetID).value.trim();
+				var password = React.findDOMNode(this.refs.password).value.trim();
 				if (!NetID || !password){
 					// TODO : Add reminder to highlight unfilled fields
 					this.setState({prompt : "Please enter NetID and Password."})
@@ -60,7 +61,7 @@
 		}
 	  });
 	  React.render(
-		<LoginForm loginURL = "/auth/"/>,
+		<LoginForm loginURL = "auth/"/>,
 		document.getElementById('loginFormContainer')
 	  );
 	</script>

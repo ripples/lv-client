@@ -9,3 +9,19 @@
 	margin:-100px 0 0 -150px;
 	
 }
+#contentWrapper
+{
+	position: relative;
+	width : 600px;
+	height : 800px;
+	top: 5%;
+	left : 10%;
+}
+#leftcontent
+{
+	float:left;
+}
+#centerContent
+{
+	float:right;
+}

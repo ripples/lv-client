@@ -21,7 +21,7 @@ app.use(cookieParser());
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/', auth);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
