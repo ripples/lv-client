@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hello React</title>
+    <title>Lecture Viewer - Login</title>
     <!-- Not present in the tutorial. Just for basic styling. -->
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/react.js"></script>
@@ -23,8 +23,8 @@
 			  data : data,
 			  success : function(data){
 				// for now, use the webtoken as URL
-				console.log(data.token);
-				// window.location += data.token;
+				console.log(window.location.host+ this.props.loginURL + data.token);
+				// window.location += (this.props.loginURL + data.token);
 			  }.bind(this),
 			  error : function(xhr, status, err) {
 				console.error(this.props.loginURL, status, err.toString());
