@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   </head>
   <body>
-    <div id="content" title="Login to Lecture Viewer"><p>Enter NetID and Password to login</p>
+    <div id="content" title="Login to Lecture Viewer"><p>Enter Username and Password to login</p>
 	<hr />
 	<div id="loginFormContainer"></div>
 	</div>
@@ -23,8 +23,8 @@
 			  data : data,
 			  success : function(data){
 				// for now, use the webtoken as URL
-				console.log(window.location+data.token);
-				window.location += data.token;
+				console.log(data.token);
+				// window.location += data.token;
 			  }.bind(this),
 			  error : function(xhr, status, err) {
 				console.error(this.props.loginURL, status, err.toString());
@@ -33,16 +33,15 @@
 		},
 		handleOnSubmit : function(e){
 				e.preventDefault();
-				var NetID = React.findDOMNode(this.refs.NetID).value.trim();
+				var username = React.findDOMNode(this.refs.username).value.trim();
 				var password = React.findDOMNode(this.refs.password).value.trim();
-				if (!NetID || !password){
+				if (!username || !password){
 					// TODO : Add reminder to highlight unfilled fields
-					this.setState({prompt : "Please enter NetID and Password."})
+					this.setState({prompt : "Please enter Username and Password."})
 					return;
 				}
 				this.setState({prompt : ""});
-				this.login({NetID : NetID, password : password});
-				// TODO : Build route to actually authenticate
+				this.login({username : username, password : password});
 		},
 		getInitialState : function(){
 			return {prompt : ""};
@@ -51,7 +50,7 @@
 			return (
 				<form className="loginForm" onSubmit={this.handleOnSubmit}>
 				  <p className="prompt">{this.state.prompt}</p>
-				  <input type = "text" placeholder="NetID" ref="NetID" />
+				  <input type = "text" placeholder="Username" ref="username" />
 				  <br />
 				  <input type = "password" placeholder="Password" ref = "password" />
 				  <input type="submit" value = "Login" />
