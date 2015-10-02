@@ -18,9 +18,9 @@
 		login : function(data){
 			$.ajax({
 			  url : this.props.loginURL,
-			  contentType: 'application/x-www-form-urlencoded',
+			  contentType: 'application/json',
 			  type : 'POST',
-			  data : data,
+			  data : JSON.stringify(data), //lvadmin/lvadmin
 			  success : function(data){
 				// for now, use the webtoken as URL
 				console.log(window.location.host+ this.props.loginURL + data.token);
@@ -41,7 +41,7 @@
 					return;
 				}
 				this.setState({prompt : ""});
-				this.login({username : username, password : password});
+				this.login({"username" : username, "password" : password});
 		},
 		getInitialState : function(){
 			return {prompt : ""};
@@ -59,7 +59,7 @@
 		}
 	  });
 	  React.render(
-		<LoginForm loginURL = "http://localhost:8080/api/authenticate"/>,
+		<LoginForm loginURL = "http://present.cs.umass.edu:9000/api/auth"/>,
 		document.getElementById('loginFormContainer')
 	  );
 	</script>
