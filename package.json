@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "bundle": "watchify -o public/javascripts/bundle.js -v -d public/javascripts/app.js",
+    "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > public/javascripts/bundle.min.js"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -11,6 +13,24 @@
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "classnames": "^2.1.3",
+    "flux": "^2.0.1",
+    "keymirror": "~0.1.0",
+    "object-assign": "^1.0.0",
+    "react": "^0.12.0"
+  },
+  "devDependencies": {
+    "browserify": "^6.2.0",
+    "envify": "^3.0.0",
+    "reactify": "^0.15.2",
+    "uglify-js": "~2.4.15",
+    "watchify": "^2.1.1"
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
   }
 }

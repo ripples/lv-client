@@ -1,67 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <title>Lecture Viewer - Login</title>
-    <!-- Not present in the tutorial. Just for basic styling. -->
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.0/JSXTransformer.js"></script>
+    <meta charset="utf-8">
+    <title>Lecture Viewer</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   </head>
   <body>
-    <div id="content" title="Login to Lecture Viewer"><p>Enter Username and Password to login</p>
-	<hr />
-	<div id="loginFormContainer"></div>
-	</div>
-	<script type="text/jsx">
-	  var LoginForm = React.createClass({
-		login : function(data){
-			$.ajax({
-			  url : this.props.loginURL,
-			  contentType: 'application/json',
-			  type : 'POST',
-			  data : JSON.stringify(data), //lvadmin/lvadmin
-			  success : function(data){
-				// for now, use the webtoken as URL
-				console.log(window.location.host+ this.props.loginURL + data.token);
-				// window.location += (this.props.loginURL + data.token);
-			  }.bind(this),
-			  error : function(xhr, status, err) {
-				console.error(this.props.loginURL, status, err.toString());
-			  }.bind(this)
-			});
-		},
-		handleOnSubmit : function(e){
-				e.preventDefault();
-				var username = React.findDOMNode(this.refs.username).value.trim();
-				var password = React.findDOMNode(this.refs.password).value.trim();
-				if (!username || !password){
-					// TODO : Add reminder to highlight unfilled fields
-					this.setState({prompt : "Please enter Username and Password."})
-					return;
-				}
-				this.setState({prompt : ""});
-				this.login({"username" : username, "password" : password});
-		},
-		getInitialState : function(){
-			return {prompt : ""};
-		},
-		render : function(){
-			return (
-				<form className="loginForm" onSubmit={this.handleOnSubmit}>
-				  <p className="prompt">{this.state.prompt}</p>
-				  <input type = "text" placeholder="Username" ref="username" />
-				  <br />
-				  <input type = "password" placeholder="Password" ref = "password" />
-				  <input type="submit" value = "Login" />
-				</form>
-			)
-		}
-	  });
-	  React.render(
-		<LoginForm loginURL = "http://present.cs.umass.edu:9000/api/auth"/>,
-		document.getElementById('loginFormContainer')
-	  );
-	</script>
- </body>
+    <section id="lvapp"></section>
+    <script src="javascripts/bundle.js"></script>
+  </body>
 </html>
