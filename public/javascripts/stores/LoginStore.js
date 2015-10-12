@@ -13,20 +13,24 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var LoginConstants = require('../constants/LoginConstants');
 var assign = require('object-assign');
+var cookie = require('react-cookie');
 
 var CHANGE_EVENT = 'change';
 
-var _jwt = null;
+var _jwt = cookie.load('lv-clientCookie');
 var _user = null;
-
 /**
  * Create the java web token (JWT) and user information
  * @param  {string} jwt The java web token
  */
 function login(jwt) {
   _jwt = jwt;
-  // _user = jwt_decode(this._jwt); require jwt-decode
+  //TODO : add user information to cookie
   // add cookie implementation here
+  var daysToExpire = 1;
+  cookie.save('lv-clientCookie', jwt,
+  /*Set to expire in an absolute time interval of days*/
+  {maxAge : 20});
 }
 
 /**
