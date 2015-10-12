@@ -30,7 +30,7 @@ function login(jwt) {
   var daysToExpire = 1;
   cookie.save('lv-clientCookie', jwt,
   /*Set to expire in an absolute time interval of days*/
-  {maxAge : 20});
+  {maxAge : daysToExpire * 84600});
 }
 
 /**
