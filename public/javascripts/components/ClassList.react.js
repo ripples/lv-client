@@ -6,33 +6,40 @@
 
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
+var LectureActions = require('../actions/LectureAction');
 
 var Class = React.createClass({
+  getInitialState : function(){
+    return {show : true};
+  },
   render : function() {
     return (
       <div className = "classContainer">
-        <h3 className="classHeader">{this.props.Classname}</h3>
-        <span className="classDescription">{this.props.classDescription}</span>
+        <h3 className="classHeader">
+          {this.props.classname}
+        </h3>
+        <span className="classShowSpan">
+          {(this.state.show)  ? "hide" : "show"}
+        </span>
       </div>
     )
   }
 });
 
 var ClassList = React.createClass({
-
-  getInitialState : function(){
-    return{
-      this.state.classes = [];
-    }
-  },
   render : function(){
-    var classList = this.state.classes.prototype.map(function(obj){
+    var classNodes = this.props.classes.map(function(obj){
       return(
-        <Class 
-          Classname ={obj.Classname}
-          classDescription = {obj.classDescription}>
+        <Class classname = {obj}>
         </Class>
       )
     });
+    return(
+      <div className = "ClassList">
+        {classNodes}
+      </div>
+    )
   }
 });
+
+module.exports = ClassList;

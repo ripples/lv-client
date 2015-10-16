@@ -4,17 +4,21 @@
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var LectureConstants = require('../constants/LectureConstants');
+var api = require('../API.js');
 
 var LectureActions = {
 
   /**
    * Create the lectures array and classes array
-   * @param  {array} lectures The array of lectures
    */
-  set: function(lectures) {
-    AppDispatcher.dispatch({
-      actionType: LectureConstants.SET,
-      lectures: lectures
+  fetch: function() {
+    api.fetchLectures({
+      success : function(lectures){
+        AppDispatcher.dispatch({
+          actionType: LectureConstants.FETCH,
+          lectures: lectures
+        });
+      }
     });
   },
 

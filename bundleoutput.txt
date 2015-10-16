@@ -2,4 +2,3 @@
 > lv-client@0.0.0 bundle c:\Users\Gary\Documents\UMass Work\ResearchProj\lv-client
 > watchify -o public/javascripts/bundle.js -v -d public/javascripts/app.js
 
-Terminate batch job (Y/N)? 

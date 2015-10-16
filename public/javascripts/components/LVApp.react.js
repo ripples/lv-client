@@ -1,8 +1,18 @@
 /**
+ * Copyright (c) 2014-2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+/**
  * This component operates as a "Controller-View".  It listens for changes in
  * the LoginStore and passes the new data to its children.
  */
 
+var FeedSection = require('./FeedSection.react');
 var LoginSection = require('./LoginSection.react');
 var React = require('react');
 var LoginStore = require('../stores/LoginStore');
@@ -38,6 +48,7 @@ var LVApp = React.createClass({
     if(LoginStore.isLoggedIn()){
       return (
         <div>
+          <FeedSection />
         </div>
       );
     }

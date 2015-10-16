@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
-var LoginActions = require('../actions/LoginAction');
+var LoginAction = require('../actions/LoginAction');
 
 var LoginSection = React.createClass({
 
@@ -13,19 +13,7 @@ var LoginSection = React.createClass({
   },
 
   login : function(data) {
-    $.ajax({
-      url : "http://present.cs.umass.edu:9000/api/auth",
-      contentType: 'application/json',
-      type : 'POST',
-      data : JSON.stringify(data), //lvadmin/lvadmin
-      success : function(data){
-        console.log(data.token);
-        LoginActions.login(data.token);
-      }.bind(this),
-      error : function(xhr, status, err) {
-        console.error(this.props.loginURL, status, err.toString());
-      }.bind(this)
-    });
+    LoginAction.login(data);
   },
 
   handleOnSubmit : function(e) {
@@ -35,7 +23,7 @@ var LoginSection = React.createClass({
 
       if (!username || !password){
         // TODO : Add reminder to highlight unfilled fields
-        this.setState({prompt : "Please enter Username and Password."})
+        this.setState({prompt : "Please enter Username and Password."});
         return;
       }
       this.setState({prompt : ""});

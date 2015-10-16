@@ -18,13 +18,13 @@ var _lectures = [];
  */
 function set(lectures) {
   _classes = [];
-  _lectures = lectures
+  _lectures = lectures;
   _lectures.forEach(function(lecture) {
     //make sure all are displayed
     lecture.display = true;
     //add all classes to the class list
     if(_classes.indexOf(lecture.classname) === -1){
-      _classes.push(lecture.classname)
+      _classes.push(lecture.classname);
     }
   });
 }
@@ -81,7 +81,7 @@ var LectureStore = assign({}, EventEmitter.prototype, {
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
-    case LectureConstants.SET:
+    case LectureConstants.FETCH:
       lectures = action.lectures;
       set(lectures);
       LectureStore.emitChange();

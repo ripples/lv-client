@@ -5,6 +5,6 @@
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
-  SET: null,
+  FETCH: null,
   FILTER: null
 });
