@@ -8,11 +8,14 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 
+
 var Lecture = React.createClass({
   render : function() {
     return (
-      <div className = "lectureContainer">
-        <h3 className="lectureHeader">{this.props.lecturename}</h3>
+      <div className="lectureContainer">
+        <h4 className="lectureHeader">
+          {this.props.lecture.classname + " " + this.props.lecture.date}
+        </h4>
       </div>
     )
   }
@@ -21,10 +24,14 @@ var Lecture = React.createClass({
 var LectureList = React.createClass({
   render : function(){
     var lectureNodes = this.props.lectures.map(function(obj){
+    if (obj.display){
       return(
-        <Lecture lecturename = {obj.classname +" "+ obj.date}>
-        </Lecture>
+          <Lecture lecture = {obj}>
+          </Lecture>
       )
+    }
+    else
+      return(null);
     });
     return(
       <div className = "LectureList">

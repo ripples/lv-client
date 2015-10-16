@@ -12,13 +12,17 @@ var Class = React.createClass({
   getInitialState : function(){
     return {show : true};
   },
+  changeDisplay : function(){
+    LectureActions.filter(this.props.classname);
+    this.setState({show : !this.state.show});
+  },
   render : function() {
     return (
       <div className = "classContainer">
         <h3 className="classHeader">
           {this.props.classname}
         </h3>
-        <span className="classShowSpan">
+        <span className="classShowSpan" onClick={this.changeDisplay}>
           {(this.state.show)  ? "hide" : "show"}
         </span>
       </div>

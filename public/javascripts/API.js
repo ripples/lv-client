@@ -23,10 +23,14 @@ var api = {
       //callstack from the previous AppDispatcher.dispatch.
       //this call WOULD BE asynchronous with a call to the
       //server, so this is a temporary subsitute to that.
-      params.success([{
-        display : false, classname : "COMPSCI 497",
-        date : "10/14/15"
-      }]);
+      params.success([
+        {display : false, classname : "COMPSCI 497",
+        date : "10/14/15"},
+        {display : false, classname : "COMPSCI 326",
+        date : "10/13/15"},
+        {display : false, classname : "COMPSCI 497",
+        date : "10/11/15"}
+      ]);
     }, 50);
   }
 };
