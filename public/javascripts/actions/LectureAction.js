@@ -14,6 +14,7 @@ var LectureActions = {
   fetch: function() {
     api.fetchLectures({
       success : function(lectures){
+        console.log(lectures);
         AppDispatcher.dispatch({
           actionType: LectureConstants.FETCH,
           lectures: lectures

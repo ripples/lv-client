@@ -14,7 +14,7 @@ var Lecture = React.createClass({
     return (
       <div className="lectureContainer">
         <h4 className="lectureHeader">
-          {this.props.lecture.classname + " " + this.props.lecture.date}
+          {this.props.lecture.course.title + " " + this.props.lecture.date.toLocaleDateString()}
         </h4>
       </div>
     )

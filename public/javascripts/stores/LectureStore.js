@@ -20,11 +20,13 @@ function set(lectures) {
   _classes = [];
   _lectures = lectures;
   _lectures.forEach(function(lecture) {
+    // convert all raw dates to date Objects
+    lecture.date = new Date(lecture.date);
     //make sure all are displayed
     lecture.display = true;
     //add all classes to the class list
-    if(_classes.indexOf(lecture.classname) === -1){
-      _classes.push(lecture.classname);
+    if(_classes.indexOf(lecture.course.title) === -1){
+      _classes.push(lecture.course.title);
     }
   });
 }
@@ -35,7 +37,7 @@ function set(lectures) {
  */
 function filter(classname) {
   _lectures.forEach(function(lecture) {
-    if(lecture.classname === classname) {
+    if(lecture.course.title === classname) {
       lecture.display = !lecture.display;
     }
   });

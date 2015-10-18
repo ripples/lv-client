@@ -37,7 +37,7 @@ var FeedSection = React.createClass({
   },
   render : function(){
     return (
-      <div classname = "FeedViewWrapper">
+      <div className = "FeedViewWrapper">
         <ClassList classes = {this.state.classes} />
         <LectureList lectures = {this.state.lectures} />
       </div>

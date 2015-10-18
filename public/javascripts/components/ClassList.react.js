@@ -19,9 +19,9 @@ var Class = React.createClass({
   render : function() {
     return (
       <div className = "classContainer">
-        <h3 className="classHeader">
+        <h5 className="classHeader">
           {this.props.classname}
-        </h3>
+        </h5>
         <span className="classShowSpan" onClick={this.changeDisplay}>
           {(this.state.show)  ? "hide" : "show"}
         </span>
