@@ -1,3 +1,9 @@
+/**
+  * LoginSection is a class to encapsulate login functionality
+  * in the "View" component of the Flux/React design
+**/
+
+
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var LoginAction = require('../actions/LoginAction');

@@ -3,6 +3,7 @@
   * This will consist of :
   *   "LectureFeed" module to show all Lectures
   *   "ClassList" module to show classes, allowing to filter
+  *   "LectureView" module to view individual lectures
 **/
 
 
@@ -15,6 +16,7 @@ var LectureList = require('./LectureList.react');
 var LectureConstants = require('../constants/LectureConstants');
 var LectureStore = require('../stores/LectureStore');
 var LectureActions = require('../actions/LectureAction');
+
 
 
 

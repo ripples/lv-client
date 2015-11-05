@@ -94,7 +94,6 @@ AppDispatcher.register(function(action) {
       filter(classname);
       LectureStore.emitChange();
       break;
-
     default:
       // no op
   }

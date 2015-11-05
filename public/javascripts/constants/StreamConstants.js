@@ -1,12 +1,11 @@
 /*
- * LoginConstants
+ * StreamConstants
  */
 
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
-  FETCH: null,
-  FILTER: null,
-  VIEW: null,
-  HIDE: null
+  BOARDS : null,
+  SLIDES : null,
+  VIDEO  : null
 });

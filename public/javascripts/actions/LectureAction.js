@@ -14,7 +14,6 @@ var LectureActions = {
   fetch: function() {
     api.fetchLectures({
       success : function(lectures){
-        console.log(lectures);
         AppDispatcher.dispatch({
           actionType: LectureConstants.FETCH,
           lectures: lectures
@@ -32,8 +31,27 @@ var LectureActions = {
       actionType: LectureConstants.FILTER,
       classname: classname
     });
-  }
+  },
 
+  /**
+   * Launch LectureView component
+   * @param {TODO:MAKESCHEMA} lecture object
+   */
+  view: function(lecture) {
+     AppDispatcher.dispatch({
+       actionType: LectureConstants.VIEW,
+       lecture : lecture
+     });
+   },
+
+   /**
+    * Hide LectureView component
+    */
+  hide: function(){
+    AppDispatch.dispatch({
+      actionType: LectureConstants.HIDE,
+    });
+  },
 };
 
 module.exports = LectureActions;
