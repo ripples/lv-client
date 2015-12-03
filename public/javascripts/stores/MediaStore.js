@@ -59,11 +59,8 @@ function calcHoptime(media) {
  */
 function syncronize(timestamp) {
   _current = _current.map(function(obj, index, thisArray){
-    console.debug('-----------------');
-    console.debug(obj);
     switch(obj.type) {
       case "video":
-      console.debug('-----------');
         return obj;
       case "images":
         var idx = -1;
@@ -72,11 +69,8 @@ function syncronize(timestamp) {
                 Number(timestamp)- Number(mediaTimestamp) >= 0))
               idx = mediaIndex;
         });
-        console.debug('index found' , idx);
-        console.debug('current Index' , obj.data.timestamp);
         if (idx !== -1)
           obj.data.timestamp = _media[index].data.timestamps[idx];
-          console.debug('-----------');
         return obj;
         default:
         break;
