@@ -9,71 +9,16 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 
-var LectureConstants = require('../constants/LectureConstants');
-var LectureStore = require('../stores/MediaStore');
-var LectureActions = require('../actions/MediaAction');
-
-var BoardView = React.createClass({
-  getInitialState : function(){
-    return {buffer : {},
-            images : {},
-            time   : {}};
-  },
-  getImage : function(){
-    //this.checkBuffer();
-    return "BOARD GOES HERE";
-  },
-  render : function(){
-    return (
-      <div className = "boardContainer">
-        {this.getImage()}
-      </div>
-    );
-  }
-});
-
-var SlideView = React.createClass({
-  getInitialState : function(){
-    return {buffer : {},
-            images : {},
-            time   : {}};
-  },
-  getImage : function(){
-    //this.checkBuffer();
-    return "SLIDES GO HERE";
-  },
-  render : function(){
-    return (
-      <div className = "slideContainer">
-        {this.getImage()}
-      </div>
-    );
-  }
-});
-
-var LectureView = React.createClass({
-  getInitialState : function(){
-    return {buffer : {},
-            images : {},
-            time   : {}};
-  },
-  render : function(){
-    return (
-      <div className = "lectureViewContainer">
-        "LECTURE GOES HERE"
-      </div>
-    );
-  }
-});
+var MediaComponent = require('./MediaComponent.react');
 
 var LowerMediaContainer = React.createClass({
   build : function(elem){
     if (elem.map){ // check if an array was passed
       var percentage = (100/elem.length).toString() + "%";
-      return elem.map(function(obj){
+      return elem.map(function(mediaObj){
         return(
-          <div width={percentage}>
-            {obj.component} // iterate through components to show all equally.
+          <div width={percentage} height="20%">
+            <MediaComponent media={mediaObj}></MediaComponent>
           </div>
         )
       });
@@ -82,7 +27,7 @@ var LowerMediaContainer = React.createClass({
       if (this.elem)
       return (
         <div width="100%">
-          {elem.component} // return the one element passed
+          <MediaComponent media ={elem}></MediaComponent> // return the one element passed
         </div>
       )
       else {
@@ -102,9 +47,11 @@ var LowerMediaContainer = React.createClass({
 var MainMediaContainer = React.createClass({
   render : function(){
     return (
-      <div className = "vidBoxContainer">
-        <div className = "UpperMediaContainer">
-          {this.props.MainMedia}
+      <div width ="100%">
+        <div className = "UpperMediaContainer" width="100%">
+          <div width = "100%">
+          <MediaComponent media = {this.props.MainMedia}></MediaComponent>
+          </div>
         </div>
         <LowerMediaContainer elements = {this.props.LowerMedia}></LowerMediaContainer>
       </div>
@@ -112,25 +59,18 @@ var MainMediaContainer = React.createClass({
   }
 });
 
-var MediaView = React.CreateClass({
-  getInitialState : function(){
-    /*
-     Initally set the focused element to whatever is
-     first in the array given.
-    */
-    this.setState({MainElement : 0});
-  },
+var MediaView = React.createClass({
   render : function(){
-    var MediaCopy = this.props.Media;
+    var MediaCopy = this.props.media.slice();
     return(
-      <div className = "MediaView">
+      <div className = "MediaView" position="relative" width = "80%" height="100%">
         <MainMediaContainer
-          MainMedia = {MediaCopy.splice(this.MainElement, 1)}
-          LowerMediaContainer = {MediaCopy}
+          MainMedia = {MediaCopy.splice(this.props.primary, 1)[0]}
+          LowerMedia = {MediaCopy}
           ></MainMediaContainer>
       </div>
     );
   }
 });
 
-module.exports = LectureView;
+module.exports = MediaView;

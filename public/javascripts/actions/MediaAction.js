@@ -15,7 +15,7 @@ var MediaActions = {
     api.fetchMedia({
       success : function(media){
         AppDispatcher.dispatch({
-          actionType: MediaConstants.FETCH,
+          actionType: MediaConstants.FETCHMEDIA,
           media: media
         });
       }

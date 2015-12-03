@@ -33,7 +33,7 @@ var DialogBox = React.createClass({
     return(
       <div className = "dialogUnderlay" onClick = {this.closeClick}>
         <div className = "dialogBox" onClick = {this.stopClick}>
-          {this.props.content || ""}
+          {this.props.content}
         </div>
       </div>
     );

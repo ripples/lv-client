@@ -12,17 +12,41 @@
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var DialogBox = require('./DialogBox.react');
+var MediaAction = require('../actions/MediaAction');
+var MediaStore = require('../stores/MediaStore');
+var MediaView = require('./MediaView.react');
 
 var Lecture = React.createClass({
+  onMediaChangeListener : function(){
+    this.setState({dialogContent :
+      this.generateMediaView({
+            media : MediaStore.getCurrent(),
+            primary : MediaStore.getPrimary()
+      })
+    });
+  },
+  generateMediaView : function(params){
+    return(
+      <MediaView media = {params.media}
+        primary = {params.primary}></MediaView>
+    )
+  },
   getInitialState : function(){
     return{ dialogVisible : false,
             dialogContent : null };
   },
   focusLecture : function() {
+    MediaAction.fetch();
     this.setState({dialogVisible : true});
   },
   unfocusLecture : function() {
     this.setState({dialogVisible : false});
+  },
+  componentDidMount : function(){
+    MediaStore.addChangeListener(this.onMediaChangeListener);
+  },
+  componentWillUnmount : function(){
+    MediaStore.removeChangeListener(this.onMediaChangeListener);
   },
   render : function() {
     return (

@@ -36,7 +36,7 @@ function set(media) {
           type: obj.type,
           data: {
             id: obj.data.id,
-            timestamp: obj.data.timestamps[0];
+            timestamp: obj.data.timestamps[0]
           }
         });
         break;
@@ -59,27 +59,32 @@ function calcHoptime(media) {
  */
 function syncronize(timestamp) {
   _current = _current.map(function(obj, index, thisArray){
-      switch(obj.type) {
-        case 'video':
-          return obj;
-          break;
-        case 'images':
-          var idx = -1;
-          _media[index].data.timestamps.map(function(mediaTimestamp, mediaIndex, mediaArray){
-            if ((Number(timestamp) - Number(mediaTimestamp)
-                < Number(timestamp) - Number(obj.data.timestamp))&&(
-                  Number(timestamp)- Number(mediaTimestamp) >= 0))
-                idx = mediaIndex;
-          });
-          if (idx !== -1)
-            obj.timestamp = _media[index].data.timestamps[idx];
-          return obj;
-          break;
-      }
-    })
-  };
+    console.debug('-----------------');
+    console.debug(obj);
+    switch(obj.type) {
+      case "video":
+      console.debug('-----------');
+        return obj;
+      case "images":
+        var idx = -1;
+        _media[index].data.timestamps.map(function(mediaTimestamp, mediaIndex, mediaArray){
+          if ((Number(timestamp) - Number(mediaTimestamp) < Number(timestamp) - Number(obj.data.timestamp))&&(
+                Number(timestamp)- Number(mediaTimestamp) >= 0))
+              idx = mediaIndex;
+        });
+        console.debug('index found' , idx);
+        console.debug('current Index' , obj.data.timestamp);
+        if (idx !== -1)
+          obj.data.timestamp = _media[index].data.timestamps[idx];
+          console.debug('-----------');
+        return obj;
+        default:
+        break;
+    }
+  });
   _timestamp = timestamp;
 }
+
 
 var MediaStore = assign({}, EventEmitter.prototype, {
 
@@ -140,7 +145,7 @@ var MediaStore = assign({}, EventEmitter.prototype, {
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
-    case MediaConstants.FETCH:
+    case MediaConstants.FETCHMEDIA:
       var media = action.media;
       set(media);
       MediaStore.emitChange();

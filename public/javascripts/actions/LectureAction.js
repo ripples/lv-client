@@ -15,7 +15,7 @@ var LectureActions = {
     api.fetchLectures({
       success : function(lectures){
         AppDispatcher.dispatch({
-          actionType: LectureConstants.FETCH,
+          actionType: LectureConstants.FETCHLECTURES,
           lectures: lectures
         });
       }

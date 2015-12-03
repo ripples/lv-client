@@ -83,7 +83,7 @@ var LectureStore = assign({}, EventEmitter.prototype, {
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
-    case LectureConstants.FETCH:
+    case LectureConstants.FETCHLECTURES:
       lectures = action.lectures;
       set(lectures);
       LectureStore.emitChange();

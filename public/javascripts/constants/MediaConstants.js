@@ -5,6 +5,6 @@
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
-  FETCH: null,
+  FETCHMEDIA: null,
   SYNC: null
 });
