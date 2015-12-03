@@ -47,6 +47,42 @@ var api = {
       //server, so this is a temporary subsitute to that.
 
     }, 50);**/
+  },
+  fetchMedia : function(params){
+    setTimeout(function(){
+      //Why setTimeout? because we must finish the
+      //callstack from the previous AppDispatcher.dispatch.
+      //this call WOULD BE asynchronous with a call to the
+      //server, so this is a temporary subsitute to that.
+      var fake_media = [
+        { type : 'video',
+          data : {
+            id : '000000001',
+            url : 'http://instantcena.com/media/quiet.mp4'
+          }
+        },
+        { type : 'images',
+          data : {
+            id: '000000002',
+            timestamps : [0,1,5,8,13]
+          }
+        },
+        { type : 'images',
+          data : {
+            id: '000000003',
+            timestamps : [0,4,9,15,19]
+          }
+        },
+        { type : 'images',
+          data : {
+            id: '000000004',
+            timestamps : [0,2,5,15,18]
+          }
+        }
+      ];
+
+      params.success(fake_media);
+    }, 50);
   }
 };
 
