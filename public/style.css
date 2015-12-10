@@ -51,6 +51,40 @@
 	margin-right:10%;
 	margin-left:5%;
 }
+.LowerMediaContainer
+{
+	position : relative;
+	height : 20%;
+	overflow-y : scroll;
+	overflow - x: hidden;
+}
+.MediaView
+{
+	align-content: center;
+}
+.MainMediaWrapper
+{
+	width : 90%;
+	height : 100%;
+}
+.PrimaryMedia
+{
+	width : 100%;
+	height : 70%;
+}
+.MediaComponent
+{
+	position: relative;
+	height : auto;
+	width : auto;
+}
+.imageContainer img
+{
+	position :relative;
+	height : 100%;
+	width : 100%;
+	float : left;
+}
 #contentWrapper
 {
 	position: relative;

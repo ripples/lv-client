@@ -14,10 +14,11 @@ var MediaComponent = require('./MediaComponent.react');
 var LowerMediaContainer = React.createClass({
   build : function(elem){
     if (elem.map){ // check if an array was passed
-      var percentage = (100/elem.length).toString() + "%";
-      return elem.map(function(mediaObj){
+      var widthPercent= Math.floor((100/elem.length)).toString() + "%";
+      var style = {"width" : widthPercent, "height" : "100%", "float" : "left"};
+      return elem.map(function(mediaObj, index){
         return(
-          <div width={percentage} height="20%">
+          <div key={index} style={style}>
             <MediaComponent media={mediaObj}></MediaComponent>
           </div>
         )
@@ -26,7 +27,8 @@ var LowerMediaContainer = React.createClass({
     else {
       if (this.elem)
       return (
-        <div width="100%">
+        <div style={{"width" : "100%",
+          "height":"20%", "align" : "center"}}>
           <MediaComponent media ={elem}></MediaComponent> // return the one element passed
         </div>
       )
@@ -47,8 +49,8 @@ var LowerMediaContainer = React.createClass({
 var MainMediaContainer = React.createClass({
   render : function(){
     return (
-      <div width ="100%">
-        <div className = "UpperMediaContainer" width="100%">
+      <div className = "MainMediaWrapper">
+        <div classsName = "PrimaryMedia">
           <div width = "100%">
           <MediaComponent media = {this.props.MainMedia}></MediaComponent>
           </div>
@@ -63,7 +65,7 @@ var MediaView = React.createClass({
   render : function(){
     var MediaCopy = this.props.media.slice();
     return(
-      <div className = "MediaView" position="relative" width = "80%" height="100%">
+      <div className = "MediaView">
         <MainMediaContainer
           MainMedia = {MediaCopy.splice(this.props.primary, 1)[0]}
           LowerMedia = {MediaCopy}

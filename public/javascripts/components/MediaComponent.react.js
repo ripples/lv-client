@@ -13,7 +13,7 @@ var MediaActions = require('../actions/MediaAction');
 var ImageView = React.createClass({
   render : function(){
     return (
-      <div className = "imageContainer" position="relative" height = "100%" width="100%">
+      <div className = "imageContainer" >
         <img src = {this.props.src}></img>
       </div>
     );
@@ -80,7 +80,7 @@ var MediaComponent = React.createClass({
   render : function(){
     var mediaObj = this.generateMediaObject();
     return(
-      <div position="relative">
+      <div className="MediaComponent">
         {mediaObj}
       </div>
     )

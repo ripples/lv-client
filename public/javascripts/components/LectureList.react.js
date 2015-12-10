@@ -67,10 +67,10 @@ var Lecture = React.createClass({
 
 var LectureList = React.createClass({
   render : function(){
-    var lectureNodes = this.props.lectures.map(function(obj){
+    var lectureNodes = this.props.lectures.map(function(obj, index){
     if (obj.display){
       return(
-          <Lecture lecture = {obj}>
+          <Lecture key={index} lecture = {obj}>
           </Lecture>
       )
     }

@@ -32,9 +32,9 @@ var Class = React.createClass({
 
 var ClassList = React.createClass({
   render : function(){
-    var classNodes = this.props.classes.map(function(obj){
+    var classNodes = this.props.classes.map(function(obj, index){
       return(
-        <Class classname = {obj}>
+        <Class key= {index} classname = {obj}>
         </Class>
       )
     });
