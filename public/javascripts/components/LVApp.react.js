@@ -48,7 +48,7 @@ var LVApp = React.createClass({
     if(LoginStore.isLoggedIn()){
       return (
         <div>
-          <FeedSection />
+          <FeedSection jwt={this.state.jwt}/>
         </div>
       );
     }

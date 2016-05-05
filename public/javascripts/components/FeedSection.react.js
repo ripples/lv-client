@@ -18,9 +18,6 @@ var LectureStore = require('../stores/LectureStore');
 var LectureActions = require('../actions/LectureAction');
 
 
-
-
-
 var FeedSection = React.createClass({
   getInitialState : function(){
     return {lectures : [], classes : []};
@@ -32,7 +29,7 @@ var FeedSection = React.createClass({
   },
   componentDidMount: function () {
     LectureStore.addChangeListener(this.onLectureChangeListener);
-    LectureActions.fetch();
+    LectureActions.fetch(this.props.jwt);
   },
   componentWillUnmount : function (){
     LectureStore.removeChangeListener(this.onLectureChangeListener);

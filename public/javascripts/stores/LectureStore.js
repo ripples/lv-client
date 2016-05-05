@@ -84,13 +84,13 @@ var LectureStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case LectureConstants.FETCHLECTURES:
-      lectures = action.lectures;
+      var lectures = action.lectures;
       set(lectures);
       LectureStore.emitChange();
       break;
 
     case LectureConstants.FILTER:
-      classname = action.classname.trim();
+      var  classname = action.classname.trim();
       filter(classname);
       LectureStore.emitChange();
       break;

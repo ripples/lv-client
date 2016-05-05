@@ -11,8 +11,9 @@ var LectureActions = {
   /**
    * Create the lectures array and classes array
    */
-  fetch: function() {
+  fetch: function(_jwt) {
     api.fetchLectures({
+      jwt : _jwt,
       success : function(lectures){
         AppDispatcher.dispatch({
           actionType: LectureConstants.FETCHLECTURES,

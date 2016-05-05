@@ -84,7 +84,7 @@ var LoginStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case LoginConstants.LOGIN:
-      jwt = action.jwt.trim();
+      var jwt = action.jwt.trim();
       if (jwt !== '') {
         login(jwt);
         LoginStore.emitChange();

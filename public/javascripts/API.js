@@ -5,7 +5,7 @@
 var api = {
   login : function(params){
     $.ajax({
-      url : "http://present.cs.umass.edu:3000/api/auth",
+      url : "http://" + window.location.host + "/api/auth",
       contentType: 'application/json',
       type : 'POST',
       data : JSON.stringify(params.data), //lvadmin/lvadmin
@@ -19,19 +19,13 @@ var api = {
   },
   fetchLectures : function(params){
     $.ajax({
-      url : "http://present.cs.umass.edu:9000/api/lectures",
+      url : "http://" + window.location.host + "/api/lectures",
       contentType : "application/json",
       type : "POST",
-      data : JSON.stringify("things"),
+      headers: { "Authorization": params.jwt },
       success : function(data){
         params.success(
           data
-          /**{display : false, classname : "COMPSCI 497",
-          date : "10/14/15"},
-          {display : false, classname : "COMPSCI 326",
-          date : "10/13/15"},
-          {display : false, classname : "COMPSCI 497",
-          date : "10/11/15"}**/
         );
       }.bind(this) || function(){
         console.error('No callback given for fetching Lecture data');
