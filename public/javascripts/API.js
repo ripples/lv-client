@@ -5,7 +5,7 @@
 var api = {
   login : function(params){
     $.ajax({
-      url : "http://present.cs.umass.edu:9000/api/auth",
+      url : "http://present.cs.umass.edu:3000/api/auth",
       contentType: 'application/json',
       type : 'POST',
       data : JSON.stringify(params.data), //lvadmin/lvadmin
