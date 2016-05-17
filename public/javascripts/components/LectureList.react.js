@@ -61,7 +61,7 @@ var Lecture = React.createClass({
           requestClose = {this.unfocusLecture}
           content = {this.state.dialogContent}></DialogBox>
       </div>
-    )
+    );
   }
 });
 
@@ -72,7 +72,7 @@ var LectureList = React.createClass({
       return(
           <Lecture key={index} lecture = {obj}>
           </Lecture>
-      )
+      );
     }
     else
       return(null);
@@ -81,7 +81,7 @@ var LectureList = React.createClass({
       <div className = "LectureList">
         {lectureNodes}
       </div>
-    )
+    );
   }
 });
 

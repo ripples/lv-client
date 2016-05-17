@@ -43,7 +43,7 @@ var LoginSection = React.createClass({
     return (
       <form className="loginForm" onSubmit={this.handleOnSubmit}>
         <p className="prompt">{this.state.prompt}</p>
-        <input type = "text" placeholder="Username" ref="username" />
+        <input type  = "text" placeholder="Username" ref="username" />
         <br />
         <input type = "password" placeholder="Password" ref = "password" />
         <input type="submit" value = "Login" />
