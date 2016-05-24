@@ -52,7 +52,7 @@ var Lecture = React.createClass({
     return (
       <div className="lectureContainer">
         <h4 className="lectureHeader">
-          {this.props.lecture.course.title + " " + this.props.lecture.date.toLocaleDateString()}
+          {this.props.lecture.course + " " + this.props.lecture.date.toLocaleDateString()}
         </h4>
         <span className="lectureDialogShowSpan" onClick={this.focusLecture}>
           view
