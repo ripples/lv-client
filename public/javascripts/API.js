@@ -5,7 +5,7 @@
 var api = {
   login : function(params){
     $.ajax({
-      url : "http://" + window.location.host + "/api/auth",
+      url : "http://" + window.location.host + "/api/v1/login",
       contentType: 'application/json',
       type : 'POST',
       data : JSON.stringify(params.data), //lvadmin/lvadmin

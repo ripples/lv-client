@@ -25,8 +25,8 @@ function set(lectures) {
     //make sure all are displayed
     lecture.display = true;
     //add all classes to the class list
-    if(_classes.indexOf(lecture.course.title) === -1){
-      _classes.push(lecture.course.title);
+    if (_classes.indexOf(lecture.course) === -1) {
+      _classes.push(lecture.course);
     }
   });
 }
@@ -37,7 +37,7 @@ function set(lectures) {
  */
 function filter(classname) {
   _lectures.forEach(function(lecture) {
-    if(lecture.course.title === classname) {
+    if (lecture.course === classname) {
       lecture.display = !lecture.display;
     }
   });
