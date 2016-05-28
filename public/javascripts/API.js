@@ -19,7 +19,7 @@ var api = {
   },
   fetchLectures : function(params){
     $.ajax({
-      url : "http://" + window.location.host + "/api/lectures",
+      url : "http://" + window.location.host + "/api/v1/lectures",
       contentType : "application/json",
       type : "POST",
       headers: { "Authorization": params.jwt },
