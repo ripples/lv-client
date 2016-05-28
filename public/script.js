@@ -13,21 +13,21 @@ var LoginForm = React.createClass({
             error : function(xhr, status, err) {
                 console.log(err);
                 if (status.value == "Bad Request" || "Unauthorized")
-                    this.setState({prompt : "Invalid Username/Password"});
+                    this.setState({prompt : "Invalid Email/Password"});
             }.bind(this)
         });
     },
     handleOnSubmit : function(e){
         e.preventDefault();
-        var username = React.findDOMNode(this.refs.username).value.trim();
+        var email = React.findDOMNode(this.refs.email).value.trim();
         var password = React.findDOMNode(this.refs.password).value.trim();
-        if (!username || !password){
+        if (!email || !password){
             // TODO : Add reminder to highlight unfilled fields
-            this.setState({prompt : "Please enter Username and Password."});
+            this.setState({prompt : "Please enter Email and Password."});
             return;
         }
         this.setState({prompt : ""});
-        this.login({"username" : username, "password" : password});
+        this.login({"email" : email, "password" : password});
     },
     getInitialState : function(){
         return {prompt : ""};
@@ -36,7 +36,7 @@ var LoginForm = React.createClass({
         return (
             <form className="loginForm" onSubmit={this.handleOnSubmit}>
               <p className="prompt">{this.state.prompt}</p>
-                 <input type = "text" placeholder="Username" ref="username" />
+                 <input type = "text" placeholder="Email" ref="email" />
                  <br />
                  <input type = "password" placeholder="Password" ref = "password" />
                  <input type="submit" value = "Login" />

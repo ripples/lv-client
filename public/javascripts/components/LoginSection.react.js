@@ -13,7 +13,7 @@ var LoginSection = React.createClass({
   getInitialState : function() {
     return {
       prompt : "",
-      username : "",
+      email : "",
       password : ""
     };
   },
@@ -24,16 +24,16 @@ var LoginSection = React.createClass({
 
   handleOnSubmit : function(e) {
       e.preventDefault();
-      var username = this.refs.username.getDOMNode().value.trim();
+      var email = this.refs.email.getDOMNode().value.trim();
       var password = this.refs.password.getDOMNode().value.trim();
 
-      if (!username || !password){
+      if (!email || !password){
         // TODO : Add reminder to highlight unfilled fields
-        this.setState({prompt : "Please enter Username and Password."});
+        this.setState({prompt : "Please enter Email and Password."});
         return;
       }
       this.setState({prompt : ""});
-      this.login({"username" : username, "password" : password});
+      this.login({"email" : email, "password" : password});
   },
 
   /**
@@ -43,7 +43,7 @@ var LoginSection = React.createClass({
     return (
       <form className="loginForm" onSubmit={this.handleOnSubmit}>
         <p className="prompt">{this.state.prompt}</p>
-        <input type  = "text" placeholder="Username" ref="username" />
+        <input type  = "text" placeholder="Email" ref="email" />
         <br />
         <input type = "password" placeholder="Password" ref = "password" />
         <input type="submit" value = "Login" />
