@@ -6,7 +6,7 @@
 
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
-var LectureActions = require('../actions/LectureAction');
+import LectureActions from '../actions/LectureAction';
 
 var Class = React.createClass({
   getInitialState : function(){

@@ -1,0 +1,7 @@
+{
+  "extends": "google",
+  "globals": {
+    "fetch": true,
+    "window": true
+  }
+}

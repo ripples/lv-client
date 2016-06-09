@@ -1,58 +1,58 @@
-/*
- * LectureActions
+"use strict";
+
+/**
+ * Lecture Actions
  */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var LectureConstants = require('../constants/LectureConstants');
-var api = require('../API.js');
+import {fetchLectures} from '../API';
 
-var LectureActions = {
-
+export default class LectureActions {
   /**
-   * Create the lectures array and classes array
+   * Fetch lectures for user
+   * @param {string} _jwt - Auth token
    */
-  fetch: function(_jwt) {
-    api.fetchLectures({
-      jwt : _jwt,
-      success : function(lectures){
+  static fetch(_jwt) {
+    fetchLectures({
+      jwt: _jwt,
+      success : (lectures) => {
         AppDispatcher.dispatch({
           actionType: LectureConstants.FETCHLECTURES,
           lectures: lectures
         });
       }
     });
-  },
+  }
 
   /**
    * Filter the lecture feed to display/not display a given class
-   * @param  {string} classname The name of the class to filter in/out
+   * @param  {string} classname - The name of the class to filter in/out
    */
-  filter: function(classname) {
+  static filter(classname) {
     AppDispatcher.dispatch({
       actionType: LectureConstants.FILTER,
       classname: classname
     });
-  },
+  }
 
   /**
    * Launch LectureView component
    * @param {TODO:MAKESCHEMA} lecture object
    */
-  view: function(lecture) {
-     AppDispatcher.dispatch({
-       actionType: LectureConstants.VIEW,
-       lecture : lecture
-     });
-   },
-
-   /**
-    * Hide LectureView component
-    */
-  hide: function(){
-    AppDispatch.dispatch({
-      actionType: LectureConstants.HIDE,
+  static view(lecture) {
+    AppDispatcher.dispatch({
+      actionType: LectureConstants.VIEW,
+      lecture : lecture
     });
-  },
-};
+  }
 
-module.exports = LectureActions;
+  /**
+   * Hide LectureView component
+   */
+  static hide(){
+    AppDispatch.dispatch({
+      actionType: LectureConstants.HIDE
+    });
+  }
+}
