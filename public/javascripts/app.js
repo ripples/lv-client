@@ -7,11 +7,22 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-var React = require('react');
+import React from 'react';
+import ReactDom from 'react-dom';
+import LVApp from './components/LVApp.react';
+import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
-var LVApp = require('./components/LVApp.react');
 
-React.render(
-  <LVApp />,
-  document.getElementById('lvapp')
+import LoginSection from './components/LoginSection.react.js';
+
+const app = document.getElementById('lvapp');
+
+ReactDom.render(
+    <Router history={hashHistory}>
+        <Route path="/" component={LVApp}>
+            <IndexRoute component={LoginSection}></IndexRoute>
+        </Route>
+    </Router>
+    ,
+    app
 );

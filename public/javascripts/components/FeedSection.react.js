@@ -7,42 +7,45 @@
 **/
 
 
-var React = require('react');
+import React from 'react';
 var ReactPropType = React.PropTypes;
 
-var ClassList = require('./ClassList.react');
-var LectureList = require('./LectureList.react');
+import ClassList from './ClassList.react';
+import LectureList from './LectureList.react';
 
-var LectureConstants = require('../constants/LectureConstants');
-var LectureStore = require('../stores/LectureStore');
-var LectureActions = require('../actions/LectureAction');
+import LectureConstants from '../constants/LectureConstants';
+import LectureStore from '../stores/LectureStore';
+import LectureActions from '../actions/LectureAction';
 
+export default class FeedSection extends React.Component{
+  constructor(){
+    super();
+    this.state = {lectures : [], classes : []};
+  }
 
-var FeedSection = React.createClass({
-  getInitialState : function(){
-    return {lectures : [], classes : []};
-  },
-  onLectureChangeListener : function (){
+  onLectureChangeListener(){
     this.setState(
-      {lectures : LectureStore.getLectures(),
-        classes : LectureStore.getClasses()});
-  },
-  componentDidMount: function () {
+        {lectures : LectureStore.getLectures(),
+          classes : LectureStore.getClasses()});
+  }
+
+  componentDidMount () {
     LectureStore.addChangeListener(this.onLectureChangeListener);
     LectureActions.fetch(this.props.jwt);
-  },
-  componentWillUnmount : function (){
+  }
+
+  componentWillUnmount(){
     LectureStore.removeChangeListener(this.onLectureChangeListener);
-  },
-  render : function(){
+  }
+
+  render(){
     return (
-      <div className = "FeedViewWrapper">
-        <ClassList classes = {this.state.classes} />
-        <LectureList lectures = {this.state.lectures} />
-      </div>
+        <div className = "FeedViewWrapper">
+          <ClassList classes = {this.state.classes} />
+          <LectureList lectures = {this.state.lectures} />
+        </div>
     );
   }
-});
+}
 
 
-module.exports = FeedSection;

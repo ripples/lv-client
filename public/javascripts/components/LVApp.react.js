@@ -12,62 +12,57 @@
  * the LoginStore and passes the new data to its children.
  */
 
-var FeedSection = require('./FeedSection.react');
-var LoginSection = require('./LoginSection.react');
-var React = require('react');
-var LoginStore = require('../stores/LoginStore');
+import FeedSection from'./FeedSection.react';
+import React from 'react';
+import LoginStore from '../stores/LoginStore';
 
 /**
  * Retrieve the current Login data from the LoginStore
  */
 function getLoginState() {
-  return {
-    jwt: LoginStore.getJWT(),
-    user: LoginStore.getUser()
-  };
+    return {
+        jwt: LoginStore.getJWT(),
+        user: LoginStore.getUser()
+    };
 }
 
-var LVApp = React.createClass({
-
-  getInitialState: function() {
-    return getLoginState();
-  },
-
-  componentDidMount: function() {
-    LoginStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function() {
-    LoginStore.removeChangeListener(this._onChange);
-  },
-
-  /**
-   * @return {object}
-   */
-  render: function() {
-    if(LoginStore.isLoggedIn()){
-      return (
-        <div>
-          <FeedSection jwt={this.state.jwt}/>
-        </div>
-      );
+export default class LVApp extends React.Component {
+    constructor() {
+        super();
+        this.state = getLoginState();
     }
-    else{
-      return (
-        <div>
-          <LoginSection />
-        </div>
-      );
+
+    componentDidMount() {
+        LoginStore.addChangeListener(this._onChange);
     }
-  },
 
-  /**
-   * Event handler for 'change' events coming from the LoginStore
-   */
-  _onChange: function() {
-    this.setState(getLoginState());
-  }
+    componentWillUnmount() {
+        LoginStore.removeChangeListener(this._onChange);
+    }
 
-});
+    render() {
+        if (LoginStore.isLoggedIn()) {
+            return (
+                <div>
+                    <FeedSection jwt={this.state.jwt}/>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    {this.props.children}
+                </div>
+            );
+        }
+    }
 
-module.exports = LVApp;
+    /**
+     * Event handler for 'change' events coming from the LoginStore
+     */
+    _onChange() {
+        this.setState(getLoginState());
+    }
+
+}
+
