@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "bundle": "watchify -d public/javascripts/app.js -v -o \"uglifyjs -cm > public/javascripts/bundle.js\" -t [babelify --presets [es2015,react]]  > bundleoutput.txt",
+    "bundle": "watchify --poll=3000 -d public/javascripts/app.js -v -o \"uglifyjs -cm > public/javascripts/bundle.js\" -t [babelify --presets [es2015,react]]",
     "build": "browserify public/javascripts/app.js -t [babelify --presets [ es2015 , react], envify --NODE_ENV production] | uglifyjs -cm > public/javascripts/bundle.js"
   },
   "dependencies": {
