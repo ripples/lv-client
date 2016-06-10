@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Copyright (c) 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -12,10 +14,11 @@
  * the LoginStore and passes the new data to its children.
  */
 
-var FeedSection = require('./FeedSection.react');
-var LoginSection = require('./LoginSection.react');
-var React = require('react');
-var LoginStore = require('../stores/LoginStore');
+import React from "react";
+
+var FeedSection = require("./FeedSection.react");
+var LoginSection = require("./LoginSection.react");
+import LoginStore from "../stores/LoginStore";
 
 /**
  * Retrieve the current Login data from the LoginStore
@@ -27,24 +30,23 @@ function getLoginState() {
   };
 }
 
-var LVApp = React.createClass({
-
-  getInitialState: function() {
+export default class LVApp extends React.Component {
+  getInitialState() {
     return getLoginState();
-  },
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     LoginStore.addChangeListener(this._onChange);
-  },
+  }
 
-  componentWillUnmount: function() {
+  componentWillUnmount() {
     LoginStore.removeChangeListener(this._onChange);
-  },
+  }
 
   /**
    * @return {object}
    */
-  render: function() {
+  render() {
     if(LoginStore.isLoggedIn()){
       return (
         <div>
@@ -59,15 +61,13 @@ var LVApp = React.createClass({
         </div>
       );
     }
-  },
+  }
 
   /**
-   * Event handler for 'change' events coming from the LoginStore
+   * Event handler for "change" events coming from the LoginStore
    */
-  _onChange: function() {
+  _onChange() {
     this.setState(getLoginState());
   }
 
-});
-
-module.exports = LVApp;
+}

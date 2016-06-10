@@ -4,7 +4,7 @@
   * Service layer for interaction with server API
 **/
 
-const API_VERSION = 'v1';
+const API_VERSION = "v1";
 
 /**
  *
@@ -19,15 +19,15 @@ const API_VERSION = 'v1';
  * }
  */
 export function login(params) {
-  let url = `http://${window.location.host}/api/${API_VERSION}/lectures`;
-  let request = new Request(url, {
-    method: 'POST',
+  const url = `http://${window.location.host}/api/${API_VERSION}/lectures`;
+  const request = new Request(url, {
+    method: "POST",
     body: JSON.stringify(params.data),
     headers: new Headers({
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json"
     })
   });
-  makeRequest(request, params);
+  makeRequest(request, params.success);
 }
 
 /**
@@ -44,16 +44,16 @@ export function login(params) {
  * }
  */
 export function fetchLectures(params) {
-  let url = `http://${window.location.host}/api/${API_VERSION}/login`;
-  let request = new Request(url, {
-    method: 'POST',
+  const url = `http://${window.location.host}/api/${API_VERSION}/login`;
+  const request = new Request(url, {
+    method: "POST",
     body: JSON.stringify(params.data),
     headers: new Headers({
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       "Authorization": params.jwt
     })
   });
-  makeRequest(request, params);
+  makeRequest(request, params.success);
 }
 
 export function fetchMedia(params) {
@@ -67,7 +67,7 @@ export function fetchMedia(params) {
  */
 function makeRequest(request, callback) {
   fetch(request).then(response => {
-    let status = response.status;
+    const status = response.status;
     if (status >= 200 && status < 300) {
       callback(null, response);
     } else {

@@ -4,9 +4,9 @@
  * Lecture Actions
  */
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var LectureConstants = require('../constants/LectureConstants');
-import {fetchLectures} from '../API';
+import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
+import {LectureConstants} from "../constants/LectureConstants";
+import {fetchLectures} from "../API";
 
 export default class LectureActions {
   /**
@@ -16,7 +16,7 @@ export default class LectureActions {
   static fetch(_jwt) {
     fetchLectures({
       jwt: _jwt,
-      success : (lectures) => {
+      success: lectures => {
         AppDispatcher.dispatch({
           actionType: LectureConstants.FETCHLECTURES,
           lectures: lectures
@@ -38,20 +38,20 @@ export default class LectureActions {
 
   /**
    * Launch LectureView component
-   * @param {TODO:MAKESCHEMA} lecture object
+   * @param {object} lecture - lecture object
    */
   static view(lecture) {
     AppDispatcher.dispatch({
       actionType: LectureConstants.VIEW,
-      lecture : lecture
+      lecture: lecture
     });
   }
 
   /**
    * Hide LectureView component
    */
-  static hide(){
-    AppDispatch.dispatch({
+  static hide() {
+    AppDispatcher.dispatch({
       actionType: LectureConstants.HIDE
     });
   }

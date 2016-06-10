@@ -2,9 +2,9 @@
  * LoginConstants
  */
 
-var keyMirror = require('keymirror');
+import keyMirror from "keymirror";
 
-module.exports = keyMirror({
+export const LectureConstants = keyMirror({
   FETCHLECTURES: null,
   FILTER: null,
   VIEW: null,

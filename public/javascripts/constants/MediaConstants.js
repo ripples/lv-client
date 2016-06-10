@@ -2,9 +2,9 @@
  * MediaConstants
  */
 
-var keyMirror = require('keymirror');
+import keyMirror from "keymirror";
 
-module.exports = keyMirror({
+export const MediaConstants = keyMirror({
   FETCHMEDIA: null,
   SYNC: null
 });
