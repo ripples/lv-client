@@ -13,6 +13,7 @@ import LoginAction from'../actions/LoginAction';
 export default class LoginSection extends React.Component{
     constructor(){
         super();
+        console.log('built loginSection');
         this.state = {
             prompt : "",
             email : "",
@@ -47,6 +48,7 @@ export default class LoginSection extends React.Component{
             this.setState({prompt : "Please enter Email and Password."});
             return;
         }
+
         this.setState({prompt : ""});
         this.login({"email" : email, "password" : password});
     }
@@ -54,49 +56,4 @@ export default class LoginSection extends React.Component{
 
 }
 
-/*var LoginSection = React.createClass({
 
-  getInitialState : function() {
-    return {
-      prompt : "",
-      email : "",
-      password : ""
-    };
-  },
-
-  login : function(data) {
-    LoginAction.login(data);
-  },
-
-  handleOnSubmit : function(e) {
-      e.preventDefault();
-      var email = this.refs.email.getDOMNode().value.trim();
-      var password = this.refs.password.getDOMNode().value.trim();
-
-      if (!email || !password){
-        // TODO : Add reminder to highlight unfilled fields
-        this.setState({prompt : "Please enter Email and Password."});
-        return;
-      }
-      this.setState({prompt : ""});
-      this.login({"email" : email, "password" : password});
-  },
-
-  /!**
-   * @return {object}
-   *!/
-  render : function() {
-    return (
-      <form className="loginForm" onSubmit={this.handleOnSubmit}>
-        <p className="prompt">{this.state.prompt}</p>
-        <input type  = "text" placeholder="Email" ref="email" />
-        <br />
-        <input type = "password" placeholder="Password" ref = "password" />
-        <input type="submit" value = "Login" />
-      </form>
-    );
-  }
-
-});
-
-module.exports = LoginSection;*/
