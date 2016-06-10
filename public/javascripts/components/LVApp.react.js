@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Copyright (c) 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -12,11 +14,15 @@
  * the LoginStore and passes the new data to its children.
  */
 
+
+import React from "react";
+
 import FeedSection from'./FeedSection.react';
-import React from 'react';
 import LoginStore from '../stores/LoginStore';
 
+
 /**
+ *
  * Retrieve the current Login data from the LoginStore
  */
 function getLoginState() {
@@ -27,6 +33,7 @@ function getLoginState() {
 }
 
 export default class LVApp extends React.Component {
+
     constructor() {
         super();
         this.state = getLoginState();
@@ -36,9 +43,14 @@ export default class LVApp extends React.Component {
         LoginStore.addChangeListener(this._onChange);
     }
 
+
     componentWillUnmount() {
         LoginStore.removeChangeListener(this._onChange);
     }
+
+    /**
+     * @return {object}
+     */
 
     render() {
         if (LoginStore.isLoggedIn()) {
@@ -57,6 +69,7 @@ export default class LVApp extends React.Component {
         }
     }
 
+
     /**
      * Event handler for 'change' events coming from the LoginStore
      */
@@ -65,4 +78,5 @@ export default class LVApp extends React.Component {
     }
 
 }
+
 

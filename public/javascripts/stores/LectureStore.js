@@ -1,13 +1,15 @@
+"use strict";
+
 /*
  * LectureStore
  */
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var LectureConstants = require('../constants/LectureConstants');
-var assign = require('object-assign');
+import EventEmitter from "events";
 
-var CHANGE_EVENT = 'change';
+import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
+import {LectureConstants} from "../constants/LectureConstants";
+
+var CHANGE_EVENT = "change";
 
 var _classes = [];
 var _lectures = [];
@@ -19,12 +21,12 @@ var _lectures = [];
 function set(lectures) {
   _classes = [];
   _lectures = lectures;
-  _lectures.forEach(function(lecture) {
+  _lectures.forEach(lecture => {
     // convert all raw dates to date Objects
     lecture.date = new Date(lecture.date);
-    //make sure all are displayed
+    // make sure all are displayed
     lecture.display = true;
-    //add all classes to the class list
+    // add all classes to the class list
     if (_classes.indexOf(lecture.course) === -1) {
       _classes.push(lecture.course);
     }
@@ -43,46 +45,46 @@ function filter(classname) {
   });
 }
 
-var LectureStore = assign({}, EventEmitter.prototype, {
+export default class LectureStore extends EventEmitter {
 
   /**
    * Get the lectures the user has access to
-   * @return {array}
+   * @return {array} - lectures list
    */
-  getLectures: function() {
+  static getLectures() {
     return _lectures;
-  },
+  }
 
   /**
    * Get the classes the user has access to
-   * @return {array}
+   * @return {array} - classes list
    */
-  getClasses: function() {
+  static getClasses() {
     return _classes;
-  },
+  }
 
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
   /**
-   * @param {function} callback
+   * @param {function} callback - called on event change
    */
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
   /**
-   * @param {function} callback
+   * @param {function} callback - to be removed from event
    */
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
-});
+}
 
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
-  switch(action.actionType) {
+  switch (action.actionType) {
     case LectureConstants.FETCHLECTURES:
       var lectures = action.lectures;
       set(lectures);
@@ -90,7 +92,7 @@ AppDispatcher.register(function(action) {
       break;
 
     case LectureConstants.FILTER:
-      var  classname = action.classname.trim();
+      var classname = action.classname.trim();
       filter(classname);
       LectureStore.emitChange();
       break;
@@ -98,5 +100,3 @@ AppDispatcher.register(function(action) {
       // no op
   }
 });
-
-module.exports = LectureStore;

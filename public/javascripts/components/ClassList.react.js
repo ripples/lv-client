@@ -4,9 +4,10 @@
   * information to update the view.
 **/
 
-import  React from 'react';
-var  ReactPropTypes = React.PropTypes;
 
+import  React from 'react';
+
+var  ReactPropTypes = React.PropTypes;
 import ClassNode from './ClassNode.react';
 
 

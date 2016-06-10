@@ -9,7 +9,6 @@ import  LectureActions from '../actions/LectureAction';
 export default class ClassNode extends React.Component {
     constructor() {
         super();
-        console.log('built ClassNode');
         this.state = {
             show: true
         }

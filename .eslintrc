@@ -1,0 +1,24 @@
+{
+  "extends": [
+    "google",
+    "plugin:react/recommended"
+  ],
+  "globals": {
+    "fetch": true,
+    "window": true,
+    "document": true
+  },
+  "rules": {
+    "quotes": 1,
+    "max-len": [1, 120],
+    "operator-linebreak": [1, "before"]
+  },
+  "plugins": [
+    "react"
+  ],
+  "parser-options": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  }
+}
