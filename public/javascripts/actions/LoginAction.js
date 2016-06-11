@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * LoginActions
  */
@@ -6,7 +8,7 @@ import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {LoginConstants} from "../constants/LoginConstants";
 import {login} from "../API";
 
-export default class LoginActions {
+class LoginActions {
 
   /**
    * Login to the system
@@ -15,7 +17,11 @@ export default class LoginActions {
   login(data) {
     login({
       data: data,
-      success: data => {
+      callback: (err, data) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
         AppDispatcher.dispatch({
           actionType: LoginConstants.LOGIN,
           jwt: data.token
@@ -33,3 +39,7 @@ export default class LoginActions {
     });
   }
 }
+
+const loginActions = new LoginActions();
+
+export default loginActions;

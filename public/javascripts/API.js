@@ -19,7 +19,7 @@ const API_VERSION = "v1";
  * }
  */
 export function login(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/lectures`;
+  const url = `http://${window.location.host}/api/${API_VERSION}/login`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify(params.data),
@@ -27,7 +27,7 @@ export function login(params) {
       "Content-Type": "application/json"
     })
   });
-  makeRequest(request, params.success);
+  makeRequest(request, params.callback);
 }
 
 /**
@@ -44,7 +44,7 @@ export function login(params) {
  * }
  */
 export function fetchLectures(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/login`;
+  const url = `http://${window.location.host}/api/${API_VERSION}/lectures`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify(params.data),
@@ -53,7 +53,7 @@ export function fetchLectures(params) {
       "Authorization": params.jwt
     })
   });
-  makeRequest(request, params.success);
+  makeRequest(request, params.callback);
 }
 
 export function fetchMedia(params) {
@@ -68,11 +68,12 @@ export function fetchMedia(params) {
 function makeRequest(request, callback) {
   fetch(request).then(response => {
     const status = response.status;
-    if (status >= 200 && status < 300) {
-      callback(null, response);
-    } else {
+    if (status < 200 && status >= 300) {
       callback(new Error(response.statusText));
     }
+    return response.json();
+  }).then(json => {
+    callback(null, json);
   }).catch(err => {
     callback(err);
   });

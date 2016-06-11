@@ -1,3 +1,5 @@
+"use strct";
+
 /**
  * LectureList will have one sub-class of Lecture
  * This design will allow for the cascading of stateful class
@@ -9,29 +11,26 @@
  *
  **/
 
-import React from'react';
-var ReactPropTypes = React.PropTypes;
+import React from "react";
 
-import Lecture from './Lecture.react';
-
+import Lecture from "./Lecture.react";
 
 export default class LectureList extends React.Component {
-    render() {
-        var lectureNodes = this.props.lectures.map(function (obj, index) {
-            if (obj.display) {
-                return (
-                    <Lecture key={index} lecture={obj}>
-                    </Lecture>
-                );
-            }
-            else
-                return (null);
-        });
+  render() {
+    const lectureNodes = this.props.lectures.map((obj, index) => {
+      if (obj.display) {
         return (
-            <div className="LectureList">
-                {lectureNodes}
-            </div>
+          <Lecture key={index} lecture={obj}>
+          </Lecture>
         );
-    }
+      }
+      return null;
+    });
+    return (
+      <div className="LectureList">
+        {lectureNodes}
+      </div>
+    );
+  }
 }
 

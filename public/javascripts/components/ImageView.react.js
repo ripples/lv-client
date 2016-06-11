@@ -1,19 +1,13 @@
-/**
- * Created by igor on 6/10/16.
- */
+"use strict";
 
-import React from 'react';
-
-import MediaStore from'../stores/MediaStore';
-import MediaActions from'../actions/MediaAction';
-import MediaConstants from'../constants/MediaConstants';
+import React from "react";
 
 export default class ImageView extends React.Component {
-    render() {
-        return (
-            <div className="imageContainer">
-                <img src={this.props.src}></img>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="imageContainer">
+        <img src={this.props.src}></img>
+      </div>
+    );
+  }
 }

@@ -14,69 +14,61 @@
  * the LoginStore and passes the new data to its children.
  */
 
-
 import React from "react";
 
-import FeedSection from'./FeedSection.react';
-import LoginStore from '../stores/LoginStore';
-
+import FeedSection from "./FeedSection.react";
+import loginStore from "../stores/LoginStore";
 
 /**
- *
  * Retrieve the current Login data from the LoginStore
+ * @return {object} - login state object
  */
 function getLoginState() {
-    return {
-        jwt: LoginStore.getJWT(),
-        user: LoginStore.getUser()
-    };
+  return {
+    jwt: loginStore.getJWT(),
+    user: loginStore.getUser()
+  };
 }
 
 export default class LVApp extends React.Component {
 
-    constructor() {
-        super();
-        this.state = getLoginState();
+  constructor() {
+    super();
+    this.state = getLoginState();
+  }
+
+  componentDidMount() {
+    loginStore.addChangeListener(this._onChange);
+  }
+
+  componentWillUnmount() {
+    loginStore.removeChangeListener(this._onChange);
+  }
+
+  /**
+   * @return {object}
+   */
+
+  render() {
+    if (loginStore.isLoggedIn()) {
+      return (
+        <div>
+          <FeedSection jwt={this.state.jwt}/>
+        </div>
+      );
     }
+    return (
+      <div>
+        {this.props.children}
+      </div>
+    );
+  }
 
-    componentDidMount() {
-        LoginStore.addChangeListener(this._onChange);
-    }
-
-
-    componentWillUnmount() {
-        LoginStore.removeChangeListener(this._onChange);
-    }
-
-    /**
-     * @return {object}
-     */
-
-    render() {
-        if (LoginStore.isLoggedIn()) {
-            return (
-                <div>
-                    <FeedSection jwt={this.state.jwt}/>
-                </div>
-            );
-        }
-        else {
-            return (
-                <div>
-                    {this.props.children}
-                </div>
-            );
-        }
-    }
-
-
-    /**
-     * Event handler for 'change' events coming from the LoginStore
-     */
-    _onChange() {
-        this.setState(getLoginState());
-    }
+  /**
+   * Event handler for "change" events coming from the LoginStore
+   */
+  _onChange() {
+    this.setState(getLoginState());
+  }
 
 }
-
-

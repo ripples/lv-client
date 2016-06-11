@@ -9,13 +9,13 @@ import EventEmitter from "events";
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {MediaConstants} from "../constants/MediaConstants";
 
-var CHANGE_EVENT = "change";
+const CHANGE_EVENT = "change";
 
-var _media = [];
-var _current = [];
-var _hoptime = NaN;
-var _primary = NaN;
-var _timestamp = NaN;
+let _media = [];
+let _current = [];
+let _hoptime = NaN;
+let _primary = NaN;
+let _timestamp = NaN;
 
 /**
  * Create the media array, current array, current timestamp, and primary media
@@ -71,8 +71,8 @@ function synchronize(timestamp) {
     switch (obj.type) {
       case "video":
         return obj;
-      case "images":
-        var idx = -1;
+      case "images": {
+        let idx = -1;
         _media[index].data.timestamps.forEach((mediaTimestamp, mediaIndex) => {
           if (isApproximateImage(timestamp, mediaTimestamp, obj)) {
             idx = mediaIndex;
@@ -82,6 +82,7 @@ function synchronize(timestamp) {
           obj.data.timestamp = _media[index].data.timestamps[idx];
         }
         return obj;
+      }
       default:
         return obj;
     }
@@ -89,19 +90,19 @@ function synchronize(timestamp) {
   _timestamp = timestamp;
 }
 
-export default class MediaStore extends EventEmitter {
+class MediaStore extends EventEmitter {
   /**
    * Get the current media array
    * @return {array} - current media array
    */
-  static getCurrent() {
+  getCurrent() {
     return _current;
   }
   /**
    * Get the time interval to syncronize with the store
    * @return {number} - time interval
    */
-  static getHoptime() {
+  getHoptime() {
     return _hoptime;
   }
 
@@ -109,15 +110,15 @@ export default class MediaStore extends EventEmitter {
    * Get the top media object
    * @return {array} - top media object
    */
-  static getPrimary() {
+  getPrimary() {
     return _primary;
   }
   /**
    * Check if we need to syncronize
-   * @param  {Date} timestamp The current time to be viewed
+   * @param  {number} timestamp The current time to be viewed
    * @return {boolean} - if need to sync
    */
-  static shouldSync(timestamp) {
+  shouldSync(timestamp) {
     // TODO for each object in the current media array check against media array to see if there is a more appropriate timestamp
     return true;
   }
@@ -142,22 +143,26 @@ export default class MediaStore extends EventEmitter {
 
 }
 
+const mediaStore = new MediaStore();
+
 // Register callback to handle all updates
 AppDispatcher.register(action => {
   switch (action.actionType) {
-    case MediaConstants.FETCHMEDIA:
-      var media = action.media;
+    case MediaConstants.FETCHMEDIA: {
+      const media = action.media;
       set(media);
-      MediaStore.emitChange();
+      mediaStore.emitChange();
       break;
-
-    case MediaConstants.SYNC:
-      var timestamp = action.timestamp;
+    }
+    case MediaConstants.SYNC: {
+      const timestamp = action.timestamp;
       synchronize(timestamp);
-      MediaStore.emitChange();
+      mediaStore.emitChange();
       break;
-
+    }
     default:
       // no op
   }
 });
+
+export default mediaStore;

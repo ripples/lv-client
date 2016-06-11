@@ -10,10 +10,10 @@ import cookie from "react-cookie";
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {LoginConstants} from "../constants/LoginConstants";
 
-var CHANGE_EVENT = "change";
+const CHANGE_EVENT = "change";
 
-var _jwt = cookie.load("lv-clientCookie");
-var _user = null;
+let _jwt = cookie.load("lv-clientCookie");
+let _user = null;
 
 /**
  * Create the java web token (JWT) and user information
@@ -23,7 +23,7 @@ function login(jwt) {
   _jwt = jwt;
   // TODO : add user information to cookie
   // add cookie implementation here
-  var daysToExpire = 1;
+  const daysToExpire = 1;
   cookie.save("lv-clientCookie", jwt,
   // Set to expire in an absolute time interval of days
   {maxAge: daysToExpire * 84600});
@@ -37,14 +37,14 @@ function logout() {
   _user = null;
 }
 
-export default class LoginStore extends EventEmitter {
+class LoginStore extends EventEmitter {
 
   /**
    * Checks if the user is logged into the system
    * @return {boolean} - if logged in
    */
   isLoggedIn() {
-    return !_jwt;
+    return typeof _jwt !== "undefined";
   }
 
   /**
@@ -82,23 +82,27 @@ export default class LoginStore extends EventEmitter {
   }
 }
 
+const loginStore = new LoginStore();
+
 // Register callback to handle all updates
-AppDispatcher.register(function(action) {
+AppDispatcher.register(action => {
   switch (action.actionType) {
-    case LoginConstants.LOGIN:
-      var jwt = action.jwt.trim();
+    case LoginConstants.LOGIN: {
+      const jwt = action.jwt.trim();
       if (jwt !== "") {
         login(jwt);
-        LoginStore.emitChange();
+        loginStore.emitChange();
       }
       break;
-
-    case LoginConstants.LOGOUT:
+    }
+    case LoginConstants.LOGOUT: {
       logout();
-      LoginStore.emitChange();
+      loginStore.emitChange();
       break;
-
+    }
     default:
       // no op
   }
 });
+
+export default loginStore;

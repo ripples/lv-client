@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Module to contain the behavior for the "Feed" view
  * This will consist of :
@@ -6,49 +8,42 @@
  *   "LectureView" module to view individual lectures
  **/
 
+import React from "react";
 
-import React from 'react';
-var ReactPropType = React.PropTypes;
-
-import ClassList from './ClassList.react';
-import LectureList from './LectureList.react';
-
-import LectureConstants from '../constants/LectureConstants';
-import LectureStore from '../stores/LectureStore';
-import LectureActions from '../actions/LectureAction';
+import ClassList from "./ClassList.react";
+import LectureList from "./LectureList.react";
+import lectureStore from "../stores/LectureStore";
+import lectureActions from "../actions/LectureAction";
 
 export default class FeedSection extends React.Component {
-    constructor() {
-        super();
-        console.log('built FeedSection');
-        this.state = {lectures: [], classes: []};
-    }
+  constructor() {
+    super();
+    this.state = {lectures: [], classes: []};
+  }
 
-    onLectureChangeListener() {
-        this.setState(
-            {
-                lectures: LectureStore.getLectures(),
-                classes: LectureStore.getClasses()
-            });
-    }
+  onLectureChangeListener() {
+    this.setState(
+      {
+        lectures: lectureStore.getLectures(),
+        classes: lectureStore.getClasses()
+      });
+  }
 
-    componentDidMount() {
-        LectureStore.addChangeListener(this.onLectureChangeListener);
-        LectureActions.fetch(this.props.jwt);
-    }
+  componentDidMount() {
+    lectureStore.addChangeListener(this.onLectureChangeListener);
+    lectureActions.fetch(this.props.jwt);
+  }
 
-    componentWillUnmount() {
-        LectureStore.removeChangeListener(this.onLectureChangeListener);
-    }
+  componentWillUnmount() {
+    lectureStore.removeChangeListener(this.onLectureChangeListener);
+  }
 
-    render() {
-        return (
-            <div className="FeedViewWrapper">
-                <ClassList classes={this.state.classes}/>
-                <LectureList lectures={this.state.lectures}/>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="FeedViewWrapper">
+        <ClassList classes={this.state.classes}/>
+        <LectureList lectures={this.state.lectures}/>
+      </div>
+    );
+  }
 }
-
-

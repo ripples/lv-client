@@ -9,10 +9,10 @@ import EventEmitter from "events";
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {LectureConstants} from "../constants/LectureConstants";
 
-var CHANGE_EVENT = "change";
+const CHANGE_EVENT = "change";
 
-var _classes = [];
-var _lectures = [];
+let _classes = [];
+let _lectures = [];
 
 /**
  * Create the lectures array and classes array
@@ -45,13 +45,13 @@ function filter(classname) {
   });
 }
 
-export default class LectureStore extends EventEmitter {
+class LectureStore extends EventEmitter {
 
   /**
    * Get the lectures the user has access to
    * @return {array} - lectures list
    */
-  static getLectures() {
+  getLectures() {
     return _lectures;
   }
 
@@ -59,7 +59,7 @@ export default class LectureStore extends EventEmitter {
    * Get the classes the user has access to
    * @return {array} - classes list
    */
-  static getClasses() {
+  getClasses() {
     return _classes;
   }
 
@@ -85,18 +85,23 @@ export default class LectureStore extends EventEmitter {
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
   switch (action.actionType) {
-    case LectureConstants.FETCHLECTURES:
-      var lectures = action.lectures;
+    case LectureConstants.FETCHLECTURES: {
+      const lectures = action.lectures;
       set(lectures);
       LectureStore.emitChange();
       break;
-
-    case LectureConstants.FILTER:
-      var classname = action.classname.trim();
+    }
+    case LectureConstants.FILTER: {
+      const classname = action.classname.trim();
       filter(classname);
       LectureStore.emitChange();
       break;
+    }
     default:
       // no op
   }
 });
+
+const lectureStore = new LectureStore();
+
+export default lectureStore;

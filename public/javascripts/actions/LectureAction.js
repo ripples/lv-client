@@ -8,15 +8,19 @@ import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {LectureConstants} from "../constants/LectureConstants";
 import {fetchLectures} from "../API";
 
-export default class LectureActions {
+class LectureActions {
   /**
    * Fetch lectures for user
    * @param {string} _jwt - Auth token
    */
-  static fetch(_jwt) {
+  fetch(_jwt) {
     fetchLectures({
       jwt: _jwt,
-      success: lectures => {
+      callback: (err, lectures) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
         AppDispatcher.dispatch({
           actionType: LectureConstants.FETCHLECTURES,
           lectures: lectures
@@ -29,7 +33,7 @@ export default class LectureActions {
    * Filter the lecture feed to display/not display a given class
    * @param  {string} classname - The name of the class to filter in/out
    */
-  static filter(classname) {
+  filter(classname) {
     AppDispatcher.dispatch({
       actionType: LectureConstants.FILTER,
       classname: classname
@@ -40,7 +44,7 @@ export default class LectureActions {
    * Launch LectureView component
    * @param {object} lecture - lecture object
    */
-  static view(lecture) {
+  view(lecture) {
     AppDispatcher.dispatch({
       actionType: LectureConstants.VIEW,
       lecture: lecture
@@ -50,9 +54,13 @@ export default class LectureActions {
   /**
    * Hide LectureView component
    */
-  static hide() {
+  hide() {
     AppDispatcher.dispatch({
       actionType: LectureConstants.HIDE
     });
   }
 }
+
+const lectureActions = new LectureActions();
+
+export default lectureActions;
