@@ -6,6 +6,12 @@
 
 const API_VERSION = "v1";
 
+import {camelizeKeys} from "humps";
+import {normalize} from "normalizr";
+
+import CourseSchema from "./schemas/CourseSchema";
+import LectureSchema from "./schemas/LectureSchema";
+
 /**
  *
  * @param {object} params - parameters to make login request
@@ -27,24 +33,20 @@ export function login(params) {
       "Content-Type": "application/json"
     })
   });
-  makeRequest(request, params.callback);
+  makeRequest(request, undefined, params.callback);
 }
 
 /**
  *
- * @param {object} params - parameters to make fetch lectures request
+ * @param {object} params - parameters to make fetch course request
  * params structured must be:
  * {
- *   data: {
- *     email: string
- *     password: string
- *   },
  *   jwt: string,
  *   success: function
  * }
  */
-export function fetchLectures(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/lectures`;
+export function fetchCourses(params) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/courses`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify(params.data),
@@ -53,7 +55,31 @@ export function fetchLectures(params) {
       "Authorization": params.jwt
     })
   });
-  makeRequest(request, params.callback);
+  makeRequest(request, CourseSchema, params.callback);
+}
+
+
+/**
+ *
+ * @param {object} params - parameters to make fetch lectures request
+ * params structured must be:
+ * {
+ *   courseId: number,
+ *   jwt: string,
+ *   success: function
+ * }
+ */
+export function fetchLectures(params) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/courses/lectures`;
+  const request = new Request(url, {
+    method: "POST",
+    body: JSON.stringify(params.data),
+    headers: new Headers({
+      "Content-Type": "application/json",
+      "Authorization": params.jwt
+    })
+  });
+  makeRequest(request, LectureSchema, params.callback);
 }
 
 export function fetchMedia(params) {
@@ -63,9 +89,10 @@ export function fetchMedia(params) {
 /**
  * Wrapper function for fetch API, used to make requests to server
  * @param {Request} request - Request object used with fetch
+ * @param {Schema} schema - Normalizr schema
  * @param {function} callback - Called on success or error returns (err, result)
  */
-function makeRequest(request, callback) {
+function makeRequest(request, schema, callback) {
   fetch(request).then(response => {
     const status = response.status;
     if (status < 200 && status >= 300) {
@@ -73,7 +100,11 @@ function makeRequest(request, callback) {
     }
     return response.json();
   }).then(json => {
-    callback(null, json);
+    let result = camelizeKeys(json);
+    if (typeof schema !== "undefined") {
+      result = normalize(result, schema);
+    }
+    callback(null, result);
   }).catch(err => {
     callback(err);
   });

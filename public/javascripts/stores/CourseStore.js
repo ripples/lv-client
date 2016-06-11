@@ -1,7 +1,7 @@
 "use strict";
 
 /*
- * LectureStore
+ * CourseStore
  */
 
 import EventEmitter from "events";
@@ -11,6 +11,7 @@ import {LectureConstants} from "../constants/LectureConstants";
 
 const CHANGE_EVENT = "change";
 
+let _classes = [];
 let _lectures = [];
 
 /**
@@ -18,6 +19,7 @@ let _lectures = [];
  * @param  {array} lectures The array of lectures
  */
 function set(lectures) {
+  _classes = [];
   _lectures = lectures;
   _lectures.forEach(lecture => {
     // convert all raw dates to date Objects
@@ -25,6 +27,9 @@ function set(lectures) {
     // make sure all are displayed
     lecture.display = true;
     // add all classes to the class list
+    if (_classes.indexOf(lecture.course) === -1) {
+      _classes.push(lecture.course);
+    }
   });
 }
 
@@ -95,7 +100,7 @@ AppDispatcher.register(function(action) {
       break;
     }
     default:
-      // no op
+    // no op
   }
 });
 

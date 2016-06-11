@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * LoginConstants
  */
@@ -5,7 +7,7 @@
 import keyMirror from "keymirror";
 
 export const LectureConstants = keyMirror({
-  FETCHLECTURES: null,
+  FETCH_LECTURES: null,
   FILTER: null,
   VIEW: null,
   HIDE: null

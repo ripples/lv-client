@@ -18,11 +18,10 @@ class LectureActions {
       jwt: _jwt,
       callback: (err, lectures) => {
         if (err) {
-          console.log(err);
-          return;
+          throw err;
         }
         AppDispatcher.dispatch({
-          actionType: LectureConstants.FETCHLECTURES,
+          actionType: LectureConstants.FETCH_LECTURES,
           lectures: lectures
         });
       }

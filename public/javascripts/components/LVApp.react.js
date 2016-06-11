@@ -35,6 +35,7 @@ export default class LVApp extends React.Component {
   constructor() {
     super();
     this.state = getLoginState();
+    this._onChange = this._onChange.bind(this);
   }
 
   componentDidMount() {
