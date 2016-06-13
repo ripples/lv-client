@@ -6,7 +6,7 @@
 
 const API_VERSION = "v1";
 
-import {camelizeKeys} from "humps";
+import camelizeKeys from "humps";
 import {normalize} from "normalizr";
 
 import CourseSchema from "./schemas/CourseSchema";
@@ -48,8 +48,7 @@ export function login(params) {
 export function fetchCourses(params) {
   const url = `http://${window.location.host}/api/${API_VERSION}/courses`;
   const request = new Request(url, {
-    method: "POST",
-    body: JSON.stringify(params.data),
+    method: "GET",
     headers: new Headers({
       "Content-Type": "application/json",
       "Authorization": params.jwt
@@ -57,7 +56,6 @@ export function fetchCourses(params) {
   });
   makeRequest(request, CourseSchema, params.callback);
 }
-
 
 /**
  *
@@ -70,7 +68,7 @@ export function fetchCourses(params) {
  * }
  */
 export function fetchLectures(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/courses/lectures`;
+  const url = `http://${window.location.host}/api/${API_VERSION}/courses/${params.courseId}`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify(params.data),

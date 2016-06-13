@@ -25,7 +25,7 @@ export default class FeedSection extends React.Component {
     this.setState(
       {
         lectures: lectureStore.getLectures(),
-        classes: lectureStore.getClasses()
+        classes: lectureStore.getCourses()
       });
   }
 

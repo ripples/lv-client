@@ -7,60 +7,48 @@
 import EventEmitter from "events";
 
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
-import {LectureConstants} from "../constants/LectureConstants";
+import {CourseConstants} from "../constants/CourseConstants";
 
 const CHANGE_EVENT = "change";
 
-let _classes = [];
-let _lectures = [];
+let _courses = [];
 
 /**
- * Create the lectures array and classes array
- * @param  {array} lectures The array of lectures
+ * Create the courses array
+ * @param  {Array.<Object>} courses The array of courses
  */
-function set(lectures) {
-  _classes = [];
-  _lectures = lectures;
-  _lectures.forEach(lecture => {
+function set(courses) {
+  _courses = courses;
+  _courses.forEach(course => {
     // convert all raw dates to date Objects
-    lecture.date = new Date(lecture.date);
+    course.startDtm = new Date(course.startDtm);
+    course.endDtm = new Date(course.endDtm);
     // make sure all are displayed
-    lecture.display = true;
-    // add all classes to the class list
-    if (_classes.indexOf(lecture.course) === -1) {
-      _classes.push(lecture.course);
-    }
+    course.display = true;
+    course.lectures = course.lectures.map(lectureName => {
+      const lecture = {};
+      lecture[lectureName] = null;
+    });
   });
 }
 
-/**
- * Filter the lecture feed to display/not display a given class
- * @param  {string} classname The name of the class to filter in/out
- */
-function filter(classname) {
-  _lectures.forEach(function(lecture) {
-    if (lecture.course === classname) {
-      lecture.display = !lecture.display;
-    }
-  });
+function updateCourse(courseId, lectures) {
+  const course = _courses.find(course => course.id === courseId);
+  course.lectures.forEach(lecture)
 }
 
-class LectureStore extends EventEmitter {
+class CourseStore extends EventEmitter {
 
   /**
-   * Get the lectures the user has access to
-   * @return {array} - lectures list
+   * Get the courses the user has access to
+   * @return {array} - courses list
    */
-  getLectures() {
-    return _lectures;
+  getCourses() {
+    return _courses;
   }
 
-  /**
-   * Get the classes the user has access to
-   * @return {array} - classes list
-   */
-  getClasses() {
-    return _classes;
+  getLectures(courseId) {
+    return _courses[courseId].lectures;
   }
 
   emitChange() {
@@ -82,21 +70,15 @@ class LectureStore extends EventEmitter {
   }
 }
 
-const lectureStore = new LectureStore();
+const courseStore = new CourseStore();
 
 // Register callback to handle all updates
-AppDispatcher.register(function(action) {
+AppDispatcher.register(action => {
   switch (action.actionType) {
-    case LectureConstants.FETCH_LECTURES: {
-      const lectures = action.lectures;
-      set(lectures);
-      lectureStore.emitChange();
-      break;
-    }
-    case LectureConstants.FILTER: {
-      const classname = action.classname.trim();
-      filter(classname);
-      lectureStore.emitChange();
+    case CourseConstants.FETCH_COURSES: {
+      const courses = action.courses;
+      set(courses);
+      courseStore.emitChange();
       break;
     }
     default:
@@ -104,4 +86,4 @@ AppDispatcher.register(function(action) {
   }
 });
 
-export default lectureStore;
+export default courseStore;
