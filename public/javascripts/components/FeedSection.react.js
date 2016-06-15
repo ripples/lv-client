@@ -12,8 +12,8 @@ import React from "react";
 
 import ClassList from "./ClassList.react";
 import LectureList from "./LectureList.react";
-import lectureStore from "../stores/LectureStore";
-import lectureActions from "../actions/LectureAction";
+import courseStore from "../stores/CourseStore";
+import courseAction from "../actions/CourseAction";
 
 export default class FeedSection extends React.Component {
   constructor() {
@@ -24,18 +24,18 @@ export default class FeedSection extends React.Component {
   onLectureChangeListener() {
     this.setState(
       {
-        lectures: lectureStore.getLectures(),
-        classes: lectureStore.getCourses()
+        lectures: courseStore.getLectures(),
+        classes: courseStore.getCourses()
       });
   }
 
   componentDidMount() {
-    lectureStore.addChangeListener(this.onLectureChangeListener);
-    lectureActions.fetch(this.props.jwt);
+    courseStore.addChangeListener(this.onLectureChangeListener);
+    courseAction.fetchCourses(this.props.jwt);
   }
 
   componentWillUnmount() {
-    lectureStore.removeChangeListener(this.onLectureChangeListener);
+    courseStore.removeChangeListener(this.onLectureChangeListener);
   }
 
   render() {

@@ -6,30 +6,44 @@
 
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {CourseConstants} from "../constants/CourseConstants";
-import {LectureConstants} from "../constants/LectureConstants";
-import {fetchCourses} from "../API";
+import * as api from "../API";
 
 class CourseAction {
   /**
-   * Fetch lectures for user
+   * Fetch courses for user
    * @param {string} _jwt - Auth token
    */
-  fetch(_jwt) {
-    fetchCourses({
+  fetchCourses(_jwt) {
+    api.fetchCourses({
       jwt: _jwt,
       callback: (err, courses) => {
         if (err) {
+          // TODO: error handler
           throw err;
         }
         AppDispatcher.dispatch({
           actionType: CourseConstants.FETCH_COURSES,
           courses: courses
         });
-        courses.forEach(course => {
-          AppDispatcher.dispatch({
-            actionType: LectureConstants.FETCH_LECTURES,
-            lectures: course.lectures
-          });
+      }
+    });
+  }
+
+  fetchLectures(_jwt, courseId) {
+    api.fetchLectures({
+      jwt: _jwt,
+      courseId: courseId,
+      callback: (err, lectures) => {
+        if (err) {
+          // TODO: error handler;
+          throw err;
+        }
+        AppDispatcher.dispatch({
+          actionType: CourseConstants.FETCH_LECTURES,
+          courseData: {
+            courseId: courseId,
+            lectures: lectures
+          }
         });
       }
     });

@@ -25,16 +25,24 @@ function set(courses) {
     course.endDtm = new Date(course.endDtm);
     // make sure all are displayed
     course.display = true;
-    course.lectures = course.lectures.map(lectureName => {
-      const lecture = {};
-      lecture[lectureName] = null;
-    });
+    course.lectures = course.lectures.reduce((lectures, lecture) => {
+      lectures[lecture] = null;
+      return lectures;
+    }, {});
   });
 }
 
+/**
+ * TODO: Will be deprecated, need to move to LectureStore
+ * Update courses array with lecture data
+ * @param {String} courseId - course to update
+ * @param {Array.<Object>} lectures - list of lecture objects
+ */
 function updateCourse(courseId, lectures) {
   const course = _courses.find(course => course.id === courseId);
-  course.lectures.forEach(lecture)
+  course.lectures.forEach(lecture => {
+    lectures[lecture.name] = lecture.data;
+  });
 }
 
 class CourseStore extends EventEmitter {
@@ -80,6 +88,11 @@ AppDispatcher.register(action => {
       set(courses);
       courseStore.emitChange();
       break;
+    }
+    case CourseConstants.FETCH_LECTURES: {
+      const courseData = action.courseData;
+      updateCourse(courseData.courseId, courseData.lectures);
+      courseStore.emitChange();
     }
     default:
     // no op

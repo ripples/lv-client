@@ -6,11 +6,7 @@
 
 const API_VERSION = "v1";
 
-import camelizeKeys from "humps";
-import {normalize} from "normalizr";
-
-import CourseSchema from "./schemas/CourseSchema";
-import LectureSchema from "./schemas/LectureSchema";
+import {camelizeKeys} from "humps";
 
 /**
  *
@@ -42,7 +38,7 @@ export function login(params) {
  * params structured must be:
  * {
  *   jwt: string,
- *   success: function
+ *   callback: function
  * }
  */
 export function fetchCourses(params) {
@@ -54,7 +50,7 @@ export function fetchCourses(params) {
       "Authorization": params.jwt
     })
   });
-  makeRequest(request, CourseSchema, params.callback);
+  makeRequest(request, undefined, params.callback);
 }
 
 /**
@@ -62,9 +58,9 @@ export function fetchCourses(params) {
  * @param {object} params - parameters to make fetch lectures request
  * params structured must be:
  * {
- *   courseId: number,
+ *   courseId: string,
  *   jwt: string,
- *   success: function
+ *   callback: function
  * }
  */
 export function fetchLectures(params) {
@@ -77,7 +73,7 @@ export function fetchLectures(params) {
       "Authorization": params.jwt
     })
   });
-  makeRequest(request, LectureSchema, params.callback);
+  makeRequest(request, undefined, params.callback);
 }
 
 export function fetchMedia(params) {
@@ -99,9 +95,9 @@ function makeRequest(request, schema, callback) {
     return response.json();
   }).then(json => {
     let result = camelizeKeys(json);
-    if (typeof schema !== "undefined") {
-      result = normalize(result, schema);
-    }
+    // if (typeof schema !== "undefined") {
+    //   result = normalize(result, schema);
+    // }
     callback(null, result);
   }).catch(err => {
     callback(err);

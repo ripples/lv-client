@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import lectureActions from "../actions/LectureAction";
+import courseAction from '../actions/CourseAction';
 
 export default class ClassNode extends React.Component {
   constructor() {
@@ -13,7 +13,7 @@ export default class ClassNode extends React.Component {
   }
 
   changeDisplay() {
-    lectureActions.filter(this.props.classname);
+    courseAction.filter(this.props.classname);
     this.setState({show: !this.state.show});
   }
 

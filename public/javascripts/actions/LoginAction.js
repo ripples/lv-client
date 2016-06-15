@@ -19,8 +19,7 @@ class LoginActions {
       data: data,
       callback: (err, data) => {
         if (err) {
-          console.log(err);
-          return;
+          throw err;
         }
         AppDispatcher.dispatch({
           actionType: LoginConstants.LOGIN,
