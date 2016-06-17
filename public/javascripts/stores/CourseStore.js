@@ -5,6 +5,7 @@
  */
 
 import EventEmitter from "events";
+import * as Immutable from "immutable";
 
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {CourseConstants} from "../constants/CourseConstants";
@@ -18,8 +19,7 @@ let _courses = [];
  * @param  {Array.<Object>} courses The array of courses
  */
 function set(courses) {
-  _courses = courses;
-  _courses.forEach(course => {
+  _courses = Immutable.fromJS(courses.reduce((courses, course) => {
     // convert all raw dates to date Objects
     course.startDtm = new Date(course.startDtm);
     course.endDtm = new Date(course.endDtm);
@@ -29,7 +29,10 @@ function set(courses) {
       lectures[lecture] = null;
       return lectures;
     }, {});
-  });
+    // It's fine that we store the id in both key and value, will be resolved later
+    courses[course.id] = course;
+    return courses;
+  }, {}));
 }
 
 /**
@@ -39,9 +42,8 @@ function set(courses) {
  * @param {Array.<Object>} lectures - list of lecture objects
  */
 function updateCourse(courseId, lectures) {
-  const course = _courses.find(course => course.id === courseId);
-  course.lectures.forEach(lecture => {
-    lectures[lecture.name] = lecture.data;
+  lectures.forEach(lecture => {
+    _courses = _courses.updateIn([courseId, "lectures", lecture.name], () => lecture.data);
   });
 }
 
@@ -52,11 +54,7 @@ class CourseStore extends EventEmitter {
    * @return {array} - courses list
    */
   getCourses() {
-    return _courses;
-  }
-
-  getLectures(courseId) {
-    return _courses[courseId].lectures;
+    return _courses.toJSON();
   }
 
   emitChange() {

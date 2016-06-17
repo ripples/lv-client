@@ -54,7 +54,7 @@ export default class LVApp extends React.Component {
     if (loginStore.isLoggedIn()) {
       return (
         <div>
-          <FeedSection jwt={this.state.jwt}/>
+          <FeedSection/>
         </div>
       );
     }

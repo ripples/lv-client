@@ -11,11 +11,9 @@ import * as api from "../API";
 class CourseAction {
   /**
    * Fetch courses for user
-   * @param {string} _jwt - Auth token
    */
-  fetchCourses(_jwt) {
+  fetchCourses() {
     api.fetchCourses({
-      jwt: _jwt,
       callback: (err, courses) => {
         if (err) {
           // TODO: error handler
@@ -29,10 +27,15 @@ class CourseAction {
     });
   }
 
-  fetchLectures(_jwt, courseId) {
+  /**
+   * Fetches list of lectures details
+   * @param {String} courseId - course id
+   * @param {Array.<String>} lectures - list of lectures fetching
+   */
+  fetchLectures(courseId, lectures) {
     api.fetchLectures({
-      jwt: _jwt,
       courseId: courseId,
+      lectures: lectures,
       callback: (err, lectures) => {
         if (err) {
           // TODO: error handler;
@@ -61,13 +64,13 @@ class CourseAction {
   }
 
   /**
-   * Launch LectureView component
-   * @param {object} lecture - lecture object
+   * Open and load course card
+   * @param {String} courseId - course id
    */
-  view(lecture) {
+  view(courseId) {
     AppDispatcher.dispatch({
       actionType: CourseConstants.VIEW,
-      lecture: lecture
+      courseId: courseId
     });
   }
 

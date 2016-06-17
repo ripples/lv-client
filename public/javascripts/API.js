@@ -3,10 +3,11 @@
 /**
   * Service layer for interaction with server API
 **/
+import {camelizeKeys} from "humps";
+
+import loginStore from "./stores/LoginStore";
 
 const API_VERSION = "v1";
-
-import {camelizeKeys} from "humps";
 
 /**
  *
@@ -37,7 +38,6 @@ export function login(params) {
  * @param {object} params - parameters to make fetch course request
  * params structured must be:
  * {
- *   jwt: string,
  *   callback: function
  * }
  */
@@ -47,7 +47,6 @@ export function fetchCourses(params) {
     method: "GET",
     headers: new Headers({
       "Content-Type": "application/json",
-      "Authorization": params.jwt
     })
   });
   makeRequest(request, undefined, params.callback);
@@ -59,7 +58,6 @@ export function fetchCourses(params) {
  * params structured must be:
  * {
  *   courseId: string,
- *   jwt: string,
  *   callback: function
  * }
  */
@@ -67,10 +65,11 @@ export function fetchLectures(params) {
   const url = `http://${window.location.host}/api/${API_VERSION}/courses/${params.courseId}`;
   const request = new Request(url, {
     method: "POST",
-    body: JSON.stringify(params.data),
+    body: JSON.stringify({
+      lectures: params.lectures
+    }),
     headers: new Headers({
       "Content-Type": "application/json",
-      "Authorization": params.jwt
     })
   });
   makeRequest(request, undefined, params.callback);
@@ -87,6 +86,9 @@ export function fetchMedia(params) {
  * @param {function} callback - Called on success or error returns (err, result)
  */
 function makeRequest(request, schema, callback) {
+  if (loginStore.isLoggedIn()) {
+    request.headers.set("Authorization", loginStore.getJWT());
+  }
   fetch(request).then(response => {
     const status = response.status;
     if (status < 200 && status >= 300) {

@@ -2,7 +2,7 @@
  * StreamConstants
  */
 
-var keyMirror = require('keymirror');
+import keyMirror from "keymirror";
 
 module.exports = keyMirror({
   BOARDS : null,
