@@ -15,61 +15,92 @@
  */
 
 import React from "react";
-
-import FeedSection from "./FeedSection.react";
 import loginStore from "../stores/LoginStore";
+import loginAction from "../actions/LoginAction";
+import {withRouter} from "react-router";
+import {LoginConstants} from "../constants/LoginConstants";
+import Header from "./Header";
+import Footer from "./Footer";
 
-/**
- * Retrieve the current Login data from the LoginStore
- * @return {object} - login state object
- */
-function getLoginState() {
-  return {
-    jwt: loginStore.getJWT(),
-    user: loginStore.getUser()
-  };
+class LVApp extends React.Component {
+	constructor() {
+		super();
+		this.state = this.getLoginState();
+		this._onChange = this._onChange.bind(this);
+	}
+	
+	componentDidMount() {
+		loginStore.addChangeListener(this._onChange);
+		loginStore.on("LOGIN_SUCCESS", this.redirectHome.bind(this));
+		loginStore.on("LOGOUT", this.redirectLogin.bind(this));
+	}
+	
+	componentWillMount() {
+	}
+	
+	componentWillUnmount() {
+		loginStore.removeChangeListener(this._onChange);
+		loginStore.removeListener(LoginConstants.LOGIN_SUCCESS, this.redirectHome.bind(this));
+		loginStore.removeListener(LoginConstants.LOGOUT, this.redirectLogin.bind(this));
+	}
+	
+	/**
+	 * @return {object}
+	 */
+	
+	render() {
+		let renderedComponent = React.cloneElement(this.props.children, {isLoggedIn: loginStore.isLoggedIn()});
+		return (
+			<div className="mainWraper">
+				<Header isLoggedIn={loginStore.isLoggedIn()}/>
+				{renderedComponent}
+				<Footer/>
+			</div>
+		);
+	}
+	
+	/**
+	 * Event handler for "change" events coming from the LoginStore
+	 */
+	_onChange() {
+		//if(!loginStore.isLoggedIn())
+		this.setState(this.getLoginState());
+	}
+
+	redirectHome() {
+		console.log("got here on the redirect home");
+		this.props.router.push("/");
+	}
+	
+	redirectLogin() {
+		console.log("got here the redirect login");
+		this.props.router.push("/login");
+	}
+	
+	testClick(event) {
+		event.preventDefault();
+		loginAction.logout();
+	}
+	
+	/**
+	 * Retrieve the current Login data from the LoginStore
+	 * @return {object} - login state object
+	 */
+	getLoginState() {
+		return {
+			jwt: loginStore.getJWT(),
+			user: loginStore.getUser(),
+		};
+	}
 }
 
-export default class LVApp extends React.Component {
 
-  constructor() {
-    super();
-    this.state = getLoginState();
-    this._onChange = this._onChange.bind(this);
-  }
+let DecorateLVApp = withRouter(LVApp);
+export default DecorateLVApp;
 
-  componentDidMount() {
-    loginStore.addChangeListener(this._onChange);
-  }
-
-  componentWillUnmount() {
-    loginStore.removeChangeListener(this._onChange);
-  }
-
-  /**
-   * @return {object}
-   */
-
-  render() {
-    if (loginStore.isLoggedIn()) {
-      return (
-        <div>
-          <FeedSection/>
-        </div>
-      );
-    }
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
-  }
-
-  /**
-   * Event handler for "change" events coming from the LoginStore
-   */
-  _onChange() {
-    this.setState(getLoginState());
-  }
-
-}
+// PropTypes
+LVApp.propTypes = {
+	router: React.PropTypes.shape({
+		push: React.PropTypes.func.isRequired
+	}).isRequired
+};

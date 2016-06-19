@@ -8,5 +8,6 @@ import keyMirror from "keymirror";
 
 export const LoginConstants = keyMirror({
   LOGIN: null,
-  LOGOUT: null
+  LOGOUT: null,
+  LOGIN_SUCCESS:null
 });

@@ -13,8 +13,9 @@ import React from "react";
 import CourseList from "./CourseList.react";
 import courseStore from "../stores/CourseStore";
 import courseAction from "../actions/CourseAction";
+import { withRouter } from 'react-router';
 
-export default class FeedSection extends React.Component {
+class FeedSection extends React.Component {
   constructor() {
     super();
     this.state = {lectures: [], courses: []};
@@ -39,10 +40,20 @@ export default class FeedSection extends React.Component {
   }
 
   render() {
+    console.log("rendered feed section:", this.props);
     return (
-      <div className="FeedViewWrapper">
+      <div className="FeedViewWrapper container-fluid">
         <CourseList courses={this.state.courses}/>
       </div>
     );
   }
 }
+let DecorateFeedSection = withRouter(FeedSection);
+export default DecorateFeedSection;
+
+// PropTypes
+FeedSection.propTypes = {
+  router: React.PropTypes.shape({
+    push: React.PropTypes.func.isRequired
+  }).isRequired
+};

@@ -10,6 +10,7 @@ import cookie from "react-cookie";
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {LoginConstants} from "../constants/LoginConstants";
 
+
 const CHANGE_EVENT = "change";
 
 let _jwt = cookie.load("lv-clientCookie");
@@ -33,6 +34,7 @@ function login(jwt) {
  * Logout of the system
  */
 function logout() {
+  cookie.remove("lv-clientCookie");
   _jwt = null;
   _user = null;
 }
@@ -45,6 +47,7 @@ class LoginStore extends EventEmitter {
    */
   isLoggedIn() {
     return typeof _jwt !== "undefined";
+    
   }
 
   /**
@@ -92,12 +95,14 @@ AppDispatcher.register(action => {
       if (jwt !== "") {
         login(jwt);
         loginStore.emitChange();
+        loginStore.emit(LoginConstants.LOGIN_SUCCESS);
       }
       break;
     }
     case LoginConstants.LOGOUT: {
       logout();
       loginStore.emitChange();
+      loginStore.emit(LoginConstants.LOGOUT);
       break;
     }
     default:

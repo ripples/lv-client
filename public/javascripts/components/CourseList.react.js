@@ -11,18 +11,20 @@ import React from "react";
 import CourseCard from "./CourseCard.react";
 
 export default class CourseList extends React.Component {
-  render() {
-    const courses = this.props.courses;
-    const courseCards = Object.keys(courses).map((id, i) => {
-      return (
-        <CourseCard key={i} course={courses[id]}/>
-      );
-    });
-    return (
-      <div className="course-card">
-        {courseCards}
-      </div>
-    );
-  }
+	render() {
+		const courses = this.props.courses;
+		const courseCards = Object.keys(courses).map((id, i) => {
+			return (
+				<div className="col-sm-12">
+					<CourseCard key={i} course={courses[id]}/>
+				</div>
+			);
+		});
+		return (
+			<div className="course-card container-fluid">
+				{courseCards}
+			</div>
+		);
+	}
 }
 
