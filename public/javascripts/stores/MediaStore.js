@@ -99,7 +99,7 @@ class MediaStore extends EventEmitter {
     return _current;
   }
   /**
-   * Get the time interval to syncronize with the store
+   * Get the time interval to synhcronize with the store
    * @return {number} - time interval
    */
   getHoptime() {
@@ -148,7 +148,7 @@ const mediaStore = new MediaStore();
 // Register callback to handle all updates
 AppDispatcher.register(action => {
   switch (action.actionType) {
-    case MediaConstants.FETCHMEDIA: {
+    case MediaConstants.FETCH_MEDIA: {
       const media = action.media;
       set(media);
       mediaStore.emitChange();

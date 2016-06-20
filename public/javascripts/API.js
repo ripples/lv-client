@@ -46,7 +46,7 @@ export function fetchCourses(params) {
   const request = new Request(url, {
     method: "GET",
     headers: new Headers({
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     })
   });
   makeRequest(request, undefined, params.callback);
@@ -54,8 +54,8 @@ export function fetchCourses(params) {
 
 /**
  *
- * @param {object} params - parameters to make fetch lectures request
- * params structured must be:
+ * @param {Object} params - parameters to make fetch lectures request
+ * params structure must be:
  * {
  *   courseId: string,
  *   callback: function
@@ -69,21 +69,35 @@ export function fetchLectures(params) {
       lectures: params.lectures
     }),
     headers: new Headers({
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     })
   });
   makeRequest(request, undefined, params.callback);
 }
 
+/**
+ *
+ * @param {Object} params - parameters to make fetch media request
+ * params structure must be:
+ * {
+ *   courseId: string,
+ *   lectureName: string,
+ *   callback: function
+ * }
+ */
 export function fetchMedia(params) {
-
+  const url = `http://${window.location.host}/api/${API_VERSION}/courses/${params.courseId}/${params.lectureName}`;
+  const request = new Request(url, {
+    method: "GET"
+  });
+  makeRequest(request, undefined, params.callback);
 }
 
 /**
  * Wrapper function for fetch API, used to make requests to server
  * @param {Request} request - Request object used with fetch
  * @param {Schema} schema - Normalizr schema
- * @param {function} callback - Called on success or error returns (err, result)
+ * @param {Function} callback - Called on success or error returns (err, result)
  */
 function makeRequest(request, schema, callback) {
   if (loginStore.isLoggedIn()) {

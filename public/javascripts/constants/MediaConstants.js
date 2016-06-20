@@ -7,6 +7,6 @@
 import keyMirror from "keymirror";
 
 export const MediaConstants = keyMirror({
-  FETCHMEDIA: null,
+  FETCH_MEDIA: null,
   SYNC: null
 });

@@ -11,13 +11,21 @@ import {fetchMedia} from "../API";
 class MediaActions {
 
   /**
-   * Create the media array
+   * Fetches media for lecture
+   * @param {String} courseId - course id to fetch media for
+   * @param {String} lectureName - lecture to fetch media for
    */
-  fetch() {
+  fetch(courseId, lectureName) {
     fetchMedia({
-      success: media => {
+      courseId: courseId,
+      lectureName: lectureName,
+      callback: (media, err) => {
+        if (err) {
+          //TODO: error handler
+          throw err;
+        }
         AppDispatcher.dispatch({
-          actionType: MediaConstants.FETCHMEDIA,
+          actionType: MediaConstants.FETCH_MEDIA,
           media: media
         });
       }
