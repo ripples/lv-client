@@ -1,5 +1,7 @@
+"use strict";
 import React from "react";
 import LoginAction from "../actions/LoginAction";
+import LoginStore from "../stores/LoginStore";
 
 export default class extends React.Component {
 	render() {

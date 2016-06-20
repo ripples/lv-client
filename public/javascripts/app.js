@@ -12,10 +12,10 @@ import * as check from './helper/helper';
 const app = document.getElementById("lvapp");
 
 ReactDOM.render(
-    <Router history={hashHistory}>
-        <Route path="/" component={LVApp}>
-            <IndexRoute component={FeedSection} onEnter={check.loginCheck}/>
-            <Route path="/login" component={LoginSection}/>
-        </Route>
-    </Router>, app
+  <Router history={hashHistory}>
+    <Route path="/" component={LVApp}>
+      <IndexRoute component={FeedSection} onEnter={check.loginCheck}/>
+      <Route path="/login" component={LoginSection}/>
+    </Route>
+  </Router>, app
 );

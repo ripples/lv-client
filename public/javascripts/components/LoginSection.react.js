@@ -24,7 +24,6 @@ class LoginSection extends React.Component {
 	}
 
 	render() {
-		console.log("rendered login section",this.props);
 		return (
 			<div>
 				<div className="container-fluid ">

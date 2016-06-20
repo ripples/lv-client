@@ -1,12 +1,21 @@
-import loginStore from '../stores/LoginStore';
+"use strict";
+import loginStore from "../stores/LoginStore";
 
-export function loginCheck(nextState, replace){
-	console.log("got here on the helper login check",loginStore.isLoggedIn());
-	if (!loginStore.isLoggedIn())
-		replace('/login');
+export function loginCheck(nextState, replace) {
+  if (!loginStore.isLoggedIn()) {
+    replace("/login");
+  }
 }
-export function logoutCheck(nextState, replace){
-	console.log("got here on the helper logout",loginStore.isLoggedIn());
-	if (loginStore.isLoggedIn())
-		replace('/');
+export function logoutCheck(nextState, replace) {
+  if (loginStore.isLoggedIn()) {
+    replace("/");
+  }
 }
+
+/*
+export function * makeIterable() {
+  let properties = Object.keys(this);
+  for (let p of properties) {
+    yield this[p];
+  }
+}*/
