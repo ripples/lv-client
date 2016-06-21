@@ -43,8 +43,11 @@ class FeedSection extends React.Component {
   render() {
     return (
       <div className="FeedViewWrapper container-fluid">
-        <SearchBar courses={this.state.courses} />
-        <CourseList courses={this.state.courses}/>
+        <SearchBar courses={this.state.courses}/>
+        <div className="row">
+          <div className="col-sm-2"><h2>Side Bar</h2></div>
+          <CourseList courses={this.state.courses}/>
+        </div>
       </div>
     );
   }

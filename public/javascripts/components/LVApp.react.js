@@ -26,9 +26,6 @@ class LVApp extends React.Component {
     loginStore.on("LOGOUT", this.redirectLogin.bind(this));
   }
 
-  componentWillMount() {
-  }
-
   componentWillUnmount() {
     loginStore.removeChangeListener(this._onChange);
     loginStore.removeListener(LoginConstants.LOGIN_SUCCESS, this.redirectHome.bind(this));
@@ -40,7 +37,7 @@ class LVApp extends React.Component {
    */
 
   render() {
-    let renderedComponent = React.cloneElement(this.props.children, {isLoggedIn: loginStore.isLoggedIn()});
+    const renderedComponent = React.cloneElement(this.props.children, {isLoggedIn: loginStore.isLoggedIn()});
     return (
       <div className="mainWraper">
         <Header isLoggedIn={Boolean(this.state.jwt)}/>
@@ -65,11 +62,6 @@ class LVApp extends React.Component {
     this.props.router.push("/login");
   }
 
-  testClick(event) {
-    event.preventDefault();
-    loginAction.logout();
-  }
-
   /**
    * Retrieve the current Login data from the LoginStore
    * @return {object} - login state object
@@ -82,12 +74,13 @@ class LVApp extends React.Component {
   }
 }
 
-let DecorateLVApp = withRouter(LVApp);
+const DecorateLVApp = withRouter(LVApp);
 export default DecorateLVApp;
 
 // PropTypes
 LVApp.propTypes = {
   router: React.PropTypes.shape({
     push: React.PropTypes.func.isRequired
-  }).isRequired
+  }).isRequired,
+  children: React.PropTypes.any.isRequired
 };

@@ -38,6 +38,16 @@ function logout() {
   _jwt = null;
   _user = null;
 }
+export function loginCheck(nextState, replace){
+  if (!loginStore.isLoggedIn()) {
+    replace("/login");
+  }
+}
+export function logoutCheck(nextState, replace) {
+  if (loginStore.isLoggedIn()) {
+    replace("/");
+  }
+}
 
 class LoginStore extends EventEmitter {
 
@@ -47,7 +57,6 @@ class LoginStore extends EventEmitter {
    */
   isLoggedIn() {
     return typeof _jwt !== "undefined";
-    
   }
 
   /**
@@ -83,6 +92,7 @@ class LoginStore extends EventEmitter {
   removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
+
 }
 
 const loginStore = new LoginStore();

@@ -11,7 +11,7 @@ export default class extends React.Component {
 						</div>
 					</div>
 				</div>
-				<div className="backstretch"><img src="images/gray-fade-bg.jpg" className="bgimg" alt=""/></div>
+				<div className="backstretch"></div>
 			</footer>
 		);
 	}

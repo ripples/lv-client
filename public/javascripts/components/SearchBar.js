@@ -9,7 +9,7 @@ export default class SearchBar extends React.Component {
 
   render() {
     let courses = [];
-    let itr = this.props.courses;
+    const itr = this.props.courses;
     Object.keys(itr).forEach((key)=>courses.push(
       <option key={chance.integer()} value={itr[key].id}>{itr[key].name}</option>)
     );
