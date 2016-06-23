@@ -1,39 +1,14 @@
-.backstretch {
-    left: 0px;
-    top: 0px;
-    overflow: hidden;
-    margin: 0px;
-    padding: 0px;
-    height: 591px;
-    width: 1845px;
-    z-index: -999999;
-    position: fixed;
-}
-
-.bgimg {
-    position: absolute;
-    margin: 0px;
-    padding: 0px;
-    border: medium none;
-    width: 1845px;
-    height: 1230px;
-    max-height: none;
-    max-width: none;
-    z-index: -999999;
-    left: 0px;
-    top: -319.5px;
-}
-
 body {
-    padding: 10px;
-    padding-top: 70px;
-    height: 100%;
-    background-color: #8c8c8c;
-}
-
-html {
     height: 100%;
     width: 100%;
+    padding: 10px;
+    padding-top: 70px;
+    background-color: #8c9196;
+}
+
+.inheritProps {
+    height: 100%;
+    width: 100%
 }
 
 a {
@@ -42,7 +17,6 @@ a {
 
 .login-form {
     padding: 2%;
-    height: 900%;
 }
 
 .centerBlock {

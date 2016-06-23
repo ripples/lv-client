@@ -4,7 +4,6 @@ import React from "react";
 import courseAction from "../actions/CourseAction";
 import LectureCard from "./LectureCard.React";
 import Chance from "chance";
-//import dateFormat from 'dateformat';
 const chance = new Chance();
 
 export default class CourseCard extends React.Component {
@@ -17,23 +16,26 @@ export default class CourseCard extends React.Component {
   }
 
   changeDisplay() {
-    if (!this.isDataFetched) {
+    if (!this.isDataFetched) { // only fetches the data once to avoid redundant requests
       this.fetchData();
     }
     this.setState({show: !this.state.show});
   }
 
+  /**
+   * fetch the lectures tho be displayed on the lecture card
+   */
   fetchData() {
     const course = this.props.course;
     courseAction.fetchLectures(course.id, Object.keys(course.lectures));
     courseAction.filter(this.props.course);
+    this.isDataFetched = true;
   }
 
   render() {
     const course = this.props.course;
-    // TODO: figure out why render is called twice, this is happens throughout all react components,
-    // I'm not sure if this is just part of react or because we're using the lifecycle incorrectly
     const lectures = course.lectures;
+    // map the lectures into lectureCards
     const lecturesCards = Object.keys(lectures).reduce((list, id, i) => {
       if (lectures[id]) {
         list.push(<LectureCard key={chance.integer()} lecture={lectures[id]}/>);
@@ -42,7 +44,7 @@ export default class CourseCard extends React.Component {
     }, []);
     const cardsToDisplay = (this.state.show ? lecturesCards : []);
     const subtitle = (this.state.show ?
-      <h3 className="text-center">Term: {course.startDtm} |
+      <h3 className="text-center">Term: {course.semester} |
         Instructor: {course.prof} | {cardsToDisplay.length} Lectures </h3> : "");
     return (
       <div className="col-sm-12">

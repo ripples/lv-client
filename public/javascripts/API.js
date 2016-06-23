@@ -1,8 +1,8 @@
 "use strict";
 
 /**
-  * Service layer for interaction with server API
-**/
+ * Service layer for interaction with server API
+ **/
 import {camelizeKeys} from "humps";
 
 import loginStore from "./stores/LoginStore";
@@ -94,6 +94,29 @@ export function fetchMedia(params) {
 }
 
 /**
+ *
+ * @param {Object} params - params to make the search request
+ * params structure:
+ * {
+ *    searchContent :string,
+ *    callback: function
+ * }
+ */
+export function fetchSearchResults(params) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/feed/search`;
+  const request = new Request(url, {
+    method: "POST",
+    body: JSON.stringify({
+      searchContent: params.searchContent
+    }),
+    headers: new Headers({
+      "Content-Type": "application/json"
+    })
+  });
+  makeRequest(request, undefined, params.callback);
+}
+
+/**
  * Wrapper function for fetch API, used to make requests to server
  * @param {Request} request - Request object used with fetch
  * @param {Schema} schema - Normalizr schema
@@ -106,14 +129,16 @@ function makeRequest(request, schema, callback) {
   fetch(request).then(response => {
     const status = response.status;
     if (status < 200 && status >= 300) {
-      callback(new Error(response.statusText));
+      callback({err: new Error(response.statusText), status: response.status});
     }
-    return response.json();
+    else {
+      return response.json();
+    }
   }).then(json => {
     let result = camelizeKeys(json);
-    // if (typeof schema !== "undefined") {
-    //   result = normalize(result, schema);
-    // }
+    if (typeof schema !== "undefined") {
+      result = normalize(result, schema);
+    }
     callback(null, result);
   }).catch(err => {
     callback(err);

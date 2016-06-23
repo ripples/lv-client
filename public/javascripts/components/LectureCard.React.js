@@ -56,7 +56,6 @@ class LectureCard extends React.Component {
       mediaComponent = <MediaComponent src={this.state.media}/>;
     }
     const lectureInfo = this.parseLectures();
-    console.log(this.props.lecture);
     return (
       <div className="container">
         {mediaComponent}

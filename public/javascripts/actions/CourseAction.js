@@ -38,7 +38,7 @@ class CourseAction {
       lectures: lectures,
       callback: (err, lectures) => {
         if (err) {
-          // TODO: error handler;
+          console.log(err);
           throw err;
         }
         AppDispatcher.dispatch({
@@ -47,6 +47,26 @@ class CourseAction {
             courseId: courseId,
             lectures: lectures
           }
+        });
+      }
+    });
+  }
+
+  /**
+   * fetches the result of the serach of lectures
+   * @param {String} searchContent
+   */
+  fetchSearchResult(searchContent){
+    api.fetchSearchResults({
+      searchContent,
+      callback:(err,result)=>{
+        if(err){
+          console.log(err);
+          throw err;
+        }
+        AppDispatcher.dispatch({
+          type: CourseConstants.FETCH_SEARCH_RESULT,
+          data: result
         });
       }
     });

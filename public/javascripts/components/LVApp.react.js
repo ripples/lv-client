@@ -32,14 +32,10 @@ class LVApp extends React.Component {
     loginStore.removeListener(LoginConstants.LOGOUT, this.redirectLogin.bind(this));
   }
 
-  /**
-   * @return {object}
-   */
-
   render() {
     const renderedComponent = React.cloneElement(this.props.children, {isLoggedIn: loginStore.isLoggedIn()});
     return (
-      <div className="mainWraper">
+      <div className="mainWraper inheritProps">
         <Header isLoggedIn={Boolean(this.state.jwt)}/>
         {renderedComponent}
         <Footer/>
