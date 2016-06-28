@@ -1,0 +1,153 @@
+.backstretch {
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    height: 591px;
+    width: 1845px;
+    z-index: -999999;
+    position: fixed;
+}
+
+.bgimg {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    border: medium none;
+    width: 1845px;
+    height: 1230px;
+    max-height: none;
+    max-width: none;
+    z-index: -999999;
+    left: 0;
+    top: -319.5px;
+}
+
+body {
+    padding: 70px 10px 10px !important;
+    height: 100%;
+    background-color: #8c9196;
+}
+
+.inheritProps {
+    height: 100%;
+    width: 100%
+}
+
+a {
+    color: #00B7FF;
+}
+
+.login-form {
+    padding: 2%;
+}
+
+.centerBlock {
+    padding: 1%;
+    display: table;
+    margin: 0 auto;
+}
+
+#content {
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    z-index: 15;
+    top: 50%;
+    left: 50%;
+    margin: -100px 0 0 -150px;
+
+}
+
+.dialogUnderlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    top: 0;
+    left: 0;
+    align-content: center;
+    background-color: rgba(0, 0, 0, .8);
+}
+
+.dialogUnderlay .dialogBox {
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    resize: both;
+    position: relative;
+    width: 60%;
+    height: 85%;
+    align-content: center;
+    margin-right: 20%;
+    margin-left: 20%;
+    margin-top: 2%;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.ClassList {
+    float: left;
+    margin-right: auto;
+}
+
+.LectureList {
+    float: left;
+    margin-left: auto;
+}
+
+.FeedViewWrapper {
+    margin-right: 10%;
+    margin-left: 5%;
+}
+
+.LowerMediaContainer {
+    position: relative;
+    height: 20%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.MediaView {
+    align-content: center;
+}
+
+.MainMediaWrapper {
+    width: 90%;
+    height: 100%;
+}
+
+.PrimaryMedia {
+    width: 100%;
+    height: 70%;
+}
+
+.MediaComponent {
+    position: relative;
+    height: auto;
+    width: auto;
+}
+
+.imageContainer img {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    float: left;
+}
+
+#contentWrapper {
+    position: relative;
+    width: 600px;
+    height: 800px;
+    top: 5%;
+    left: 10%;
+}
+
+#leftcontent {
+    float: left;
+}
+
+#centerContent {
+    float: right;
+}

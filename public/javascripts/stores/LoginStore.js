@@ -1,17 +1,20 @@
+"use strict";
+
 /*
  * LoginStore
  */
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var LoginConstants = require('../constants/LoginConstants');
-var assign = require('object-assign');
-var cookie = require('react-cookie');
+import EventEmitter from "events";
+import cookie from "react-cookie";
 
-var CHANGE_EVENT = 'change';
+import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
+import {LoginConstants} from "../constants/LoginConstants";
 
-var _jwt = cookie.load('lv-clientCookie');
-var _user = null;
+
+const CHANGE_EVENT = "change";
+
+let _jwt = cookie.load("lv-clientCookie");
+let _user = null;
 
 /**
  * Create the java web token (JWT) and user information
@@ -19,86 +22,92 @@ var _user = null;
  */
 function login(jwt) {
   _jwt = jwt;
-  //TODO : add user information to cookie
+  // TODO : add user information to cookie
   // add cookie implementation here
-  var daysToExpire = 1;
-  cookie.save('lv-clientCookie', jwt,
-  /*Set to expire in an absolute time interval of days*/
-  {maxAge : daysToExpire * 84600});
+  const daysToExpire = 1;
+  cookie.save("lv-clientCookie", jwt,
+  // Set to expire in an absolute time interval of days
+  {maxAge: daysToExpire * 84600});
 }
 
 /**
  * Logout of the system
  */
 function logout() {
+  cookie.remove("lv-clientCookie");
   _jwt = null;
   _user = null;
 }
 
-var LoginStore = assign({}, EventEmitter.prototype, {
+class LoginStore extends EventEmitter {
 
   /**
    * Checks if the user is logged into the system
-   * @return {boolean}
+   * @return {boolean} - if logged in
    */
-  isLoggedIn: function() {
-    return !!_jwt;
-  },
+  isLoggedIn() {
+    return typeof _jwt !== "undefined";
+  }
 
   /**
    * Get the JWT for communicating with the server
-   * @return {string}
+   * @return {string} - jwt token
    */
-  getJWT: function() {
+  getJWT() {
     return _jwt;
-  },
+  }
 
   /**
    * Get the user information
-   * @return {object}
+   * @return {object} - user
    */
-  getUser: function() {
+  getUser() {
     return _user;
-  },
+  }
 
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
   /**
-   * @param {function} callback
+   * @param {function} callback - called on event change
    */
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
   /**
-   * @param {function} callback
+   * @param {function} callback - to be removed from event
    */
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
-});
+
+}
+
+const loginStore = new LoginStore();
 
 // Register callback to handle all updates
-AppDispatcher.register(function(action) {
-  switch(action.actionType) {
-    case LoginConstants.LOGIN:
-      var jwt = action.jwt.trim();
-      if (jwt !== '') {
+AppDispatcher.register(action => {
+  switch (action.actionType) {
+    case LoginConstants.LOGIN: {
+      const jwt = action.jwt.trim();
+      if (jwt !== "") {
         login(jwt);
-        LoginStore.emitChange();
+        loginStore.emitChange();
+        loginStore.emit(LoginConstants.LOGIN_SUCCESS);
       }
       break;
-
-    case LoginConstants.LOGOUT:
+    }
+    case LoginConstants.LOGOUT: {
       logout();
-      LoginStore.emitChange();
+      loginStore.emitChange();
+      loginStore.emit(LoginConstants.LOGOUT);
       break;
-
+    }
     default:
       // no op
   }
 });
 
-module.exports = LoginStore;
+export default loginStore;

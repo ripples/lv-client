@@ -1,83 +1,147 @@
+"use strict";
+
 /**
-  * Module to contain all the web API to interact with the server
-**/
+ * Service layer for interaction with server API
+ **/
+import {camelizeKeys} from "humps";
 
-var api = {
-  login : function(params){
-    $.ajax({
-      url : "http://" + window.location.host + "/api/v1/login",
-      contentType: 'application/json',
-      type : 'POST',
-      data : JSON.stringify(params.data), //lvadmin/lvadmin
-      success : params.success || function(){
-        console.error('No callback given for login function');
-      },
-      error : function(xhr, status, err) {
-        console.error(this.props.loginURL, status, err.toString());
-      }.bind(this)
-    });
-  },
-  fetchLectures : function(params){
-    $.ajax({
-      url : "http://" + window.location.host + "/api/v1/lectures",
-      contentType : "application/json",
-      type : "POST",
-      headers: { "Authorization": params.jwt },
-      success : function(data){
-        params.success(
-          data
-        );
-      }.bind(this) || function(){
-        console.error('No callback given for fetching Lecture data');
-      },
-      error : function(xhr, status, err) {
-        console.error(this.props.loginURL, status, err.toString());
-      }.bind(this)
-    });
-    /**setTimeout(function(){
-      //Why setTimeout? because we must finish the
-      //callstack from the previous AppDispatcher.dispatch.
-      //this call WOULD BE asynchronous with a call to the
-      //server, so this is a temporary subsitute to that.
+import loginStore from "./stores/LoginStore";
 
-    }, 50);**/
-  },
-  fetchMedia : function(params){
-    setTimeout(function(){
-      //Why setTimeout? because we must finish the
-      //callstack from the previous AppDispatcher.dispatch.
-      //this call WOULD BE asynchronous with a call to the
-      //server, so this is a temporary subsitute to that.
-      var fake_media = [
-        { type : 'video',
-          data : {
-            id : '000000001',
-            url : 'http://instantcena.com/media/quiet.mp4'
-          }
-        },
-        { type : 'images',
-          data : {
-            id: '000000002',
-            timestamps : [0,1,5,8,13]
-          }
-        },
-        { type : 'images',
-          data : {
-            id: '000000003',
-            timestamps : [0,4,9,15,19]
-          }
-        },
-        { type : 'images',
-          data : {
-            id: '000000004',
-            timestamps : [0,2,5,15,18]
-          }
-        }
-      ];
+const API_VERSION = "v1";
 
-      params.success(fake_media);
-    }, 50);
+/**
+ *
+ * @param {object} params - parameters to make login request
+ * params structured must be:
+ * {
+ *   data: {
+ *     email: string
+ *     password: string
+ *   },
+ *   success: function
+ * }
+ */
+export function login(params) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/login`;
+  const request = new Request(url, {
+    method: "POST",
+    body: JSON.stringify(params.data),
+    headers: new Headers({
+      "Content-Type": "application/json"
+    })
+  });
+  makeRequest(request, undefined, params.callback);
+}
+
+/**
+ *
+ * @param {object} params - parameters to make fetch course request
+ * params structured must be:
+ * {
+ *   callback: function
+ * }
+ */
+export function fetchCourses(params) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/courses`;
+  const request = new Request(url, {
+    method: "GET",
+    headers: new Headers({
+      "Content-Type": "application/json"
+    })
+  });
+  makeRequest(request, undefined, params.callback);
+}
+
+/**
+ *
+ * @param {Object} params - parameters to make fetch lectures request
+ * params structure must be:
+ * {
+ *   courseId: string,
+ *   callback: function
+ * }
+ */
+export function fetchLectures(params) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/courses/${params.courseId}`;
+  const request = new Request(url, {
+    method: "POST",
+    body: JSON.stringify({
+      lectures: params.lectures
+    }),
+    headers: new Headers({
+      "Content-Type": "application/json"
+    })
+  });
+  makeRequest(request, undefined, params.callback);
+}
+
+/**
+ *
+ * @param {Object} params - parameters to make fetch media request
+ * params structure must be:
+ * {
+ *   courseId: string,
+ *   lectureName: string,
+ *   callback: function
+ * }
+ */
+export function fetchMedia(params) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/courses/${params.courseId}/${params.lectureName}`;
+  const request = new Request(url, {
+    method: "GET"
+  });
+  makeRequest(request, undefined, params.callback);
+}
+
+/**
+ *
+ * @param {Object} params - params to make the search request
+ * params structure:
+ * {
+ *    searchContent :string,
+ *    callback: function
+ * }
+ */
+export function fetchSearchResults(params) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/feed/search`;
+  const request = new Request(url, {
+    method: "POST",
+    body: JSON.stringify({
+      searchContent: params.searchContent
+    }),
+    headers: new Headers({
+      "Content-Type": "application/json"
+    })
+  });
+  makeRequest(request, undefined, params.callback);
+}
+
+/**
+ * Wrapper function for fetch API, used to make requests to server
+ * @param {Request} request - Request object used with fetch
+ * @param {Schema} schema - Normalizr schema
+ * @param {Function} callback - Called on success or error returns (err, result)
+ */
+function makeRequest(request, schema, callback) {
+  if (loginStore.isLoggedIn()) {
+    request.headers.set("Authorization", loginStore.getJWT());
   }
-};
+  fetch(request).then(response => {
+    const status = response.status;
+    if (status < 200 && status >= 300) {
+      callback({err: new Error(response.statusText), status: response.status});
+    }
+    else {
+      return response.json();
+    }
+  }).then(json => {
+    let result = camelizeKeys(json);
+    //if (typeof schema !== "undefined") {
+    //  result = normalize(result, schema);
+    //}
+    callback(null, result);
+  }).catch(err => {
+    callback(err);
+  });
+}
 
-module.exports = api;

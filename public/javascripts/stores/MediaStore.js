@@ -1,19 +1,21 @@
+"use strict";
+
 /*
  * MediaStore
  */
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var MediaConstants = require('../constants/MediaConstants');
-var assign = require('object-assign');
+import EventEmitter from "events";
 
-var CHANGE_EVENT = 'change';
+import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
+import {MediaConstants} from "../constants/MediaConstants";
 
-var _media = [];
-var _current = [];
-var _hoptime = NaN;
-var _primary = NaN;
-var _timestamp = NaN;
+const CHANGE_EVENT = "change";
+
+let _media = [];
+let _current = [];
+let _hoptime = NaN;
+let _primary = NaN;
+let _timestamp = NaN;
 
 /**
  * Create the media array, current array, current timestamp, and primary media
@@ -23,15 +25,15 @@ function set(media) {
   _media = media;
   _primary = 0;
   _timestamp = 0;
-  _hoptime = calcHoptime(media);
+  _hoptime = calcHopTime(media);
 
   _current = [];
-  for(obj of media) {
-    switch(obj.type) {
-      case 'video':
+  for (let obj of media) {
+    switch (obj.type) {
+      case "video":
         _current.push(obj);
         break;
-      case 'images':
+      case "images":
         _current.push({
           type: obj.type,
           data: {
@@ -40,6 +42,8 @@ function set(media) {
           }
         });
         break;
+      default:
+        // no op
     }
   }
 }
@@ -47,113 +51,118 @@ function set(media) {
 /**
  * Calculate the interval for syncronization
  * @param  {array} media The media object in question
+ * @return {number} interval
  */
-function calcHoptime(media) {
-  //TODO
+function calcHopTime(media) {
+  // TODO
   return 20;
 }
 
+function isApproximateImage(timestamp, mediaTimestamp, obj) {
+  return (Number(timestamp) - Number(mediaTimestamp) < Number(timestamp) - Number(obj.data.timestamp))
+    && (Number(timestamp) - Number(mediaTimestamp) >= 0);
+}
 /**
  * Update the current media array based on a given timestamp
  * @param  {Date} timestamp The current time to be viewed
  */
-function syncronize(timestamp) {
-  _current = _current.map(function(obj, index, thisArray){
-    switch(obj.type) {
+function synchronize(timestamp) {
+  _current = _current.map((obj, index) => {
+    switch (obj.type) {
       case "video":
         return obj;
-      case "images":
-        var idx = -1;
-        _media[index].data.timestamps.map(function(mediaTimestamp, mediaIndex, mediaArray){
-          if ((Number(timestamp) - Number(mediaTimestamp) < Number(timestamp) - Number(obj.data.timestamp))&&(
-                Number(timestamp)- Number(mediaTimestamp) >= 0))
-              idx = mediaIndex;
+      case "images": {
+        let idx = -1;
+        _media[index].data.timestamps.forEach((mediaTimestamp, mediaIndex) => {
+          if (isApproximateImage(timestamp, mediaTimestamp, obj)) {
+            idx = mediaIndex;
+          }
         });
-        if (idx !== -1)
+        if (idx !== -1) {
           obj.data.timestamp = _media[index].data.timestamps[idx];
+        }
         return obj;
-        default:
-        break;
+      }
+      default:
+        return obj;
     }
   });
   _timestamp = timestamp;
 }
 
-
-var MediaStore = assign({}, EventEmitter.prototype, {
-
+class MediaStore extends EventEmitter {
   /**
    * Get the current media array
-   * @return {array}
+   * @return {array} - current media array
    */
-  getCurrent: function() {
+  getCurrent() {
     return _current;
-  },
-
+  }
   /**
-   * Get the time interval to syncronize with the store
-   * @return {array}
+   * Get the time interval to synhcronize with the store
+   * @return {number} - time interval
    */
-  getHoptime: function() {
+  getHoptime() {
     return _hoptime;
-  },
+  }
 
   /**
    * Get the top media object
-   * @return {array}
+   * @return {array} - top media object
    */
-  getPrimary: function() {
+  getPrimary() {
     return _primary;
-  },
-
+  }
   /**
    * Check if we need to syncronize
-   * @param  {Date} timestamp The current time to be viewed
-   * @return {array}
+   * @param  {number} timestamp The current time to be viewed
+   * @return {boolean} - if need to sync
    */
-  shouldSync: function(timestamp) {
-    return true;  //TODO for each object in the current media array,
-                  //check against media array to see if there is a more appropriate timestamp
-  },
+  shouldSync(timestamp) {
+    // TODO for each object in the current media array check against media array to see if there is a more appropriate timestamp
+    return true;
+  }
 
-  emitChange: function() {
+  emitChange() {
     this.emit(CHANGE_EVENT);
-  },
+  }
 
   /**
-   * @param {function} callback
+   * @param {function} callback - called on event change
    */
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
-  },
+  }
 
   /**
-   * @param {function} callback
+   * @param {function} callback - to be removed from event
    */
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
-});
+}
+
+const mediaStore = new MediaStore();
 
 // Register callback to handle all updates
-AppDispatcher.register(function(action) {
-  switch(action.actionType) {
-    case MediaConstants.FETCHMEDIA:
-      var media = action.media;
+AppDispatcher.register(action => {
+  switch (action.actionType) {
+    case MediaConstants.FETCH_MEDIA: {
+      const media = action.media;
       set(media);
-      MediaStore.emitChange();
+      mediaStore.emitChange();
       break;
-
-    case MediaConstants.SYNC:
-      var timestamp = action.timestamp;
-      syncronize(timestamp);
-      MediaStore.emitChange();
+    }
+    case MediaConstants.SYNC: {
+      const timestamp = action.timestamp;
+      synchronize(timestamp);
+      mediaStore.emitChange();
       break;
-
+    }
     default:
       // no op
   }
 });
 
-module.exports = MediaStore;
+export default mediaStore;

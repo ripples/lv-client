@@ -1,38 +1,49 @@
+"use strict";
+
 /*
  * MediaActions
  */
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var MediaConstants = require('../constants/MediaConstants');
-var api = require('../API.js');
+import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
+import {MediaConstants} from "../constants/MediaConstants";
+import {fetchMedia} from "../API";
 
-var MediaActions = {
+class MediaActions {
 
   /**
-   * Create the media array
+   * Fetches media for lecture
+   * @param {String} courseId - course id to fetch media for
+   * @param {String} lectureName - lecture to fetch media for
    */
-  fetch: function() {
-    api.fetchMedia({
-      success : function(media){
+  fetch(courseId, lectureName) {
+    fetchMedia({
+      courseId: courseId,
+      lectureName: lectureName,
+      callback: (media, err) => {
+        if (err) {
+          //TODO: error handler
+          throw err;
+        }
         AppDispatcher.dispatch({
-          actionType: MediaConstants.FETCHMEDIA,
+          actionType: MediaConstants.FETCH_MEDIA,
           media: media
         });
       }
     });
-  },
+  }
 
   /**
-   * Syncronize the current media object for the current timestamp
-   * @param  {Date} timestamp The current time to be viewed
+   * Synchronize the current media object for the current timestamp
+   * @param  {Date} timestamp - The current time to be viewed
    */
-  sync: function(timestamp) {
+  sync(timestamp) {
     AppDispatcher.dispatch({
       actionType: MediaConstants.SYNC,
       timestamp: timestamp
     });
   }
+}
 
-};
+const mediaActions = new MediaActions();
 
-module.exports = MediaActions;
+export default mediaActions;

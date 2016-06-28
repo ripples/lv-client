@@ -1,10 +1,13 @@
+"use strict";
+
 /*
  * LoginConstants
  */
 
-var keyMirror = require('keymirror');
+import keyMirror from "keymirror";
 
-module.exports = keyMirror({
+export const LoginConstants = keyMirror({
   LOGIN: null,
-  LOGOUT: null
+  LOGOUT: null,
+  LOGIN_SUCCESS:null
 });

@@ -1,38 +1,44 @@
+"use strict";
+
 /*
  * LoginActions
  */
 
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var LoginConstants = require('../constants/LoginConstants');
-var api = require('../API.js');
+import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
+import {LoginConstants} from "../constants/LoginConstants";
+import {login} from "../API";
 
-var LoginActions = {
+class LoginActions {
 
   /**
    * Login to the system
-   * @param  {string} jwt The java web token
+   * @param  {object} data - login params
    */
-  login: function(data) {
-    api.login({
-      data : data,
-      success : function(data){
+  login(data) {
+    login({
+      data: data,
+      callback: (err, data) => {
+        if (err) {
+          throw err;
+        }
         AppDispatcher.dispatch({
           actionType: LoginConstants.LOGIN,
           jwt: data.token
         });
       }
     });
-  },
+  }
 
   /**
    * Logout of the system
    */
-  logout: function() {
+  logout() {
     AppDispatcher.dispatch({
       actionType: LoginConstants.LOGOUT
     });
   }
+}
 
-};
+const loginActions = new LoginActions();
 
-module.exports = LoginActions;
+export default loginActions;

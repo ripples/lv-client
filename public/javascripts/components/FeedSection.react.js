@@ -1,48 +1,64 @@
+"use strict";
+
 /**
-  * Module to contain the behavior for the "Feed" view
-  * This will consist of :
-  *   "LectureFeed" module to show all Lectures
-  *   "ClassList" module to show classes, allowing to filter
-  *   "LectureView" module to view individual lectures
-**/
+ * Module to contain the behavior for the "Feed" view
+ * This will consist of :
+ *   "LectureFeed" module to show all Lectures
+ *   "CourseList" module to show courses, allowing to filter
+ *   "LectureView" module to view individual lectures
+ **/
 
+import React from "react";
 
-var React = require('react');
-var ReactPropType = React.PropTypes;
+import CourseList from "./CourseList.react";
+import courseStore from "../stores/CourseStore";
+import courseAction from "../actions/CourseAction";
+import SearchBar from "./SearchBar";
+import SideBar from "./SideBar";
+import {withRouter} from 'react-router';
 
-var ClassList = require('./ClassList.react');
-var LectureList = require('./LectureList.react');
+class FeedSection extends React.Component {
+  constructor() {
+    super();
+    this.state = {lectures: [], courses: []};
+    // TODO: replace binding with ES7 decorator https://github.com/andreypopp/autobind-decorator
+    this.onCourseChangeListener = this.onCourseChangeListener.bind(this);
+  }
 
-var LectureConstants = require('../constants/LectureConstants');
-var LectureStore = require('../stores/LectureStore');
-var LectureActions = require('../actions/LectureAction');
-
-
-var FeedSection = React.createClass({
-  getInitialState : function(){
-    return {lectures : [], classes : []};
-  },
-  onLectureChangeListener : function (){
+  onCourseChangeListener() {
     this.setState(
-      {lectures : LectureStore.getLectures(),
-        classes : LectureStore.getClasses()});
-  },
-  componentDidMount: function () {
-    LectureStore.addChangeListener(this.onLectureChangeListener);
-    LectureActions.fetch(this.props.jwt);
-  },
-  componentWillUnmount : function (){
-    LectureStore.removeChangeListener(this.onLectureChangeListener);
-  },
-  render : function(){
+      {
+        courses: courseStore.getCourses()
+      });
+  }
+
+  componentDidMount() {
+    courseStore.addChangeListener(this.onCourseChangeListener);
+    courseAction.fetchCourses();
+  }
+
+  componentWillUnmount() {
+    courseStore.removeChangeListener(this.onCourseChangeListener);
+  }
+
+  render() {
     return (
-      <div className = "FeedViewWrapper">
-        <ClassList classes = {this.state.classes} />
-        <LectureList lectures = {this.state.lectures} />
+      <div className="FeedSection inheritProps container-fluid">
+        <SearchBar courses={this.state.courses}/>
+        <div className="container-fluid feedSection">
+          <SideBar/>
+          <CourseList courses={this.state.courses}/>
+        </div>
       </div>
     );
   }
-});
+}
+let DecorateFeedSection = withRouter(FeedSection);
+export default DecorateFeedSection;
 
-
-module.exports = FeedSection;
+// PropTypes
+FeedSection.propTypes = {
+  router: React.PropTypes.shape({
+    push: React.PropTypes.func.isRequired
+  }).isRequired
+};

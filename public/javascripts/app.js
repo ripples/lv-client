@@ -1,17 +1,35 @@
-/**
- * Copyright (c) 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
+"use strict";
 
-var React = require('react');
+import React from "react";
+import ReactDOM from "react-dom";
+import {Router, Route, IndexRoute, browserHistory} from "react-router";
 
-var LVApp = require('./components/LVApp.react');
+import LVApp from "./components/LVApp.react";
+import LoginSection from "./components/LoginSection.react.js";
+import FeedSection from "./components/FeedSection.react";
+import loginStore from "./stores/LoginStore";
 
-React.render(
-  <LVApp />,
-  document.getElementById('lvapp')
+const app = document.getElementById("lvapp");
+import utils from "./utils/defaultBehavior";
+// runs the page behaviors, not sure exactly where to put this yet
+utils();
+
+ReactDOM.render(
+  <Router history={browserHistory}>
+    <Route path="/" component={LVApp}>
+      <IndexRoute component={FeedSection} onEnter={loginCheck}/>
+      <Route path="/login" component={LoginSection}/>
+    </Route>
+  </Router>, app
 );
+
+function loginCheck(nextState, replace) {
+  if (!loginStore.isLoggedIn()) {
+    replace("/login");
+  }
+}
+function logoutCheck(nextState, replace) {
+  if (loginStore.isLoggedIn()) {
+    replace("/");
+  }
+}

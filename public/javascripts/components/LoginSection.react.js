@@ -1,56 +1,75 @@
+"use strict";
+
 /**
-  * LoginSection is a class to encapsulate login functionality
-  * in the "View" component of the Flux/React design
-**/
+ * LoginSection is a class to encapsulate login functionality
+ * in the "View" component of the Flux/React design
+ **/
 
+import React from "react";
 
-var React = require('react');
-var ReactPropTypes = React.PropTypes;
-var LoginAction = require('../actions/LoginAction');
+import loginActions from "../actions/LoginAction";
+import {withRouter} from 'react-router';
 
-var LoginSection = React.createClass({
+class LoginSection extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+			prompt: "",
+			email: "",
+			password: ""
+		};
+	}
+	login(data) {
+		loginActions.login(data);
+	}
 
-  getInitialState : function() {
-    return {
-      prompt : "",
-      email : "",
-      password : ""
-    };
-  },
+	render() {
+		return (
+			<div>
+				<div className="container-fluid ">
+					<div className="row">
+						<div className="col-sm-6 col-sm-offset-3 login-form">
+							<form id="login-form" className="form-horizontal well well-lg loginForm" onSubmit={this._handleOnSubmit.bind(this)}>
+								<p className="prompt">{this.state.prompt}</p>
+								<div className="form-group">
+									<label for="login">Login</label>
+									<input defaultValue="test-student1@email.com" type="email" className="form-control" placeholder="Email" ref={(email)=>this._email = email}/>
+								</div>
+								<div className="form-group">
+									<label for="password">Password</label>
+									<input type="password" placeholder="Password" className="form-control" ref={(password)=>this._password = password}/>
+								</div>
+								<button type="submit" className="btn btn-danger">Login</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
-  login : function(data) {
-    LoginAction.login(data);
-  },
+	_handleOnSubmit(e) {
+		e.preventDefault();
+		const email = this._email.value;
+		const password = this._password.value;
 
-  handleOnSubmit : function(e) {
-      e.preventDefault();
-      var email = this.refs.email.getDOMNode().value.trim();
-      var password = this.refs.password.getDOMNode().value.trim();
+		if (!email || !password) {
+			// TODO : Add reminder to highlight unfilled fields
+			this.setState({prompt: "Please enter Email and Password."});
+			return;
+		}
 
-      if (!email || !password){
-        // TODO : Add reminder to highlight unfilled fields
-        this.setState({prompt : "Please enter Email and Password."});
-        return;
-      }
-      this.setState({prompt : ""});
-      this.login({"email" : email, "password" : password});
-  },
+		this.setState({prompt: ""});
+		this.login({"email": email, "password": password});
+	}
+}
 
-  /**
-   * @return {object}
-   */
-  render : function() {
-    return (
-      <form className="loginForm" onSubmit={this.handleOnSubmit}>
-        <p className="prompt">{this.state.prompt}</p>
-        <input type  = "text" placeholder="Email" ref="email" />
-        <br />
-        <input type = "password" placeholder="Password" ref = "password" />
-        <input type="submit" value = "Login" />
-      </form>
-    );
-  }
+let DecorateLoginSection = withRouter(LoginSection);
+export default DecorateLoginSection;
 
-});
-
-module.exports = LoginSection;
+// PropTypes
+LoginSection.propTypes = {
+	router: React.PropTypes.shape({
+		push: React.PropTypes.func.isRequired
+	}).isRequired
+};
