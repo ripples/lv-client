@@ -1,9 +1,9 @@
 .backstretch {
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     overflow: hidden;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     height: 591px;
     width: 1845px;
     z-index: -999999;
@@ -12,21 +12,20 @@
 
 .bgimg {
     position: absolute;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     border: medium none;
     width: 1845px;
     height: 1230px;
     max-height: none;
     max-width: none;
     z-index: -999999;
-    left: 0px;
+    left: 0;
     top: -319.5px;
 }
 
 body {
-    padding: 10px;
-    padding-top: 70px;
+    padding: 70px 10px 10px !important;
     height: 100%;
     background-color: #8c8c8c;
 }

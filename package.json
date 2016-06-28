@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "bundle": "watchify --poll=3000 -d public/javascripts/app.js -v -o \"uglifyjs -cm > public/javascripts/bundle.js\" -t [babelify --presets [es2015,react]]",
-    "bundle-dev": "watchify --poll=3000 -d public/javascripts/app.js -v -o public/javascripts/bundle.js -t [babelify --presets [es2015,react]]",
-    "build": "browserify public/javascripts/app.js -t [babelify --presets [ es2015 , react], envify --NODE_ENV production] | uglifyjs -cm > public/javascripts/bundle.js",
+    "watch": "watchify --poll=3000 -d public/javascripts/app.js -v -o \"uglifyjs -cm > public/javascripts/bundle.js\" -t [babelify --presets [es2015,react]]",
+    "build-prod": "browserify public/javascripts/app.js -t [babelify --presets [ es2015 , react], envify --NODE_ENV production] | uglifyjs -cm > public/javascripts/bundle.js",
     "build-dev": "browserify public/javascripts/app.js --debug -t [babelify --presets [ es2015 , react], envify --NODE_ENV production] -o public/javascripts/bundle.js"
   },
   "dependencies": {
@@ -37,8 +36,6 @@
     "eslint": "^2.11.1",
     "eslint-config-google": "^0.5.0",
     "eslint-plugin-react": "^5.1.1",
-    "install": "^0.8.1",
-    "npm": "^3.9.5",
     "uglify-js": "~2.4.15",
     "watchify": "^3.7.0"
   },
