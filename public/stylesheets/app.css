@@ -1,3 +1,4 @@
+<<<<<<< HEAD:public/stylesheets/app.css
 .backstretch {
     left: 0;
     top: 0;
@@ -28,11 +29,19 @@ body {
     padding: 70px 10px 10px !important;
     height: 100%;
     background-color: #8c8c8c;
-}
-
-html {
+=======
+body {
     height: 100%;
     width: 100%;
+    padding: 10px;
+    padding-top: 70px;
+    background-color: #8c9196;
+>>>>>>> 57eecc4295c9287230dbed10ad687927dc66249b:public/stylesheets/style.css
+}
+
+.inheritProps {
+    height: 100%;
+    width: 100%
 }
 
 a {
@@ -41,7 +50,6 @@ a {
 
 .login-form {
     padding: 2%;
-    height: 900%;
 }
 
 .centerBlock {

@@ -13,6 +13,7 @@ import {CourseConstants} from "../constants/CourseConstants";
 const CHANGE_EVENT = "change";
 
 let _courses = [];
+let _searchResults = [];
 
 /**
  * Create the courses array
@@ -46,6 +47,9 @@ function updateCourse(courseId, lectures) {
     _courses = _courses.updateIn([courseId, "lectures", lecture.name], () => lecture.data);
   });
 }
+function populateResults(data) {
+  _searchResults = data;
+}
 
 class CourseStore extends EventEmitter {
 
@@ -55,6 +59,13 @@ class CourseStore extends EventEmitter {
    */
   getCourses() {
     return _courses.toJSON();
+  }
+
+  /**
+   * @returns {Array} - results from the search
+   */
+  getSearchResult(){
+    return _searchResults;
   }
 
   emitChange() {
@@ -81,16 +92,25 @@ const courseStore = new CourseStore();
 // Register callback to handle all updates
 AppDispatcher.register(action => {
   switch (action.actionType) {
-    case CourseConstants.FETCH_COURSES: {
+    case CourseConstants.FETCH_COURSES:
+    {
       const courses = action.courses;
       set(courses);
       courseStore.emitChange();
       break;
     }
-    case CourseConstants.FETCH_LECTURES: {
+    case CourseConstants.FETCH_LECTURES:
+    {
       const courseData = action.courseData;
       updateCourse(courseData.courseId, courseData.lectures);
       courseStore.emitChange();
+      break;
+    }
+    case CourseConstants.FETCH_SEARCH_RESULT:
+    {
+      populateResults(action.data);
+      courseStore.emitChange();
+      break;
     }
     default:
     // no op

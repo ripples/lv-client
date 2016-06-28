@@ -14,6 +14,7 @@ import CourseList from "./CourseList.react";
 import courseStore from "../stores/CourseStore";
 import courseAction from "../actions/CourseAction";
 import SearchBar from "./SearchBar";
+import SideBar from "./SideBar";
 import {withRouter} from 'react-router';
 
 class FeedSection extends React.Component {
@@ -42,10 +43,10 @@ class FeedSection extends React.Component {
 
   render() {
     return (
-      <div className="FeedViewWrapper container-fluid">
+      <div className="FeedSection inheritProps container-fluid">
         <SearchBar courses={this.state.courses}/>
-        <div className="row">
-          <div className="col-sm-2"><h2>Side Bar</h2></div>
+        <div className="container-fluid feedSection">
+          <SideBar/>
           <CourseList courses={this.state.courses}/>
         </div>
       </div>

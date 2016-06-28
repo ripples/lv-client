@@ -17,6 +17,7 @@
     "history": "^3.0.0",
     "humps": "^1.1.0",
     "immutable": "^3.8.1",
+    "jquery": "^3.0.0",
     "keymirror": "~0.1.0",
     "morgan": "~1.6.1",
     "normalizr": "^2.1.0",

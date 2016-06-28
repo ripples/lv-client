@@ -38,16 +38,6 @@ function logout() {
   _jwt = null;
   _user = null;
 }
-export function loginCheck(nextState, replace){
-  if (!loginStore.isLoggedIn()) {
-    replace("/login");
-  }
-}
-export function logoutCheck(nextState, replace) {
-  if (loginStore.isLoggedIn()) {
-    replace("/");
-  }
-}
 
 class LoginStore extends EventEmitter {
 
