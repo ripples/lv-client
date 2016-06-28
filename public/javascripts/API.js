@@ -136,9 +136,9 @@ function makeRequest(request, schema, callback) {
     }
   }).then(json => {
     let result = camelizeKeys(json);
-    if (typeof schema !== "undefined") {
-      result = normalize(result, schema);
-    }
+    //if (typeof schema !== "undefined") {
+    //  result = normalize(result, schema);
+    //}
     callback(null, result);
   }).catch(err => {
     callback(err);

@@ -38,6 +38,7 @@ class CourseAction {
       lectures: lectures,
       callback: (err, lectures) => {
         if (err) {
+          // TODO: error handler
           console.log(err);
           throw err;
         }
@@ -61,6 +62,7 @@ class CourseAction {
       searchContent,
       callback:(err,result)=>{
         if(err){
+          // TODO: error handler
           console.log(err);
           throw err;
         }
