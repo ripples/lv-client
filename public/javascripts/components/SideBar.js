@@ -2,6 +2,7 @@
 
 import React from "react";
 import $ from "jquery";
+import {Col} from "react-bootstrap";
 
 /**
  * SideBar: contain  the inout to add keywords and the filer options
@@ -39,8 +40,9 @@ export default class SideBar extends React.Component {
         <input type="checkbox" value={filter}/>
       </div>);
     return (
-      <div className="col-sm-2 ">
+      <div className="col-sm-2 well">
         <div className="container-fluid">
+
           <h1> Refine Search</h1>
           <h3>KEYWORDS</h3>
           <form onSubmit={this._addKeyWord.bind(this)} name="keywords">

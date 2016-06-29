@@ -5,7 +5,9 @@
  */
 
 import React from "react";
+import {Col} from "react-bootstrap";
 import $ from "jquery";
+
 
 import CourseActions from "../actions/CourseAction";
 

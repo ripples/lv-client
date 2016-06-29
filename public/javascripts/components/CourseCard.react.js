@@ -4,6 +4,7 @@ import React from "react";
 
 import courseAction from "../actions/CourseAction";
 import LectureCard from "./LectureCard.React";
+import {Button, ButtonGroup, Col} from "react-bootstrap";
 
 export default class CourseCard extends React.Component {
   constructor() {
@@ -47,17 +48,19 @@ export default class CourseCard extends React.Component {
       <h3 className="text-center">Term: {course.semester} |
         Instructor: {course.prof} | {cardsToDisplay.length} Lectures </h3> : "");
     return (
-      <div className="col-sm-12">
+      <Col sm={12} className="well">
         <div className="course-card">
-          <a className="btn btn-info" onClick={() => this.changeDisplay()}>
-            {course.name}
-          </a>
+          <ButtonGroup vertical block>
+            <Button bsStyle="info" onClick={() => this.changeDisplay()}>
+              {course.name}
+            </Button>
+          </ButtonGroup>
           {subtitle}
-          <div className="col-sm-12">
+          <Col sm={12}>
             {cardsToDisplay}
-          </div>
+          </Col>
         </div>
-      </div>
+      </Col>
     );
   }
 }

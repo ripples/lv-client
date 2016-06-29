@@ -15,7 +15,7 @@ import courseStore from "../stores/CourseStore";
 import courseAction from "../actions/CourseAction";
 import SearchBar from "./SearchBar";
 import SideBar from "./SideBar";
-import {withRouter} from 'react-router';
+import {withRouter} from "react-router";
 
 class FeedSection extends React.Component {
   constructor() {

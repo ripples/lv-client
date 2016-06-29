@@ -9,19 +9,20 @@
 import React from "react";
 
 import CourseCard from "./CourseCard.react";
+import {Col} from "react-bootstrap";
 
 export default class CourseList extends React.Component {
   render() {
     const courses = this.props.courses;
     const courseCards = Object.keys(courses).map((id, i) => {
       return (
-        <CourseCard key={i} course={courses[id]}/>
+        <CourseCard key={id} course={courses[id]}/>
       );
     });
     return (
-      <div className="course-card col-sm-10">
+      <Col sm={10} className="course-card">
         {courseCards}
-      </div>
+      </Col>
     );
   }
 }
