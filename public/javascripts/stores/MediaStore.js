@@ -1,126 +1,38 @@
 "use strict";
 
-/*
- * MediaStore
- */
-
 import EventEmitter from "events";
+import * as Immutable from "immutable";
 
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {MediaConstants} from "../constants/MediaConstants";
 
 const CHANGE_EVENT = "change";
 
-let _media = [];
-let _current = [];
-let _hoptime = NaN;
-let _primary = NaN;
-let _timestamp = NaN;
-
-/**
- * Create the media array, current array, current timestamp, and primary media
- * @param  {array} media The array of media objects
- */
-function set(media) {
-  _media = media;
-  _primary = 0;
-  _timestamp = 0;
-  _hoptime = calcHopTime(media);
-
-  _current = [];
-  for (let obj of media) {
-    switch (obj.type) {
-      case "video":
-        _current.push(obj);
-        break;
-      case "images":
-        _current.push({
-          type: obj.type,
-          data: {
-            id: obj.data.id,
-            timestamp: obj.data.timestamps[0]
-          }
-        });
-        break;
-      default:
-        // no op
-    }
-  }
-}
-
-/**
- * Calculate the interval for syncronization
- * @param  {array} media The media object in question
- * @return {number} interval
- */
-function calcHopTime(media) {
-  // TODO
-  return 20;
-}
-
-function isApproximateImage(timestamp, mediaTimestamp, obj) {
-  return (Number(timestamp) - Number(mediaTimestamp) < Number(timestamp) - Number(obj.data.timestamp))
-    && (Number(timestamp) - Number(mediaTimestamp) >= 0);
-}
-/**
- * Update the current media array based on a given timestamp
- * @param  {Date} timestamp The current time to be viewed
- */
-function synchronize(timestamp) {
-  _current = _current.map((obj, index) => {
-    switch (obj.type) {
-      case "video":
-        return obj;
-      case "images": {
-        let idx = -1;
-        _media[index].data.timestamps.forEach((mediaTimestamp, mediaIndex) => {
-          if (isApproximateImage(timestamp, mediaTimestamp, obj)) {
-            idx = mediaIndex;
-          }
-        });
-        if (idx !== -1) {
-          obj.data.timestamp = _media[index].data.timestamps[idx];
-        }
-        return obj;
-      }
-      default:
-        return obj;
-    }
+function* imageIterator(images) {
+  images.forEach(image => {
+    yield image;
   });
-  _timestamp = timestamp;
 }
 
 class MediaStore extends EventEmitter {
   /**
-   * Get the current media array
-   * @return {array} - current media array
+   * Set media store data
+   * @param  {Object} media - Object of media objects
    */
-  getCurrent() {
-    return _current;
-  }
-  /**
-   * Get the time interval to synhcronize with the store
-   * @return {number} - time interval
-   */
-  getHoptime() {
-    return _hoptime;
-  }
+  set(media) {
+    let _media = {
+      video: media.video,
+      whiteboard: media.whiteboard,
+      whiteboardImages: media.whiteboard.images,
+      computer: media.computer,
+      computerImages: media.computer.images
+    };
 
-  /**
-   * Get the top media object
-   * @return {array} - top media object
-   */
-  getPrimary() {
-    return _primary;
-  }
-  /**
-   * Check if we need to syncronize
-   * @param  {number} timestamp The current time to be viewed
-   * @return {boolean} - if need to sync
-   */
-  shouldSync(timestamp) {
-    // TODO for each object in the current media array check against media array to see if there is a more appropriate timestamp
-    return true;
+    // So there isn't unnecessary movement of large sets of data
+    delete _media.video.images;
+    delete _media.whiteboard.images;
+
+    this._media = Immutable.fromJS(_media);
   }
 
   emitChange() {
@@ -141,6 +53,45 @@ class MediaStore extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
+  /**
+   * Get video data
+   * @return {Object} - video data
+   */
+  getVideoData() {
+    return this._media.get("video").toJSON();
+  }
+
+  /**
+   * Get whiteboard data
+   * @return {Object} - whiteboard data
+   */
+  getWhiteboardData() {
+    return this._media.get("whiteboard").toJSON();
+  }
+
+  /**
+   * Get Computer data
+   * @return {Object} - computer data
+   */
+  getComputerData() {
+    return this._media.get("computer").toJSON();
+  }
+
+  /**
+   * Get generator for whiteboard images
+   * @return {Generator} - whiteboard generator
+   */
+  whiteboardImages() {
+    return imageIterator(this._media.get("whiteboardImages"));
+  }
+
+  /**
+   * Get generator for computer images
+   * @return {Generator} - computer generator
+   */
+  computerImages() {
+    return imageIterator(this._media.get("computerImages"));
+  }
 }
 
 const mediaStore = new MediaStore();
@@ -150,7 +101,7 @@ AppDispatcher.register(action => {
   switch (action.actionType) {
     case MediaConstants.FETCH_MEDIA: {
       const media = action.media;
-      set(media);
+      mediaStore.set(media);
       mediaStore.emitChange();
       break;
     }

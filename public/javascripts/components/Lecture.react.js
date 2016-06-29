@@ -12,7 +12,7 @@ export default class Lecture extends React.Component {
     this.setState({
       dialogContent: this.generateMediaView({
         media: mediaStore.getCurrent(),
-        primary: mediaStore.getPrimary()
+        primary: mediaStore.getVideoData()
       })
     });
   }

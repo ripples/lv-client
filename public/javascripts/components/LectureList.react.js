@@ -1,4 +1,4 @@
-"use strct";
+"use strict";
 
 /**
  * LectureList will have one sub-class of Lecture
