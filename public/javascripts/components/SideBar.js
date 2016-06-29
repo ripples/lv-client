@@ -1,9 +1,7 @@
 "use strict";
 
 import React from "react";
-import Chance from "chance";
 import $ from "jquery";
-const chance = new Chance();
 
 /**
  * SideBar: contain  the inout to add keywords and the filer options
@@ -28,10 +26,18 @@ export default class SideBar extends React.Component {
   }
 
   render() {
-    const renderedKeyWords = this.state.keywords
-      .map(keyword => <div key={chance.integer()} className="col-sm-4">{keyword}</div>);
-    const renderedFilters = this.getFilters()
-      .map(filter => <div key={chance.integer()}><label>{filter}</label><input type="checkbox" value={filter}/></div>);
+    const renderedKeyWords = this.state.keywords.map(keyword =>
+      <div key={keyword} className="col-sm-4">
+        {keyword}
+      </div>
+    );
+    const renderedFilters = this.getFilters().map(filter =>
+      <div key={filter}>
+        <label>
+          {filter}
+        </label>
+        <input type="checkbox" value={filter}/>
+      </div>);
     return (
       <div className="col-sm-2 ">
         <div className="container-fluid">
@@ -39,7 +45,9 @@ export default class SideBar extends React.Component {
           <h3>KEYWORDS</h3>
           <form onSubmit={this._addKeyWord.bind(this)} name="keywords">
             <input type="text" ref={keyword=>this._keyword = keyword} minlength="2"/>
-            <button onClick={this._addKeyWord.bind(this)} className="btn btn-sm btn-info-"> ADD KEYWORD</button>
+            <button onClick={this._addKeyWord.bind(this)} className="btn btn-sm btn-info-">
+              ADD KEYWORD
+            </button>
           </form>
           {renderedKeyWords}
         </div>

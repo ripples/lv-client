@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "watch": "watchify --poll=3000 -d public/javascripts/app.js -v -o \"uglifyjs -cm > public/javascripts/bundle.js\" -t [babelify --presets [es2015,react]]",
+    "watch": "watchify --poll=3000 -d public/javascripts/app.js -v -o public/javascripts/bundle.js -t [babelify --presets [es2015,react]]",
     "build-prod": "browserify public/javascripts/app.js -t [babelify --presets [ es2015 , react], envify --NODE_ENV production] | uglifyjs -cm > public/javascripts/bundle.js",
     "build-dev": "browserify public/javascripts/app.js --debug -t [babelify --presets [ es2015 , react], envify --NODE_ENV production] -o public/javascripts/bundle.js"
   },
@@ -33,7 +33,6 @@
     "babel-preset-react": "^6.5.0",
     "babelify": "^7.3.0",
     "browserify": "^12.0.1",
-    "chance": "^1.0.3",
     "eslint": "^2.11.1",
     "eslint-config-google": "^0.5.0",
     "eslint-plugin-react": "^5.1.1",

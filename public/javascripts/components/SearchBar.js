@@ -5,10 +5,9 @@
  */
 
 import React from "react";
-import Chance from "chance";
-const chance = new Chance();
-import CourseActions from "../actions/CourseAction";
 import $ from "jquery";
+
+import CourseActions from "../actions/CourseAction";
 
 export default class SearchBar extends React.Component {
   constructor() {
@@ -47,8 +46,8 @@ export default class SearchBar extends React.Component {
   getSelectCourses() {
     let courses = [];
     const itr = this.props.courses;
-    Object.keys(itr).forEach((key)=>courses.push(
-      <option key={chance.integer()} value={itr[key].id}>{itr[key].name} </option>)
+    Object.keys(itr).forEach(key => courses.push(
+      <option key={key.id} value={itr[key].id}>{itr[key].name} </option>)
     );
     return (
       <select name="courses">

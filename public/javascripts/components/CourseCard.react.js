@@ -1,10 +1,9 @@
 "use strict";
 
 import React from "react";
+
 import courseAction from "../actions/CourseAction";
 import LectureCard from "./LectureCard.React";
-import Chance from "chance";
-const chance = new Chance();
 
 export default class CourseCard extends React.Component {
   constructor() {
@@ -37,9 +36,9 @@ export default class CourseCard extends React.Component {
     const course = this.props.course;
     const lectures = course.lectures;
     // map the lectures into lectureCards
-    const lecturesCards = Object.keys(lectures).reduce((list, id, i) => {
+    const lecturesCards = Object.keys(lectures).reduce((list, id) => {
       if (lectures[id]) {
-        list.push(<LectureCard key={chance.integer()} lecture={lectures[id]}/>);
+        list.push(<LectureCard key={id} lecture={lectures[id]}/>);
       }
       return list;
     }, []);
