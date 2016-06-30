@@ -76,21 +76,18 @@ export function fetchLectures(params) {
 }
 
 /**
- *
- * @param {Object} params - parameters to make fetch media request
- * params structure must be:
- * {
- *   courseId: string,
- *   lectureName: string,
- *   callback: function
- * }
+ * Fetch video and image data
+ * @param {String} semester - semester
+ * @param {String} courseId - course id
+ * @param {String} lectureName - lecture name
+ * @param {Function} callback - Called on success or error returns (err, result)
  */
-export function fetchMedia(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/courses/${params.courseId}/${params.lectureName}`;
+export function fetchMedia(semester, courseId, lectureName, callback) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/media/${semester}/${courseId}/${lectureName}`;
   const request = new Request(url, {
     method: "GET"
   });
-  makeRequest(request, undefined, params.callback);
+  makeRequest(request, undefined, callback);
 }
 
 /**

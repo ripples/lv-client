@@ -11,7 +11,7 @@ export default class MainMediaContainer extends React.Component {
       <div className="MainMediaWrapper">
         <div className="PrimaryMedia">
           <div width="100%">
-            <MediaComponent media={this.props.MainMedia}/>
+            <MediaPage media={this.props.MainMedia}/>
           </div>
         </div>
         <LowerMediaContainer elements={this.props.LowerMedia}/>

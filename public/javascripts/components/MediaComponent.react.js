@@ -12,7 +12,7 @@ import VideoView from "./VideoView";
 import mediaActions from "../actions/MediaAction";
 import mediaStore from "../stores/MediaStore";
 
-export default class MediaComponent extends React.Component {
+export default class MediaPage extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -27,8 +27,7 @@ export default class MediaComponent extends React.Component {
    * @private
    */
   _fetchMedia() {
-    const params = this.props.params;
-    mediaActions.fetch(params.courseId, params.lectureName);
+    mediaActions.fetch();
   }
 
   onMediaChangeListener() {
@@ -62,3 +61,9 @@ export default class MediaComponent extends React.Component {
   }
 }
 
+MediaPage.propTypes = {
+
+  video: React.PropTypes.shape({
+    source: React.PropTypes.string
+  }).isRequired
+};

@@ -8,27 +8,42 @@ import {MediaConstants} from "../constants/MediaConstants";
 
 const CHANGE_EVENT = "change";
 
+/**
+ * Iterator for images
+ * @param {Array<String>} images - list of images
+ * @return {Generator} - generator for image iteration
+ */
 function* imageIterator(images) {
   images.forEach(image => {
     yield image;
   });
 }
 
+
 class MediaStore extends EventEmitter {
   /**
    * Set media store data
-   * @param  {Object} media - Object of media objects
+   * @param {Object} media - Object of media objects
+   * @param {String} semester - semester
+   * @param {String} courseId - course id
+   * @param {String} lectureName - lecture name
    */
-  set(media) {
+  set(media, semester, courseId, lectureName) {
     let _media = {
+      course: {
+        semester: semester,
+        courseId: courseId,
+        lectureName: lectureName
+      },
       video: media.video,
-      whiteboard: media.whiteboard,
+      whiteboardData: media.whiteboard,
       whiteboardImages: media.whiteboard.images,
-      computer: media.computer,
+      computerData: media.computer,
       computerImages: media.computer.images
     };
 
-    // So there isn't unnecessary movement of large sets of data
+    // So there isn't unnecessary movement of large sets of data,
+    // forced to use imageIterator generator
     delete _media.video.images;
     delete _media.whiteboard.images;
 
@@ -54,6 +69,14 @@ class MediaStore extends EventEmitter {
   }
 
   /**
+   * Get current associated course for media data
+   * @returns {Object} - current course data
+   */
+  getCurrentCourse() {
+    return this._media.get("course").toJSON();
+  }
+
+  /**
    * Get video data
    * @return {Object} - video data
    */
@@ -66,7 +89,7 @@ class MediaStore extends EventEmitter {
    * @return {Object} - whiteboard data
    */
   getWhiteboardData() {
-    return this._media.get("whiteboard").toJSON();
+    return this._media.get("whiteboardData").toJSON();
   }
 
   /**
@@ -74,7 +97,7 @@ class MediaStore extends EventEmitter {
    * @return {Object} - computer data
    */
   getComputerData() {
-    return this._media.get("computer").toJSON();
+    return this._media.get("computerData").toJSON();
   }
 
   /**
@@ -92,6 +115,7 @@ class MediaStore extends EventEmitter {
   computerImages() {
     return imageIterator(this._media.get("computerImages"));
   }
+
 }
 
 const mediaStore = new MediaStore();
@@ -100,8 +124,7 @@ const mediaStore = new MediaStore();
 AppDispatcher.register(action => {
   switch (action.actionType) {
     case MediaConstants.FETCH_MEDIA: {
-      const media = action.media;
-      mediaStore.set(media);
+      mediaStore.set(action.media, action.semester, action.courseId, action.lectureName);
       mediaStore.emitChange();
       break;
     }

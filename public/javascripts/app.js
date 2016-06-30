@@ -7,7 +7,7 @@ import {Router, Route, IndexRoute, browserHistory} from "react-router";
 import LVApp from "./components/LVApp.react";
 import loginStore from "./stores/LoginStore";
 
-import LoginSection from "./components/LoginSection.react.js";
+import LoginSection from "./components/LoginSection.js";
 import FeedSection from "./components/FeedSection.react";
 import MediaComponent from "./components/MediaComponent.react";
 

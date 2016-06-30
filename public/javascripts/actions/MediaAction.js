@@ -12,29 +12,29 @@ class MediaActions {
 
   /**
    * Fetches media for lecture
+   * @param {String} semester - semester to fetch media for
    * @param {String} courseId - course id to fetch media for
    * @param {String} lectureName - lecture to fetch media for
    */
-  fetch(courseId, lectureName) {
-    fetchMedia({
-      courseId: courseId,
-      lectureName: lectureName,
-      callback: (media, err) => {
-        if (err) {
-          //TODO: error handler
-          throw err;
-        }
-        AppDispatcher.dispatch({
-          actionType: MediaConstants.FETCH_MEDIA,
-          media: media
-        });
+  fetch(semester, courseId, lectureName) {
+    fetchMedia(semester, courseId, lectureName, (err, result) => {
+      if (err) {
+        //TODO: error handler
+        throw err;
       }
+      AppDispatcher.dispatch({
+        actionType: MediaConstants.FETCH_MEDIA,
+        media: result,
+        semester: semester,
+        courseId: courseId,
+        lectureName: lectureName
+      });
     });
   }
 
   /**
    * Synchronize the current media object for the current timestamp
-   * @param  {Date} timestamp - The current time to be viewed
+   * @param {Number} timestamp - The current time to be viewed
    */
   sync(timestamp) {
     AppDispatcher.dispatch({
