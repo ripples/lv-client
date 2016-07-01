@@ -37,9 +37,9 @@ export default class CourseCard extends React.Component {
     const course = this.props.course;
     const lectures = course.lectures;
     // map the lectures into lectureCards
-    const lecturesCards = Object.keys(lectures).reduce((list, id) => {
-      if (lectures[id]) {
-        list.push(<LectureCard key={id} lecture={lectures[id]}/>);
+    const lecturesCards = Object.keys(lectures).reduce((list, name) => {
+      if (lectures[name]) {
+        list.push(<LectureCard key={name} lecture={lectures[name]} lectureName={name} courseId={course.id}/>);
       }
       return list;
     }, []);

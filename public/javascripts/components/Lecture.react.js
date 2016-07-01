@@ -12,7 +12,7 @@ export default class Lecture extends React.Component {
     this.setState({
       dialogContent: this.generateMediaView({
         media: mediaStore.getCurrent(),
-        primary: mediaStore.getPrimary()
+        primary: mediaStore.getVideoData()
       })
     });
   }
@@ -20,7 +20,7 @@ export default class Lecture extends React.Component {
   generateMediaView(params) {
     return (
       <MediaView media={params.media}
-                 primary={params.primary}></MediaView>
+                 primary={params.primary}/>
     );
   }
 
@@ -64,7 +64,7 @@ export default class Lecture extends React.Component {
         </span>
         <DialogBox visible={this.state.dialogVisible}
                    requestClose={this.unfocusLecture}
-                   content={this.state.dialogContent}></DialogBox>
+                   content={this.state.dialogContent}/>
       </div>
     );
   }

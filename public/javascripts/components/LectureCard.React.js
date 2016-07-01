@@ -1,9 +1,7 @@
 "use strict";
 
 import React from "react";
-import MediaComponent from "./MediaComponent.react";
-import mediaActions from "../actions/MediaAction";
-import mediaStore from "../stores/MediaStore";
+import {Link} from "react-router";
 
 class LectureCard extends React.Component {
   constructor() {
@@ -14,51 +12,29 @@ class LectureCard extends React.Component {
     };
   }
 
-  _onChange() {
-    this.setState({
-      show: true,
-      media: mediaStore.getPrimary()
-    });
-  }
-
-  componentDidMount() {
-    mediaStore.addChangeListener(this._onChange);
-  }
-
-  componentWillUnmount() {
-    mediaStore.removeChangeListener(this._onChange);
-  }
-
-  fetchMedia() {
-    mediaActions.fetch(this.props.courseId, this.props.lecture);
-  }
-
-  parseLectures() {
+  buildHtml() {
     const lecture = this.props.lecture;
-    let element =
+    const mediaRoute = `/courses/${this.props.courseId}/${this.props.lectureName}`;
+
+    return (
       <div className="col-sm-6">
-        <h2>Lecture: {lecture.lecture}</h2>
-        <p><em>Date: {lecture.lecture}</em></p>
+        <h2>Lecture: {lecture.lectureName}</h2>
+        <p><em>Date: {lecture.timestamp}</em></p>
         <p>Runtime:{lecture.duration}</p>
-        <a className="btn btn-success" onClick={() => this.fetchMedia()}>
+        <Link className="btn btn-success" to={mediaRoute}>
           Load Media
-        </a>
-      </div>;
-    return element;
+        </Link>
+      </div>
+    );
   }
 
   render() {
     if (!this.state.show) {
       return;
     }
-    let mediaComponent = <div className="col-sm-6"><h3>Media Component</h3></div>;
-    if (this.state.media) {
-      mediaComponent = <MediaComponent src={this.state.media}/>;
-    }
-    const lectureInfo = this.parseLectures();
+    const lectureInfo = this.buildHtml();
     return (
       <div className="container">
-        {mediaComponent}
         {lectureInfo}
       </div>
     );
@@ -66,8 +42,9 @@ class LectureCard extends React.Component {
 }
 
 LectureCard.propTypes = {
-  lecture: React.PropTypes.any.isRequired,
-  courseId: React.PropTypes.any.isRequired
+  lecture: React.PropTypes.object.isRequired,
+  courseId: React.PropTypes.string.isRequired,
+  lectureName: React.PropTypes.string.isRequired
 };
 
 export default LectureCard;

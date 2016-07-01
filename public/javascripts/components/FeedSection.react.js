@@ -10,7 +10,7 @@
 
 import React from "react";
 
-import CourseList from "./CourseList.react";
+import CourseList from "./CourseList";
 import courseStore from "../stores/CourseStore";
 import courseAction from "../actions/CourseAction";
 import SearchBar from "./SearchBar";
