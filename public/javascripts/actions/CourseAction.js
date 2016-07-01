@@ -66,6 +66,7 @@ class CourseAction {
           console.log(err);
           throw err;
         }
+        console.log(result);
         AppDispatcher.dispatch({
           type: CourseConstants.FETCH_SEARCH_RESULT,
           data: result

@@ -20,7 +20,7 @@ export default class CourseList extends React.Component {
       );
     });
     return (
-      <Col sm={10} className="course-card">
+      <Col sm={9} className="course-card">
         {courseCards}
       </Col>
     );

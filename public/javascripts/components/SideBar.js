@@ -2,7 +2,7 @@
 
 import React from "react";
 import $ from "jquery";
-import {Col} from "react-bootstrap";
+import {Col, Button} from "react-bootstrap";
 
 /**
  * SideBar: contain  the inout to add keywords and the filer options
@@ -40,16 +40,16 @@ export default class SideBar extends React.Component {
         <input type="checkbox" value={filter}/>
       </div>);
     return (
-      <div className="col-sm-2 well">
+      <Col sm={3} className="well">
         <div className="container-fluid">
 
           <h1> Refine Search</h1>
           <h3>KEYWORDS</h3>
           <form onSubmit={this._addKeyWord.bind(this)} name="keywords">
             <input type="text" ref={keyword=>this._keyword = keyword} minlength="2"/>
-            <button onClick={this._addKeyWord.bind(this)} className="btn btn-sm btn-info-">
+            <Button onClick={this._addKeyWord.bind(this)} bsStyle="info" size="small">
               ADD KEYWORD
-            </button>
+            </Button>
           </form>
           {renderedKeyWords}
         </div>
@@ -59,7 +59,7 @@ export default class SideBar extends React.Component {
             {renderedFilters}
           </form>
         </div>
-      </div>
+      </Col>
     );
   }
 
