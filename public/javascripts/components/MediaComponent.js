@@ -6,7 +6,7 @@
 
 import React from "react";
 
-import ImageView from "./ImageView.react";
+import ImageView from "./ImageView";
 import VideoView from "./VideoView";
 
 import mediaActions from "../actions/MediaAction";
@@ -20,6 +20,7 @@ export default class MediaPage extends React.Component {
       whiteBoardView: null,
       computerView: null
     };
+    this.onMediaChangeListener = this.onMediaChangeListener.bind(this);
   }
 
   /**
@@ -27,17 +28,18 @@ export default class MediaPage extends React.Component {
    * @private
    */
   _fetchMedia() {
-    mediaActions.fetch();
+    let params = this.props.params;
+    mediaActions.fetch(params.semester, params.courseId, params.lectureName);
   }
 
   onMediaChangeListener() {
-    const video = mediaStore.getVideoData();
-    const whiteBoardImages = mediaStore.getWhiteboardData();
-    const computerImages = mediaStore.getComputerData();
+    const videoUrl = mediaStore.getVideoUrl();
+    const whiteBoardImages = mediaStore.getWhiteboardImagesIterator();
+    const computerImages = mediaStore.getComputerImagesIterator();
     this.setState({
-      videoView: <VideoView video={video}/>,
-      whiteBoardView: <ImageView images={whiteBoardImages}/>,
-      computerView: <ImageView images={computerImages}/>
+      videoView: <VideoView video={videoUrl}/>
+      // whiteBoardView: <ImageView images={whiteBoardImages}/>,
+      // computerView: <ImageView images={computerImages}/>
     });
   }
 
@@ -62,8 +64,9 @@ export default class MediaPage extends React.Component {
 }
 
 MediaPage.propTypes = {
-
-  video: React.PropTypes.shape({
-    source: React.PropTypes.string
+  params: React.PropTypes.shape({
+    semester: React.PropTypes.string.isRequired,
+    courseId: React.PropTypes.string.isRequired,
+    lectureName: React.PropTypes.string.isRequired
   }).isRequired
 };

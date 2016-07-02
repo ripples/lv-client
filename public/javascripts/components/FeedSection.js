@@ -20,7 +20,9 @@ import {withRouter} from 'react-router';
 class FeedSection extends React.Component {
   constructor() {
     super();
-    this.state = {lectures: [], courses: []};
+    this.state = {
+      courses: {}
+    };
     // TODO: replace binding with ES7 decorator https://github.com/andreypopp/autobind-decorator
     this.onCourseChangeListener = this.onCourseChangeListener.bind(this);
   }

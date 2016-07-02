@@ -29,27 +29,23 @@ class CourseAction {
 
   /**
    * Fetches list of lectures details
+   * @param {String} semester - semester
    * @param {String} courseId - course id
    * @param {Array.<String>} lectures - list of lectures fetching
    */
-  fetchLectures(courseId, lectures) {
-    api.fetchLectures({
-      courseId: courseId,
-      lectures: lectures,
-      callback: (err, lectures) => {
-        if (err) {
-          // TODO: error handler
-          console.log(err);
-          throw err;
-        }
-        AppDispatcher.dispatch({
-          actionType: CourseConstants.FETCH_LECTURES,
-          courseData: {
-            courseId: courseId,
-            lectures: lectures
-          }
-        });
+  fetchLectures(semester, courseId, lectures) {
+    api.fetchLectures(semester, courseId, lectures, (err, lectures) => {
+      if (err) {
+        // TODO: error handler
+        throw err;
       }
+      AppDispatcher.dispatch({
+        actionType: CourseConstants.FETCH_LECTURES,
+        courseData: {
+          courseId: courseId,
+          lectures: lectures
+        }
+      });
     });
   }
 
@@ -57,13 +53,12 @@ class CourseAction {
    * fetches the result of the serach of lectures
    * @param {String} searchContent
    */
-  fetchSearchResult(searchContent){
+  fetchSearchResult(searchContent) {
     api.fetchSearchResults({
       searchContent,
-      callback:(err,result)=>{
-        if(err){
+      callback: (err, result)=> {
+        if (err) {
           // TODO: error handler
-          console.log(err);
           throw err;
         }
         AppDispatcher.dispatch({

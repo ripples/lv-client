@@ -3,7 +3,7 @@
 import React from "react";
 
 import courseAction from "../actions/CourseAction";
-import LectureCard from "./LectureCard.React";
+import LectureCard from "./LectureCard";
 
 export default class CourseCard extends React.Component {
   constructor() {
@@ -27,7 +27,7 @@ export default class CourseCard extends React.Component {
    */
   fetchData() {
     const course = this.props.course;
-    courseAction.fetchLectures(course.id, Object.keys(course.lectures));
+    courseAction.fetchLectures(course.semester, course.id, Object.keys(course.lectures));
     courseAction.filter(this.props.course);
     this.isDataFetched = true;
   }
@@ -38,7 +38,7 @@ export default class CourseCard extends React.Component {
     // map the lectures into lectureCards
     const lecturesCards = Object.keys(lectures).reduce((list, name) => {
       if (lectures[name]) {
-        list.push(<LectureCard key={name} lecture={lectures[name]} lectureName={name} courseId={course.id}/>);
+        list.push(<LectureCard key={name} semester={course.semester} lecture={lectures[name]} courseId={course.id}/>);
       }
       return list;
     }, []);
@@ -63,5 +63,10 @@ export default class CourseCard extends React.Component {
 }
 
 CourseCard.propTypes = {
-  course: React.PropTypes.any.isRequired
+  course: React.PropTypes.shape({
+    id: React.PropTypes.string.isRequired,
+    name: React.PropTypes.string.isRequired,
+    semester: React.PropTypes.string.isRequired,
+    lectures: React.PropTypes.object.isRequired
+  }).isRequired
 };

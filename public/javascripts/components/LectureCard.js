@@ -14,7 +14,7 @@ class LectureCard extends React.Component {
 
   buildHtml() {
     const lecture = this.props.lecture;
-    const mediaRoute = `/courses/${this.props.courseId}/${this.props.lectureName}`;
+    const mediaRoute = `/courses/${this.props.semester}/${this.props.courseId}/${this.props.lecture.lectureName}`;
 
     return (
       <div className="col-sm-6">
@@ -42,9 +42,9 @@ class LectureCard extends React.Component {
 }
 
 LectureCard.propTypes = {
+  semester: React.PropTypes.string.isRequired,
   lecture: React.PropTypes.object.isRequired,
-  courseId: React.PropTypes.string.isRequired,
-  lectureName: React.PropTypes.string.isRequired
+  courseId: React.PropTypes.string.isRequired
 };
 
 export default LectureCard;

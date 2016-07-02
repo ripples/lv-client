@@ -11,10 +11,10 @@ import {fetchMedia} from "../API";
 class MediaActions {
 
   /**
-   * Fetches media for lecture
-   * @param {String} semester - semester to fetch media for
-   * @param {String} courseId - course id to fetch media for
-   * @param {String} lectureName - lecture to fetch media for
+   * Fetch initial media data for lecture which consists of video url, info and list of images
+   * @param {String} semester - semester
+   * @param {String} courseId - course id
+   * @param {String} lectureName - lecture name
    */
   fetch(semester, courseId, lectureName) {
     fetchMedia(semester, courseId, lectureName, (err, result) => {
@@ -22,13 +22,9 @@ class MediaActions {
         //TODO: error handler
         throw err;
       }
-      AppDispatcher.dispatch({
-        actionType: MediaConstants.FETCH_MEDIA,
-        media: result,
-        semester: semester,
-        courseId: courseId,
-        lectureName: lectureName
-      });
+      AppDispatcher.dispatch(Object.assign(result, {
+        actionType: MediaConstants.FETCH_MEDIA
+      }));
     });
   }
 

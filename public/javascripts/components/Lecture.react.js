@@ -12,7 +12,7 @@ export default class Lecture extends React.Component {
     this.setState({
       dialogContent: this.generateMediaView({
         media: mediaStore.getCurrent(),
-        primary: mediaStore.getVideoData()
+        primary: mediaStore.getVideoUrl()
       })
     });
   }
@@ -33,7 +33,7 @@ export default class Lecture extends React.Component {
   }
 
   focusLecture() {
-    mediaActions.fetch();
+    mediaActions.fetchImages();
     this.setState({dialogVisible: true});
   }
 
