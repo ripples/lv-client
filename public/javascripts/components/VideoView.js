@@ -23,7 +23,7 @@ export default class VideoView extends React.Component {
     return (
       <div className="videoViewContainer">
         <video width="100%" height="70%" controls>
-          <source src={this.props.video.source} type="video/mp4"/>
+          <source src={this.props.video} type="video/mp4"/>
         </video>
       </div>
     );
@@ -31,7 +31,5 @@ export default class VideoView extends React.Component {
 }
 
 VideoView.propTypes = {
-  video: React.PropTypes.shape({
-    source: React.PropTypes.string
-  }).isRequired
+  video: React.PropTypes.any.isRequired
 };
