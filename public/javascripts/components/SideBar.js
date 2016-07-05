@@ -52,10 +52,10 @@ export default class SideBar extends React.Component {
           <h1> Refine Search</h1>
           <h3>KEYWORDS</h3>
           <form onSubmit={this._addKeyWord.bind(this)} name="keywords">
-            <input type="text" ref={keyword=>this._keyword = keyword}/>
-            <Button onClick={this._addKeyWord.bind(this)} bsStyle="info" size="small">
+            <input type="text" ref={keyword=>this._keyword = keyword} minLength="2"/>
+            <button onClick={this._addKeyWord.bind(this)} bsStyle="info" size="small" className="btn btn-sm btn-info-">
               ADD KEYWORD
-            </Button>
+            </button>
           </form>
           {renderedKeyWords}
         </div>
