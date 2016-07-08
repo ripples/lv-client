@@ -7,22 +7,15 @@ import mediaActions from "../actions/MediaAction";
 
 export default class VideoView extends React.Component {
 
-  checkTimeSync() {
-    // check the video time with the MediaStore
-    if (document.getElementById(this.props.videoID).paused) {
-      return;
-    }
-
-    const currentTime = Math.floor(document.getElementById(this.props.videoID).currentTime);
-    if (mediaStore.shouldSync(currentTime)) {
-      this.syncTimestamps(currentTime);
-    }
+  checkTimeSync(e) {
+    const currentTime = e.target.currentTime;
+    mediaStore.getClosestImage()
   }
 
   render() {
     return (
       <div className="videoViewContainer">
-        <video width="100%" height="70%" controls>
+        <video width="100%" height="70%" controls onTimeUpdate={e => this.checkTimeSync(e)}>
           <source src={this.props.video} type="video/mp4"/>
         </video>
       </div>

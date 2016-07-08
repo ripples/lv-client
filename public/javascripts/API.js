@@ -73,21 +73,25 @@ export function fetchLectures(semester, courseId, lectures, callback) {
 }
 
 /**
- * Fetch video data
+ * Fetch video, list of images, and the first image thumbs (If exists)
  * @param {String} semester - semester
  * @param {String} courseId - course id
  * @param {String} lectureName - lecture name
  * @param {Function} callback - Called on success or error returns (err, result)
  */
 export function fetchMedia(semester, courseId, lectureName, callback) {
-  let promises = [];
-  const urls = ["video", "images"].map(location => {
-    return `http://${window.location.host}/api/${API_VERSION}/media/${semester}/${courseId}/${lectureName}/${location}`;
-  });
+  const baseUrl = `http://${window.location.host}/api/${API_VERSION}/media/${semester}/${courseId}/${lectureName}`;
 
-  urls.forEach(url => {
-    promises.push(new Promise((resolve, reject) => {
-      const request = new Request(url, {
+  /**
+   * TODO: Current fetch model:
+   * Fully synchronous: (video & image data) -> callback (video & raw image & image data)
+   * We want:
+   * Partially synchronous: callback1 (video, (image data)  -> callback2 (raw image))
+   *                                   video shouldn't wait on image data
+   **/
+  const promises = ["video", "images"].map(location => {
+    return new Promise((resolve, reject) => {
+      const request = new Request(`${baseUrl}/${location}`, {
         method: "GET"
       });
       makeRequest(request, undefined, (err, result) => {
@@ -96,18 +100,47 @@ export function fetchMedia(semester, courseId, lectureName, callback) {
         }
         resolve(result);
       });
-    }));
+    });
   });
 
-  Promise.all(promises).then(values => {
-    callback(null, {
-      video: values[0],
-      images: values[1],
-      lecture: {
-        semester: semester,
-        courseId: courseId,
-        name: lectureName
+  Promise.all(promises).then(promiseResult1 => {
+    const images = promiseResult1[1];
+
+    const promises = ["whiteboard", "computer"].reduce((currentPromises, mediaType) => {
+      // No need to check for images that don't exist
+      const media = images[mediaType];
+      if (media.length > 0) {
+        currentPromises.push(new Promise((resolve, reject) => {
+          const request = new Request(`${baseUrl}/images/${mediaType}/${media[0]}/thumb`, {
+            method: "GET"
+          });
+          makeRequest(request, undefined, (err, result) => {
+            if (err) {
+              reject(err);
+            }
+            resolve(result);
+          });
+        }));
       }
+      return currentPromises;
+    }, []);
+
+    Promise.all(promises).then(promiseResult2 => {
+      callback(null, {
+        mediaBlobs: {
+          video: promiseResult1[0],
+          whiteboard: promiseResult2[1],
+          computer: promiseResult2[1]
+        },
+        images: images,
+        lecture: {
+          semester: semester,
+          courseId: courseId,
+          name: lectureName
+        }
+      });
+    }).catch(reason => {
+      callback(reason);
     });
   }).catch(reason => {
     callback(reason);
@@ -172,35 +205,27 @@ function makeRequest(request, schema, callback) {
     contentType = response.headers.get("Content-Type").split(";")[0];
     switch (contentType) {
       case "application/json":
-      {
         return response.json();
-      }
       case "video/mp4":
-      {
         return response.blob();
-      }
-      default :
-      {
+      case "image/png":
+        return response.blob();
+      default:
         return response.text();
-      }
     }
   }).then(data => {
     switch (contentType) {
       case "application/javascript":
-      {
-        const result = camelizeKeys(data);
-        callback(null, result);
+        callback(null, camelizeKeys(data));
         break;
-      }
       case "video/mp4":
-      {
         callback(null, URL.createObjectURL(data));
         break;
-      }
+      case "image/png":
+        callback(null, URL.createObjectURL(data));
+        break;
       default:
-      {
         callback(null, data);
-      }
     }
   }).catch(err => {
     callback(err);

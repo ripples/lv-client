@@ -1,31 +1,22 @@
 "use strict";
 
 import EventEmitter from "events";
-
+import binarySearch from "../utils/binarySearchClosest";
 import * as Immutable from "immutable";
-// eslint-disable-next-line no-unused-vars
-import regeneratorRuntime from "regenerator-runtime";
 
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {MediaConstants} from "../constants/MediaConstants";
 
 const CHANGE_EVENT = "change";
 
-/**
- * Iterator for images
- * @param {Array<String>} images - list of images
- * @yield {String} - generator for image iteration
- */
-function * imageIterator(images) {
-  for (let image of images) {
-    yield image;
-  }
-}
-
 class MediaStore extends EventEmitter {
   constructor() {
     super();
     this._media = Immutable.fromJS({
+      currentTime: {
+        whiteboard: 0,
+        computer: 0
+      },
       lecture: {
         semester: "",
         courseId: "",
@@ -45,19 +36,25 @@ class MediaStore extends EventEmitter {
 
   /**
    * Set media store data
-   * @param {URL} videoUrl - Url of video
+   * @param {Object} mediaBlobs - Object of media blobs
    * @param {Object} images - Object of media data
    * @param {Object} lecture - Object of current lecture info
    */
-  setMedia(videoUrl, images, lecture) {
+  setMedia(mediaBlobs, images, lecture) {
     // TODO: cleanup
-    this._media = this._media.updateIn(["urls", "video"], () => videoUrl);
-    this._media = this._media.updateIn(["images", "whiteboard"], () => images.whiteboard);
-    this._media = this._media.updateIn(["images", "computer"], () => images.computer);
-    this._media = this._media.set("lecture", {
+    this._media = this._media.set("lecture", Immutable.Map({
       semester: lecture.semester,
       courseId: lecture.courseId,
-      name: lecture.lectureName
+      name: lecture.name
+    }));
+    this._media = this._media.set("urls", Immutable.Map({
+      video: mediaBlobs.video,
+      whiteboard: mediaBlobs.whiteboard,
+      computer: mediaBlobs.computer
+    }));
+    this._media = this._media.set("images", {
+      whiteboard: Immutable.List(images.whiteboard),
+      computer: Immutable.List(images.computer)
     });
   }
 
@@ -95,7 +92,7 @@ class MediaStore extends EventEmitter {
    * Get video data
    * @return {Object} - video data
    */
-  getWhiteboardUrl() {
+  getWhiteboardImageUrl() {
     return this._media.getIn(["urls", "whiteboard"]);
   }
 
@@ -103,26 +100,14 @@ class MediaStore extends EventEmitter {
    * Get video data
    * @return {Object} - video data
    */
-  getComputerUrl() {
+  getComputerImageUrl() {
     return this._media.getIn(["urls", "computer"]);
   }
 
-  /**
-   * Get generator for whiteboard images
-   * @return {Generator} - whiteboard generator
-   */
-  getWhiteboardImagesIterator() {
-    return imageIterator(this._media.getIn(["images", "whiteboard"]));
-  }
+  getClosestWhiteBoardImage() {
 
-  /**
-   * Get generator for computer images
-   * @return {Generator} - computer generator
-   */
-  getComputerImagesIterator() {
-    return imageIterator(this._media.getIn(["images", "computer"]));
+    binarySearch()
   }
-
 }
 
 const mediaStore = new MediaStore();
@@ -130,19 +115,21 @@ const mediaStore = new MediaStore();
 // Register callback to handle all updates
 AppDispatcher.register(action => {
   switch (action.actionType) {
-    case MediaConstants.FETCH_MEDIA: {
-      mediaStore.setMedia(action.video, action.images, action.lecture);
+    case MediaConstants.FETCH_MEDIA:
+    {
+      mediaStore.setMedia(action.mediaBlobs, action.images, action.lecture);
       mediaStore.emitChange();
       break;
     }
-    case MediaConstants.SYNC: {
+    case MediaConstants.SYNC:
+    {
       const timestamp = action.timestamp;
       synchronize(timestamp);
       mediaStore.emitChange();
       break;
     }
     default:
-      // no op
+    // no op
   }
 });
 

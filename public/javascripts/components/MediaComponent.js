@@ -34,12 +34,14 @@ export default class MediaPage extends React.Component {
 
   onMediaChangeListener() {
     const videoUrl = mediaStore.getVideoUrl();
-    const whiteBoardImages = mediaStore.getWhiteboardImagesIterator();
-    const computerImages = mediaStore.getComputerImagesIterator();
+    const computerImageUrl = mediaStore.getComputerImageUrl();
+    const whiteBoardImageUrl = mediaStore.getWhiteboardImageUrl();
+    // const whiteBoardImages = mediaStore.getWhiteboardImagesIterator();
+    // const computerImages = mediaStore.getComputerImagesIterator();
     this.setState({
-      videoView: <VideoView video={videoUrl}/>
-      // whiteBoardView: <ImageView images={whiteBoardImages}/>,
-      // computerView: <ImageView images={computerImages}/>
+      videoView: <VideoView video={videoUrl}/>,
+      whiteBoardView: <ImageView image={computerImageUrl}/>,
+      computerView: <ImageView image={whiteBoardImageUrl}/>
     });
   }
 
