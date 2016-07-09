@@ -6,7 +6,13 @@
 
 import keyMirror from "keymirror";
 
-export const MediaConstants = keyMirror({
-  FETCH_MEDIA: null,
+const MediaConstants = keyMirror({
+  FETCH_INITIAL_MEDIA: null,
+  FETCH_CURRENT_IMAGES: null,
   SYNC: null
 });
+
+export default MediaConstants;
+
+export const IMAGE_TYPES = ["computer", "whiteboard"];
+

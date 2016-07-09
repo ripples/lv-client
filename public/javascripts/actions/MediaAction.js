@@ -4,9 +4,9 @@
  * MediaActions
  */
 
-import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
-import {MediaConstants} from "../constants/MediaConstants";
-import {fetchMedia} from "../API";
+import appDispatcher from "../dispatcher/AppDispatcher";
+import MediaConstants from "../constants/MediaConstants";
+import {fetchInitialMedia, fetchImages} from "../API";
 
 class MediaActions {
 
@@ -16,30 +16,51 @@ class MediaActions {
    * @param {String} courseId - course id
    * @param {String} lectureName - lecture name
    */
-  fetch(semester, courseId, lectureName) {
-    fetchMedia(semester, courseId, lectureName, (err, result) => {
+  static fetchInit(semester, courseId, lectureName) {
+    fetchInitialMedia(semester, courseId, lectureName, (err, result) => {
       if (err) {
         //TODO: error handler
         throw err;
       }
-      AppDispatcher.dispatch(Object.assign(result, {
-        actionType: MediaConstants.FETCH_MEDIA
+      appDispatcher.dispatch(Object.assign(result, {
+        actionType: MediaConstants.FETCH_INITIAL_MEDIA
       }));
     });
   }
 
   /**
-   * Synchronize the current media object for the current timestamp
-   * @param {Number} timestamp - The current time to be viewed
+   * Synchronize the current media object for the current video timestamp
+   * @param {Number} videoTimestamp - The current time to be viewed
    */
-  sync(timestamp) {
-    AppDispatcher.dispatch({
+  static sync(videoTimestamp) {
+    appDispatcher.dispatch({
       actionType: MediaConstants.SYNC,
-      timestamp: timestamp
+      videoTimestamp: videoTimestamp
+    });
+  }
+
+  /**
+   * Fetches images, does not handle caching
+   * @param {String} semester - semester
+   * @param {String} courseId - course id
+   * @param {String} lectureName - lecture name
+   * @param {Array<String>} images - list of images
+   * @param {String} imageType - type of image
+   * @param {String} size - image size
+   */
+  static fetchImages(semester, courseId, lectureName, images, imageType, size) {
+    fetchImages(semester, courseId, lectureName, images, imageType, size, (err, result) => {
+      if (err) {
+        //TODO: error handler
+        throw err;
+      }
+      appDispatcher.dispatch({
+        actionType: MediaConstants.FETCH_CURRENT_IMAGES,
+        imageUrls: result,
+        type: imageType
+      });
     });
   }
 }
 
-const mediaActions = new MediaActions();
-
-export default mediaActions;
+export default MediaActions;

@@ -4,7 +4,7 @@
  * Lecture Actions
  */
 
-import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
+import appDispatcher from "../dispatcher/AppDispatcher";
 import {CourseConstants} from "../constants/CourseConstants";
 import * as api from "../API";
 
@@ -17,19 +17,19 @@ class CourseAction {
       callback: (err, courses) => {
         if (err) {
           const message = String(err.err.message);
-          AppDispatcher.dispatch({
+          appDispatcher.dispatch({
             actionType: CourseConstants.ERROR,
             errorType: message
           });
         }
-        AppDispatcher.dispatch({
+        appDispatcher.dispatch({
           actionType: CourseConstants.FETCH_COURSES,
           courses: courses
         });
       }
     });
   }
-  
+
   /**
    * Fetches list of lectures details
    * @param {String} semester - semester
@@ -40,12 +40,12 @@ class CourseAction {
     api.fetchLectures(semester, courseId, lectures, (err, lectures) => {
       if (err) {
         const message = String(err.err.message);
-        AppDispatcher.dispatch({
+        appDispatcher.dispatch({
           actionType: CourseConstants.ERROR,
           errorType: message
         });
       }
-      AppDispatcher.dispatch({
+      appDispatcher.dispatch({
         actionType: CourseConstants.FETCH_LECTURES,
         courseData: {
           courseId: courseId,
@@ -54,10 +54,10 @@ class CourseAction {
       });
     });
   }
-  
+
   /**
-   * fetches the result of the serach of lectures
-   * @param {String} searchContent
+   * fetches the result of the search of lectures
+   * @param {String} searchContent - Search content
    */
   fetchSearchResult(searchContent) {
     api.fetchSearchResults({
@@ -65,46 +65,46 @@ class CourseAction {
       callback: (err, result)=> {
         if (err) {
           const message = String(err.err.message);
-          AppDispatcher.dispatch({
+          appDispatcher.dispatch({
             actionType: CourseConstants.ERROR,
             errorType: message
           });
         }
-        AppDispatcher.dispatch({
+        appDispatcher.dispatch({
           actionType: CourseConstants.FETCH_SEARCH_RESULTS,
           data: result
         });
       }
     });
   }
-  
+
   /**
    * Filter the lecture feed to display/not display a given class
    * @param  {string} classname - The name of the class to filter in/out
    */
   filter(classname) {
-    AppDispatcher.dispatch({
+    appDispatcher.dispatch({
       actionType: CourseConstants.FILTER,
       classname: classname
     });
   }
-  
+
   /**
    * Open and load course card
    * @param {String} courseId - course id
    */
   view(courseId) {
-    AppDispatcher.dispatch({
+    appDispatcher.dispatch({
       actionType: CourseConstants.VIEW,
       courseId: courseId
     });
   }
-  
+
   /**
    * Hide LectureView component
    */
   hide() {
-    AppDispatcher.dispatch({
+    appDispatcher.dispatch({
       actionType: CourseConstants.HIDE
     });
   }

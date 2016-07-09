@@ -7,7 +7,7 @@
 import EventEmitter from "events";
 import * as Immutable from "immutable";
 
-import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
+import appDispatcher from "../dispatcher/AppDispatcher";
 import {CourseConstants} from "../constants/CourseConstants";
 import ErrorConstants from "../constants/ErrorConstants";
 const CHANGE_EVENT = "change";
@@ -111,7 +111,7 @@ class CourseStore extends EventEmitter {
 const courseStore = new CourseStore();
 
 // Register callback to handle all updates
-AppDispatcher.register(action => {
+appDispatcher.register(action => {
   switch (action.actionType) {
     case CourseConstants.FETCH_COURSES: {
       const courses = action.courses;

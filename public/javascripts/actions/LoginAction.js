@@ -4,7 +4,7 @@
  * LoginActions
  */
 
-import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
+import appDispatcher from "../dispatcher/AppDispatcher";
 import {LoginConstants} from "../constants/LoginConstants";
 import {login} from "../API";
 
@@ -25,7 +25,7 @@ class LoginActions {
             errorType: message
           });
         }
-        AppDispatcher.dispatch({
+        appDispatcher.dispatch({
           actionType: LoginConstants.LOGIN,
           jwt: data.token
         });
@@ -37,7 +37,7 @@ class LoginActions {
    * Logout of the system
    */
   logout() {
-    AppDispatcher.dispatch({
+    appDispatcher.dispatch({
       actionType: LoginConstants.LOGOUT
     });
   }

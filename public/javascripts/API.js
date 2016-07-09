@@ -5,8 +5,10 @@
  **/
 import {camelizeKeys} from "humps";
 import loginStore from "./stores/LoginStore";
+import {IMAGE_TYPES} from "./constants/MediaConstants";
 
 const API_VERSION = "v1";
+const BASE_URL = `http://${window.location.host}/api/${API_VERSION}`;
 
 /**
  *
@@ -21,7 +23,7 @@ const API_VERSION = "v1";
  * }
  */
 export function login(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/login`;
+  const url = `${BASE_URL}/login`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify(params.data),
@@ -41,7 +43,7 @@ export function login(params) {
  * }
  */
 export function fetchCourses(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/courses`;
+  const url = `${BASE_URL}/courses`;
   const request = new Request(url, {
     method: "GET",
     headers: new Headers({
@@ -59,7 +61,7 @@ export function fetchCourses(params) {
  * @param {Function} callback - Called on success or error returns (err, result)
  */
 export function fetchLectures(semester, courseId, lectures, callback) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/courses/${semester}/${courseId}`;
+  const url = `${BASE_URL}/courses/${semester}/${courseId}`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify({
@@ -79,8 +81,8 @@ export function fetchLectures(semester, courseId, lectures, callback) {
  * @param {String} lectureName - lecture name
  * @param {Function} callback - Called on success or error returns (err, result)
  */
-export function fetchMedia(semester, courseId, lectureName, callback) {
-  const baseUrl = `http://${window.location.host}/api/${API_VERSION}/media/${semester}/${courseId}/${lectureName}`;
+export function fetchInitialMedia(semester, courseId, lectureName, callback) {
+  const baseUrl = `${BASE_URL}/media/${semester}/${courseId}/${lectureName}`;
 
   /**
    * TODO: Current fetch model:
@@ -106,12 +108,12 @@ export function fetchMedia(semester, courseId, lectureName, callback) {
   Promise.all(promises).then(promiseResult1 => {
     const images = promiseResult1[1];
 
-    const promises = ["whiteboard", "computer"].reduce((currentPromises, mediaType) => {
+    const promises = IMAGE_TYPES.reduce((currentPromises, imageType) => {
       // No need to check for images that don't exist
-      const media = images[mediaType];
+      const media = images[imageType];
       if (media.length > 0) {
         currentPromises.push(new Promise((resolve, reject) => {
-          const request = new Request(`${baseUrl}/images/${mediaType}/${media[0]}/thumb`, {
+          const request = new Request(`${baseUrl}/images/${imageType}/thumb/${media[0]}`, {
             method: "GET"
           });
           makeRequest(request, undefined, (err, result) => {
@@ -127,7 +129,7 @@ export function fetchMedia(semester, courseId, lectureName, callback) {
 
     Promise.all(promises).then(promiseResult2 => {
       callback(null, {
-        mediaBlobs: {
+        mediaUrls: {
           video: promiseResult1[0],
           whiteboard: promiseResult2[1],
           computer: promiseResult2[1]
@@ -148,18 +150,35 @@ export function fetchMedia(semester, courseId, lectureName, callback) {
 }
 
 /**
- * Fetch image data
+ * Fetch list of images
  * @param {String} semester - semester
  * @param {String} courseId - course id
  * @param {String} lectureName - lecture name
+ * @param {Array<String>} images - list of images
+ * @param {String} imageType - type of image
+ * @param {String} size - image size
  * @param {Function} callback - Called on success or error returns (err, result)
  */
-export function fetchImages(semester, courseId, lectureName, callback) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/images/${semester}/${courseId}/${lectureName}`;
-  const request = new Request(url, {
-    method: "GET"
+export function fetchImages(semester, courseId, lectureName, images, imageType, size, callback) {
+  const baseUrl = `${BASE_URL}/media/${semester}/${courseId}/${lectureName}/images/${imageType}/${size}`;
+  const promises = images.map(imageName => {
+    return new Promise((resolve, reject) => {
+      const request = new Request(`${baseUrl}/${imageName}`, {
+        method: "GET"
+      });
+      makeRequest(request, undefined, (err, result) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(result);
+      });
+    });
   });
-  makeRequest(request, undefined, callback);
+  Promise.all(promises).then(values => {
+    callback(null, values);
+  }).catch(reason => {
+    callback(reason);
+  });
 }
 
 /**
@@ -172,7 +191,7 @@ export function fetchImages(semester, courseId, lectureName, callback) {
  * }
  */
 export function fetchSearchResults(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/courses/search`;
+  const url = `${BASE_URL}/courses/search`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify({

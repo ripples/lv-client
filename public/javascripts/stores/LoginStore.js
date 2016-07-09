@@ -7,7 +7,7 @@
 import EventEmitter from "events";
 import cookie from "react-cookie";
 
-import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
+import appDispatcher from "../dispatcher/AppDispatcher";
 import {LoginConstants} from "../constants/LoginConstants";
 import ErrorConstants from "../constants/ErrorConstants";
 
@@ -111,7 +111,7 @@ class LoginStore extends EventEmitter {
 const loginStore = new LoginStore();
 
 // Register callback to handle all updates
-AppDispatcher.register(action => {
+appDispatcher.register(action => {
   switch (action.actionType) {
     case LoginConstants.LOGIN: {
       const jwt = action.jwt.trim();

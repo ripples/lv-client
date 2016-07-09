@@ -6,10 +6,10 @@
 
 import React from "react";
 
-import ImageView from "./ImageView";
 import VideoView from "./VideoView";
+import TimelineComponent from "./TimelineComponent";
 
-import mediaActions from "../actions/MediaAction";
+import MediaActions from "../actions/MediaAction";
 import mediaStore from "../stores/MediaStore";
 
 export default class MediaPage extends React.Component {
@@ -17,8 +17,7 @@ export default class MediaPage extends React.Component {
     super();
     this.state = {
       videoView: null,
-      whiteBoardView: null,
-      computerView: null
+      timelineComponent: null
     };
     this.onMediaChangeListener = this.onMediaChangeListener.bind(this);
   }
@@ -29,19 +28,21 @@ export default class MediaPage extends React.Component {
    */
   _fetchMedia() {
     let params = this.props.params;
-    mediaActions.fetch(params.semester, params.courseId, params.lectureName);
+    MediaActions.fetchInit(params.semester, params.courseId, params.lectureName);
+  }
+
+  sync(videoTimestamp) {
+    Math.floor(videoTimestamp + )
+    MediaActions.sync(videoTimestamp);
   }
 
   onMediaChangeListener() {
     const videoUrl = mediaStore.getVideoUrl();
-    const computerImageUrl = mediaStore.getComputerImageUrl();
-    const whiteBoardImageUrl = mediaStore.getWhiteboardImageUrl();
-    // const whiteBoardImages = mediaStore.getWhiteboardImagesIterator();
-    // const computerImages = mediaStore.getComputerImagesIterator();
+    const computerImageUrls = mediaStore.getComputerImageUrls();
+    const whiteboardImageUrls = mediaStore.getWhiteboardImageUrls();
     this.setState({
-      videoView: <VideoView video={videoUrl}/>,
-      whiteBoardView: <ImageView image={computerImageUrl}/>,
-      computerView: <ImageView image={whiteBoardImageUrl}/>
+      videoView: <VideoView video={videoUrl} sync={this.sync}/>,
+      timelineComponent: <TimelineComponent computer={computerImageUrls} whiteboard={whiteboardImageUrls}/>
     });
   }
 
@@ -58,8 +59,7 @@ export default class MediaPage extends React.Component {
     return (
       <div className="MediaComponent">
         {this.state.videoView}
-        {this.state.whiteBoardView}
-        {this.state.computerView}
+        {this.state.timelineComponent}
       </div>
     );
   }
