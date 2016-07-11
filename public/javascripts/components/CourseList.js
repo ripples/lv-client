@@ -13,8 +13,10 @@ export default class CourseList extends React.Component {
         <CourseCard key={id} course={courses[id]}/>
       );
     });
+    const subtitle = (courseCards.length === 0 ? <h2>No Courses Found</h2>: <h2>Courses</h2>);
     return (
       <Col sm={9} className="course-card">
+        {subtitle}
         {courseCards}
       </Col>
     );

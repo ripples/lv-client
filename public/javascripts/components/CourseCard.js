@@ -54,6 +54,7 @@ export default class CourseCard extends React.Component {
           <ButtonGroup vertical block>
             <Button bsStyle="info" onClick={() => this.changeDisplay()}>
               {course.name}
+              <span className="caret"></span>
             </Button>
           </ButtonGroup>
           {subtitle}

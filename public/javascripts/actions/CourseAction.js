@@ -61,9 +61,8 @@ class CourseAction {
           // TODO: error handler
           throw err;
         }
-        console.log(result);
         AppDispatcher.dispatch({
-          type: CourseConstants.FETCH_SEARCH_RESULT,
+          actionType: CourseConstants.FETCH_SEARCH_RESULTS,
           data: result
         });
       }

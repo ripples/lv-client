@@ -77,7 +77,11 @@ export default class SearchBar extends React.Component {
   _doSearchRequest() {
     const searchContent = this.search.value;
     const courseId = $('select[name=courses] option:selected').val();
-    console.log(`Selected Option: ${courseId}`);
-    CourseActions.fetchSearchResult(searchContent);
+    if (searchContent.length > 2) {
+      CourseActions.fetchSearchResult(searchContent);
+    }
+    else {
+      CourseActions.fetchCourses();
+    }
   }
 }

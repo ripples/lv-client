@@ -72,7 +72,7 @@ class CourseStore extends EventEmitter {
    * @returns {Array} - results from the search
    */
   getSearchResult(){
-    return this._searchResults;
+    return this._searchResults.toJSON();
   }
 
   emitChange() {
@@ -112,7 +112,8 @@ AppDispatcher.register(action => {
       break;
     }
     case CourseConstants.FETCH_SEARCH_RESULTS: {
-      courseStore.populateResults(action.data);
+      const searchResults = action.data;
+      courseStore.set(searchResults);
       courseStore.emitChange();
       break;
     }
