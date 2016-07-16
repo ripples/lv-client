@@ -15,8 +15,9 @@ export default class SearchBar extends React.Component {
   constructor() {
     super();
     this.searchWaitTime = 1500;
+    this.iddleTime = null;
   }
-
+  
   render() {
     const styleClasses = this.getStyleClasses();
     const selectCourse = this.getSelectCourses();
@@ -33,14 +34,14 @@ export default class SearchBar extends React.Component {
       </div>
     );
   }
-
+  
   /**
    * @return {string} - classes to be applied to the main div of the this component
    */
   getStyleClasses() {
     return "container-fluid searchBar well text";
   }
-
+  
   /**
    *
    * @returns {XML} - Select option of the search bar
@@ -58,18 +59,17 @@ export default class SearchBar extends React.Component {
       </select>
     );
   }
-
+  
   /**
    * handle the search
    * @private
    */
   _handleSearch() {
     // this has to be a class variable, otherwise it will fire the setTimeout function multiple times
-    this.iddleTime;
     clearTimeout(this.iddleTime);
     this.iddleTime = setTimeout(this._doSearchRequest.bind(this), this.searchWaitTime);
   }
-
+  
   /**
    * fires the action to make the request for the search
    * @private

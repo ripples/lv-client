@@ -16,8 +16,11 @@ class CourseAction {
     api.fetchCourses({
       callback: (err, courses) => {
         if (err) {
-          // TODO: error handler
-          throw err;
+          const message = String(err.err.message);
+          AppDispatcher.dispatch({
+            actionType: CourseConstants.ERROR,
+            errorType: message
+          });
         }
         AppDispatcher.dispatch({
           actionType: CourseConstants.FETCH_COURSES,
@@ -26,7 +29,7 @@ class CourseAction {
       }
     });
   }
-
+  
   /**
    * Fetches list of lectures details
    * @param {String} semester - semester
@@ -36,8 +39,11 @@ class CourseAction {
   fetchLectures(semester, courseId, lectures) {
     api.fetchLectures(semester, courseId, lectures, (err, lectures) => {
       if (err) {
-        // TODO: error handler
-        throw err;
+        const message = String(err.err.message);
+        AppDispatcher.dispatch({
+          actionType: CourseConstants.ERROR,
+          errorType: message
+        });
       }
       AppDispatcher.dispatch({
         actionType: CourseConstants.FETCH_LECTURES,
@@ -48,7 +54,7 @@ class CourseAction {
       });
     });
   }
-
+  
   /**
    * fetches the result of the serach of lectures
    * @param {String} searchContent
@@ -58,8 +64,11 @@ class CourseAction {
       searchContent,
       callback: (err, result)=> {
         if (err) {
-          // TODO: error handler
-          throw err;
+          const message = String(err.err.message);
+          AppDispatcher.dispatch({
+            actionType: CourseConstants.ERROR,
+            errorType: message
+          });
         }
         AppDispatcher.dispatch({
           actionType: CourseConstants.FETCH_SEARCH_RESULTS,
@@ -68,7 +77,7 @@ class CourseAction {
       }
     });
   }
-
+  
   /**
    * Filter the lecture feed to display/not display a given class
    * @param  {string} classname - The name of the class to filter in/out
@@ -79,7 +88,7 @@ class CourseAction {
       classname: classname
     });
   }
-
+  
   /**
    * Open and load course card
    * @param {String} courseId - course id
@@ -90,7 +99,7 @@ class CourseAction {
       courseId: courseId
     });
   }
-
+  
   /**
    * Hide LectureView component
    */

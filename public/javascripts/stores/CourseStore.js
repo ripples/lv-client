@@ -9,7 +9,7 @@ import * as Immutable from "immutable";
 
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {CourseConstants} from "../constants/CourseConstants";
-
+import ErrorConstants from "../constants/ErrorConstants";
 const CHANGE_EVENT = "change";
 
 class CourseStore extends EventEmitter {
@@ -18,7 +18,7 @@ class CourseStore extends EventEmitter {
     this._courses = [];
     this._searchResults = [];
   }
-
+  
   /**
    * Create the courses array
    * @param  {Array.<Object>} courses The array of courses
@@ -39,7 +39,7 @@ class CourseStore extends EventEmitter {
       return courses;
     }, {}));
   }
-
+  
   /**
    * TODO: Will be deprecated, need to move to LectureStore
    * Update courses array with lecture data
@@ -56,7 +56,7 @@ class CourseStore extends EventEmitter {
       });
     });
   }
-
+  
   /**
    * Get the courses the user has access to
    * @return {array} - courses list
@@ -64,28 +64,42 @@ class CourseStore extends EventEmitter {
   getCourses() {
     return this._courses.toJSON();
   }
-
+  
   populateResults(data) {
     this._searchResults = data;
   }
+  
   /**
    * @returns {Array} - results from the search
    */
-  getSearchResult(){
+  getSearchResult() {
     return this._searchResults.toJSON();
   }
-
+  
   emitChange() {
     this.emit(CHANGE_EVENT);
   }
-
+  
+  /**
+   * emit the errors related to the Courses
+   * @param {string} errorType - the error received
+   */
+  emitError(errorType) {
+    switch (errorType) {
+      default: {
+        this.emit(ErrorConstants.UNEXPECTED_ERROR);
+        break;
+      }
+    }
+  }
+  
   /**
    * @param {function} callback - called on event change
    */
   addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
   }
-
+  
   /**
    * @param {function} callback - to be removed from event
    */
@@ -115,6 +129,10 @@ AppDispatcher.register(action => {
       const searchResults = action.data;
       courseStore.set(searchResults);
       courseStore.emitChange();
+      break;
+    }
+    case CourseConstants.ERROR: {
+      courseStore.emitError(action.errorType);
       break;
     }
     default:

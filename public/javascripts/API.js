@@ -139,7 +139,7 @@ export function fetchImages(semester, courseId, lectureName, callback) {
  * }
  */
 export function fetchSearchResults(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/feed/search`;
+  const url = `http://${window.location.host}/api/${API_VERSION}/courses/search`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify({
@@ -165,7 +165,7 @@ function makeRequest(request, schema, callback) {
   let contentType = "";
   fetch(request).then(response => {
     const status = response.status;
-    if (status < 200 && status >= 300) {
+    if (status < 200 || status >= 306) {
       callback({err: new Error(response.statusText), status: response.status});
       return;
     }

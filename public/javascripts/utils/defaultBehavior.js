@@ -1,4 +1,6 @@
 import $ from "jquery";
+window.jQuery = $;
+window.$ = $;
 
 /**
  * PS: This module is here for test purposes
