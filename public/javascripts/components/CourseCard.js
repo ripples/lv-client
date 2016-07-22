@@ -15,7 +15,7 @@ export default class CourseCard extends React.Component {
     };
     this.isDataFetched = false;
   }
-
+  
   changeDisplay() {
     // TODO: Will be replaced by caching system
     if (!this.isDataFetched) { // only fetches the data once to avoid redundant requests
@@ -23,7 +23,7 @@ export default class CourseCard extends React.Component {
     }
     this.setState({show: !this.state.show});
   }
-
+  
   /**
    * fetch the lectures tho be displayed on the lecture card
    */
@@ -33,7 +33,7 @@ export default class CourseCard extends React.Component {
     courseAction.filter(this.props.course);
     this.isDataFetched = true;
   }
-
+  
   render() {
     const course = this.props.course;
     const lectures = course.lectures;
@@ -54,7 +54,7 @@ export default class CourseCard extends React.Component {
           <ButtonGroup vertical block>
             <Button bsStyle="info" onClick={() => this.changeDisplay()}>
               {course.name}
-              <span className="caret"></span>
+              <span className="caret"/>
             </Button>
           </ButtonGroup>
           {subtitle}

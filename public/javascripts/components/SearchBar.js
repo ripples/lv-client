@@ -50,7 +50,7 @@ export default class SearchBar extends React.Component {
     let courses = [];
     const itr = this.props.courses;
     Object.keys(itr).forEach(key => courses.push(
-      <option key={key.id} value={itr[key].id}>{itr[key].name} </option>)
+      <option key={itr[key].id} value={itr[key].id}>{itr[key].name} </option>)
     );
     return (
       <select name="courses">

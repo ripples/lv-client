@@ -20,7 +20,6 @@ class LoginActions {
       callback: (err, data) => {
         if (err) {
           let message = String(err.err.message);
-          console.log(`here on the login action\n`, message, `\n===========\n`);
           AppDispatcher.dispatch({
             actionType: LoginConstants.ERROR,
             errorType: message
