@@ -26,6 +26,11 @@ export default class SideBar extends React.Component {
     }
   }
   
+  componentDidMount() {
+    console.log(this.state);
+    //this._refineSearch();
+  }
+  
   render() {
     const renderedKeyWords = this.state.keywords.map(keyword =>
       <div key={keyword} className="col-sm-4">

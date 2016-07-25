@@ -23,7 +23,10 @@ class FeedSection extends React.Component {
     this.state = {
       courses: {},
       renderedCourses: {},
-      searchFilters: {},
+      searchFilters: {
+        semester: null,
+        keywords: []
+      },
       semesterOptions: {
         current: "CUR",
         past: "PAST",
@@ -41,7 +44,7 @@ class FeedSection extends React.Component {
       {
         courses: courseStore.getCourses(),
         renderedCourses: courseStore.getCourses()
-      });
+      }, this._setSearchFilters.bind(this, this.state.searchFilters));
   }
   
   componentDidMount() {
@@ -121,10 +124,10 @@ class FeedSection extends React.Component {
           }
         });
       });
-      this.setState({renderedCourses: courseList});
+      this.setState({renderedCourses: courseList, searchFilters: filters});
       return;
     }
-    this.setState({renderedCourses: filteredCourses});
+    this.setState({renderedCourses: filteredCourses, searchFilters: filters});
   }
 }
 let DecorateFeedSection = withRouter(FeedSection);
