@@ -9,7 +9,7 @@
 
 import React from "react";
 
-import MainMediaContainer from "./MainMediaContainer.react";
+import MainMediaContainer from "./MainMediaContainer";
 
 export default class MediaView extends React.Component {
   render() {

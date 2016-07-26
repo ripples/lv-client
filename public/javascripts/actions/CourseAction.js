@@ -16,8 +16,11 @@ class CourseAction {
     api.fetchCourses({
       callback: (err, courses) => {
         if (err) {
-          // TODO: error handler
-          throw err;
+          const message = String(err.err.message);
+          AppDispatcher.dispatch({
+            actionType: CourseConstants.ERROR,
+            errorType: message
+          });
         }
         AppDispatcher.dispatch({
           actionType: CourseConstants.FETCH_COURSES,
@@ -26,54 +29,55 @@ class CourseAction {
       }
     });
   }
-
+  
   /**
    * Fetches list of lectures details
+   * @param {String} semester - semester
    * @param {String} courseId - course id
    * @param {Array.<String>} lectures - list of lectures fetching
    */
-  fetchLectures(courseId, lectures) {
-    api.fetchLectures({
-      courseId: courseId,
-      lectures: lectures,
-      callback: (err, lectures) => {
-        if (err) {
-          // TODO: error handler
-          console.log(err);
-          throw err;
-        }
+  fetchLectures(semester, courseId, lectures) {
+    api.fetchLectures(semester, courseId, lectures, (err, lectures) => {
+      if (err) {
+        const message = String(err.err.message);
         AppDispatcher.dispatch({
-          actionType: CourseConstants.FETCH_LECTURES,
-          courseData: {
-            courseId: courseId,
-            lectures: lectures
-          }
+          actionType: CourseConstants.ERROR,
+          errorType: message
         });
       }
+      AppDispatcher.dispatch({
+        actionType: CourseConstants.FETCH_LECTURES,
+        courseData: {
+          courseId: courseId,
+          lectures: lectures
+        }
+      });
     });
   }
-
+  
   /**
    * fetches the result of the serach of lectures
    * @param {String} searchContent
    */
-  fetchSearchResult(searchContent){
+  fetchSearchResult(searchContent) {
     api.fetchSearchResults({
       searchContent,
-      callback:(err,result)=>{
-        if(err){
-          // TODO: error handler
-          console.log(err);
-          throw err;
+      callback: (err, result)=> {
+        if (err) {
+          const message = String(err.err.message);
+          AppDispatcher.dispatch({
+            actionType: CourseConstants.ERROR,
+            errorType: message
+          });
         }
         AppDispatcher.dispatch({
-          type: CourseConstants.FETCH_SEARCH_RESULT,
+          actionType: CourseConstants.FETCH_SEARCH_RESULTS,
           data: result
         });
       }
     });
   }
-
+  
   /**
    * Filter the lecture feed to display/not display a given class
    * @param  {string} classname - The name of the class to filter in/out
@@ -84,7 +88,7 @@ class CourseAction {
       classname: classname
     });
   }
-
+  
   /**
    * Open and load course card
    * @param {String} courseId - course id
@@ -95,7 +99,7 @@ class CourseAction {
       courseId: courseId
     });
   }
-
+  
   /**
    * Hide LectureView component
    */

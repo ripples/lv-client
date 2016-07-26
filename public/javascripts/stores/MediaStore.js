@@ -1,126 +1,64 @@
 "use strict";
 
-/*
- * MediaStore
- */
-
 import EventEmitter from "events";
+
+import * as Immutable from "immutable";
+// eslint-disable-next-line no-unused-vars
+import regeneratorRuntime from "regenerator-runtime";
 
 import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
 import {MediaConstants} from "../constants/MediaConstants";
 
 const CHANGE_EVENT = "change";
 
-let _media = [];
-let _current = [];
-let _hoptime = NaN;
-let _primary = NaN;
-let _timestamp = NaN;
-
 /**
- * Create the media array, current array, current timestamp, and primary media
- * @param  {array} media The array of media objects
+ * Iterator for images
+ * @param {Array<String>} images - list of images
+ * @yield {String} - generator for image iteration
  */
-function set(media) {
-  _media = media;
-  _primary = 0;
-  _timestamp = 0;
-  _hoptime = calcHopTime(media);
-
-  _current = [];
-  for (let obj of media) {
-    switch (obj.type) {
-      case "video":
-        _current.push(obj);
-        break;
-      case "images":
-        _current.push({
-          type: obj.type,
-          data: {
-            id: obj.data.id,
-            timestamp: obj.data.timestamps[0]
-          }
-        });
-        break;
-      default:
-        // no op
-    }
+function * imageIterator(images) {
+  for (let image of images) {
+    yield image;
   }
-}
-
-/**
- * Calculate the interval for syncronization
- * @param  {array} media The media object in question
- * @return {number} interval
- */
-function calcHopTime(media) {
-  // TODO
-  return 20;
-}
-
-function isApproximateImage(timestamp, mediaTimestamp, obj) {
-  return (Number(timestamp) - Number(mediaTimestamp) < Number(timestamp) - Number(obj.data.timestamp))
-    && (Number(timestamp) - Number(mediaTimestamp) >= 0);
-}
-/**
- * Update the current media array based on a given timestamp
- * @param  {Date} timestamp The current time to be viewed
- */
-function synchronize(timestamp) {
-  _current = _current.map((obj, index) => {
-    switch (obj.type) {
-      case "video":
-        return obj;
-      case "images": {
-        let idx = -1;
-        _media[index].data.timestamps.forEach((mediaTimestamp, mediaIndex) => {
-          if (isApproximateImage(timestamp, mediaTimestamp, obj)) {
-            idx = mediaIndex;
-          }
-        });
-        if (idx !== -1) {
-          obj.data.timestamp = _media[index].data.timestamps[idx];
-        }
-        return obj;
-      }
-      default:
-        return obj;
-    }
-  });
-  _timestamp = timestamp;
 }
 
 class MediaStore extends EventEmitter {
-  /**
-   * Get the current media array
-   * @return {array} - current media array
-   */
-  getCurrent() {
-    return _current;
-  }
-  /**
-   * Get the time interval to synhcronize with the store
-   * @return {number} - time interval
-   */
-  getHoptime() {
-    return _hoptime;
+  constructor() {
+    super();
+    this._media = Immutable.fromJS({
+      lecture: {
+        semester: "",
+        courseId: "",
+        name: ""
+      },
+      urls: {
+        video: "",
+        whiteboard: "",
+        computer: ""
+      },
+      images: {
+        whiteboard: [],
+        computer: []
+      }
+    });
   }
 
   /**
-   * Get the top media object
-   * @return {array} - top media object
+   * Set media store data
+   * @param {URL} videoUrl - Url of video
+   * @param {Object} images - Object of media data
+   * @param {Object} lecture - Object of current lecture info
    */
-  getPrimary() {
-    return _primary;
-  }
-  /**
-   * Check if we need to syncronize
-   * @param  {number} timestamp The current time to be viewed
-   * @return {boolean} - if need to sync
-   */
-  shouldSync(timestamp) {
-    // TODO for each object in the current media array check against media array to see if there is a more appropriate timestamp
-    return true;
+  setMedia(videoUrl, images, lecture) {
+    // TODO: cleanup
+    this._media = this._media.updateIn(["urls", "video"], () => videoUrl);
+    this._media = this._media.updateIn(["images", "whiteboard"], () => images.whiteboard);
+    this._media = this._media.updateIn(["images", "computer"], () => images.computer);
+    this._media = this._media.set("lecture", {
+      semester: lecture.semester,
+      courseId: lecture.courseId,
+      name: lecture.lectureName
+    });
   }
 
   emitChange() {
@@ -128,17 +66,61 @@ class MediaStore extends EventEmitter {
   }
 
   /**
-   * @param {function} callback - called on event change
+   * @param {Function} callback - called on event change
    */
   addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
   }
 
   /**
-   * @param {function} callback - to be removed from event
+   * @param {Function} callback - to be removed from event
    */
   removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
+  }
+
+  getInfo() {
+    return this._media.get("info").toJSON();
+  }
+
+  /**
+   * Get video data
+   * @return {Object} - video data
+   */
+  getVideoUrl() {
+    return this._media.getIn(["urls", "video"]);
+  }
+
+  /**
+   * Get video data
+   * @return {Object} - video data
+   */
+  getWhiteboardUrl() {
+    return this._media.getIn(["urls", "whiteboard"]);
+  }
+
+  /**
+   * Get video data
+   * @return {Object} - video data
+   */
+  getComputerUrl() {
+    return this._media.getIn(["urls", "computer"]);
+  }
+
+  /**
+   * Get generator for whiteboard images
+   * @return {Generator} - whiteboard generator
+   */
+  getWhiteboardImagesIterator() {
+    return imageIterator(this._media.getIn(["images", "whiteboard"]));
+  }
+
+  /**
+   * Get generator for computer images
+   * @return {Generator} - computer generator
+   */
+  getComputerImagesIterator() {
+    return imageIterator(this._media.getIn(["images", "computer"]));
   }
 
 }
@@ -149,8 +131,7 @@ const mediaStore = new MediaStore();
 AppDispatcher.register(action => {
   switch (action.actionType) {
     case MediaConstants.FETCH_MEDIA: {
-      const media = action.media;
-      set(media);
+      mediaStore.setMedia(action.video, action.images, action.lecture);
       mediaStore.emitChange();
       break;
     }

@@ -12,5 +12,6 @@ export const CourseConstants = keyMirror({
   FETCH_SEARCH_RESULTS: null,
   FILTER: null,
   VIEW: null,
-  HIDE: null
+  HIDE: null,
+  ERROR: null,
 });

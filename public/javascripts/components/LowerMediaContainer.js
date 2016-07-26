@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import MediaComponent from "./MediaComponent.react";
+import MediaComponent from "./MediaComponent";
 
 
 export default class LowerMediaContainer extends React.Component {
@@ -17,14 +17,14 @@ export default class LowerMediaContainer extends React.Component {
       return elem.map((mediaObj, index) => {
         return (
           <div key={index} style={style}>
-            <MediaComponent media={mediaObj}/>
+            <MediaPage media={mediaObj}/>
           </div>
         );
       });
     } else if (this.elem) {
       return (
         <div style={{width: "100%", height: "20%", alright : "center"}}>
-          <MediaComponent media={elem}/> // return the one element passed
+          <MediaPage media={elem}/> // return the one element passed
         </div>
       );
     }

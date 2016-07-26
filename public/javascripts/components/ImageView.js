@@ -6,7 +6,7 @@ export default class ImageView extends React.Component {
   render() {
     return (
       <div className="imageContainer">
-        <img src={this.props.src}></img>
+        <img src={this.props.src}/>
       </div>
     );
   }

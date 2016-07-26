@@ -9,7 +9,7 @@ import {LoginConstants} from "../constants/LoginConstants";
 import {login} from "../API";
 
 class LoginActions {
-
+  
   /**
    * Login to the system
    * @param  {object} data - login params
@@ -19,7 +19,11 @@ class LoginActions {
       data: data,
       callback: (err, data) => {
         if (err) {
-          throw err;
+          let message = String(err.err.message);
+          AppDispatcher.dispatch({
+            actionType: LoginConstants.ERROR,
+            errorType: message
+          });
         }
         AppDispatcher.dispatch({
           actionType: LoginConstants.LOGIN,
@@ -28,7 +32,7 @@ class LoginActions {
       }
     });
   }
-
+  
   /**
    * Logout of the system
    */

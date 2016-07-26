@@ -11,30 +11,26 @@ import {fetchMedia} from "../API";
 class MediaActions {
 
   /**
-   * Fetches media for lecture
-   * @param {String} courseId - course id to fetch media for
-   * @param {String} lectureName - lecture to fetch media for
+   * Fetch initial media data for lecture which consists of video url, info and list of images
+   * @param {String} semester - semester
+   * @param {String} courseId - course id
+   * @param {String} lectureName - lecture name
    */
-  fetch(courseId, lectureName) {
-    fetchMedia({
-      courseId: courseId,
-      lectureName: lectureName,
-      callback: (media, err) => {
-        if (err) {
-          //TODO: error handler
-          throw err;
-        }
-        AppDispatcher.dispatch({
-          actionType: MediaConstants.FETCH_MEDIA,
-          media: media
-        });
+  fetch(semester, courseId, lectureName) {
+    fetchMedia(semester, courseId, lectureName, (err, result) => {
+      if (err) {
+        //TODO: error handler
+        throw err;
       }
+      AppDispatcher.dispatch(Object.assign(result, {
+        actionType: MediaConstants.FETCH_MEDIA
+      }));
     });
   }
 
   /**
    * Synchronize the current media object for the current timestamp
-   * @param  {Date} timestamp - The current time to be viewed
+   * @param {Number} timestamp - The current time to be viewed
    */
   sync(timestamp) {
     AppDispatcher.dispatch({

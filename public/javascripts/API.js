@@ -4,7 +4,6 @@
  * Service layer for interaction with server API
  **/
 import {camelizeKeys} from "humps";
-
 import loginStore from "./stores/LoginStore";
 
 const API_VERSION = "v1";
@@ -53,44 +52,81 @@ export function fetchCourses(params) {
 }
 
 /**
- *
- * @param {Object} params - parameters to make fetch lectures request
- * params structure must be:
- * {
- *   courseId: string,
- *   callback: function
- * }
+ * Fetch given lectures data for course
+ * @param {String} semester - semester
+ * @param {String} courseId - course id
+ * @param {Array<String>} lectures - lectures data will be fetched for
+ * @param {Function} callback - Called on success or error returns (err, result)
  */
-export function fetchLectures(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/courses/${params.courseId}`;
+export function fetchLectures(semester, courseId, lectures, callback) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/courses/${semester}/${courseId}`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify({
-      lectures: params.lectures
+      lectures: lectures
     }),
     headers: new Headers({
       "Content-Type": "application/json"
     })
   });
-  makeRequest(request, undefined, params.callback);
+  makeRequest(request, undefined, callback);
 }
 
 /**
- *
- * @param {Object} params - parameters to make fetch media request
- * params structure must be:
- * {
- *   courseId: string,
- *   lectureName: string,
- *   callback: function
- * }
+ * Fetch video data
+ * @param {String} semester - semester
+ * @param {String} courseId - course id
+ * @param {String} lectureName - lecture name
+ * @param {Function} callback - Called on success or error returns (err, result)
  */
-export function fetchMedia(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/courses/${params.courseId}/${params.lectureName}`;
+export function fetchMedia(semester, courseId, lectureName, callback) {
+  let promises = [];
+  const urls = ["video", "images"].map(location => {
+    return `http://${window.location.host}/api/${API_VERSION}/media/${semester}/${courseId}/${lectureName}/${location}`;
+  });
+
+  urls.forEach(url => {
+    promises.push(new Promise((resolve, reject) => {
+      const request = new Request(url, {
+        method: "GET"
+      });
+      makeRequest(request, undefined, (err, result) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(result);
+      });
+    }));
+  });
+
+  Promise.all(promises).then(values => {
+    callback(null, {
+      video: values[0],
+      images: values[1],
+      lecture: {
+        semester: semester,
+        courseId: courseId,
+        name: lectureName
+      }
+    });
+  }).catch(reason => {
+    callback(reason);
+  });
+}
+
+/**
+ * Fetch image data
+ * @param {String} semester - semester
+ * @param {String} courseId - course id
+ * @param {String} lectureName - lecture name
+ * @param {Function} callback - Called on success or error returns (err, result)
+ */
+export function fetchImages(semester, courseId, lectureName, callback) {
+  const url = `http://${window.location.host}/api/${API_VERSION}/images/${semester}/${courseId}/${lectureName}`;
   const request = new Request(url, {
     method: "GET"
   });
-  makeRequest(request, undefined, params.callback);
+  makeRequest(request, undefined, callback);
 }
 
 /**
@@ -103,7 +139,7 @@ export function fetchMedia(params) {
  * }
  */
 export function fetchSearchResults(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/feed/search`;
+  const url = `http://${window.location.host}/api/${API_VERSION}/courses/search`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify({
@@ -126,20 +162,46 @@ function makeRequest(request, schema, callback) {
   if (loginStore.isLoggedIn()) {
     request.headers.set("Authorization", loginStore.getJWT());
   }
+  let contentType = "";
   fetch(request).then(response => {
     const status = response.status;
-    if (status < 200 && status >= 300) {
+    if (status < 200 || status >= 306) {
       callback({err: new Error(response.statusText), status: response.status});
+      return;
     }
-    else {
-      return response.json();
+    contentType = response.headers.get("Content-Type").split(";")[0];
+    switch (contentType) {
+      case "application/json":
+      {
+        return response.json();
+      }
+      case "video/mp4":
+      {
+        return response.blob();
+      }
+      default :
+      {
+        return response.text();
+      }
     }
-  }).then(json => {
-    let result = camelizeKeys(json);
-    //if (typeof schema !== "undefined") {
-    //  result = normalize(result, schema);
-    //}
-    callback(null, result);
+  }).then(data => {
+    switch (contentType) {
+      case "application/javascript":
+      {
+        const result = camelizeKeys(data);
+        callback(null, result);
+        break;
+      }
+      case "video/mp4":
+      {
+        callback(null, URL.createObjectURL(data));
+        break;
+      }
+      default:
+      {
+        callback(null, data);
+      }
+    }
   }).catch(err => {
     callback(err);
   });
