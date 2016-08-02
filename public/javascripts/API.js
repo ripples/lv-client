@@ -4,8 +4,10 @@
  * Service layer for interaction with server API
  **/
 import {camelizeKeys} from "humps";
+
 import loginStore from "./stores/LoginStore";
 import {IMAGE_TYPES} from "./constants/MediaConstants";
+import {getMaxThumbs} from "./utils/sync";
 
 const API_VERSION = "v1";
 const BASE_URL = `http://${window.location.host}/api/${API_VERSION}`;
@@ -83,12 +85,12 @@ export function fetchLectures(semester, courseId, lectures, callback) {
  */
 export function fetchInitialMedia(semester, courseId, lectureName, callback) {
   const baseUrl = `${BASE_URL}/media/${semester}/${courseId}/${lectureName}`;
-
+  const maxThumbs = getMaxThumbs();
   /**
    * TODO: Current fetch model:
-   * Fully synchronous: (video & image data) -> callback (video & raw image & image data)
+   * Fully synchronous: (video & image data) -> callback (video & raw images & image data)
    * We want:
-   * Partially synchronous: callback1 (video, (image data)  -> callback2 (raw image))
+   * Partially synchronous: callback1 (video, (image data)  -> callback2(index, individual raw image))
    *                                   video shouldn't wait on image data
    **/
   const promises = ["video", "images"].map(location => {
@@ -109,30 +111,32 @@ export function fetchInitialMedia(semester, courseId, lectureName, callback) {
     const images = promiseResult1[1];
 
     const promises = IMAGE_TYPES.reduce((currentPromises, imageType) => {
-      // No need to check for images that don't exist
-      const media = images[imageType];
-      if (media.length > 0) {
-        currentPromises.push(new Promise((resolve, reject) => {
-          const request = new Request(`${baseUrl}/images/${imageType}/thumb/${media[0]}`, {
-            method: "GET"
-          });
-          makeRequest(request, undefined, (err, result) => {
-            if (err) {
-              reject(err);
-            }
-            resolve(result);
-          });
-        }));
-      }
+      Object.keys(images[imageType]).forEach(id => {
+        const media = images[imageType][id];
+        // No need to check for images that don't exist
+        if (media.length > 0) {
+          for (let i = 0; i < maxThumbs; i++) {
+            currentPromises.push(new Promise((resolve, reject) => {
+              const request = new Request(`${baseUrl}/images/${imageType}/thumb/${media[i]}`, {
+                method: "GET"
+              });
+              makeRequest(request, undefined, (err, result) => {
+                if (err) {
+                  reject(err);
+                }
+                resolve([media[i], result]);
+              });
+            }));
+          }
+        }
+      });
       return currentPromises;
     }, []);
 
     Promise.all(promises).then(promiseResult2 => {
-      callback(null, {
+      const result = {
         mediaUrls: {
-          video: promiseResult1[0],
-          whiteboard: promiseResult2[1],
-          computer: promiseResult2[1]
+          video: promiseResult1[0]
         },
         images: images,
         lecture: {
@@ -140,7 +144,20 @@ export function fetchInitialMedia(semester, courseId, lectureName, callback) {
           courseId: courseId,
           name: lectureName
         }
+      };
+      let i = 0;
+      IMAGE_TYPES.forEach(imageType => {
+        const imageTypeMap = {};
+        result.mediaUrls[imageType] = imageTypeMap;
+        Object.keys(images[imageType]).forEach(id => {
+          imageTypeMap[id] = promiseResult2.slice(i, i + maxThumbs).reduce((images, imageInfo) => {
+            images[imageInfo[0]] = imageInfo[1];
+            return images;
+          }, {});
+          i += maxThumbs;
+        });
       });
+      callback(null, result);
     }).catch(reason => {
       callback(reason);
     });
@@ -163,6 +180,7 @@ export function fetchImages(semester, courseId, lectureName, images, imageType, 
   const baseUrl = `${BASE_URL}/media/${semester}/${courseId}/${lectureName}/images/${imageType}/${size}`;
   const promises = images.map(imageName => {
     return new Promise((resolve, reject) => {
+      console.log(`${baseUrl}/${imageName}`);
       const request = new Request(`${baseUrl}/${imageName}`, {
         method: "GET"
       });

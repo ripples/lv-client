@@ -12,16 +12,25 @@ class LectureCard extends React.Component {
     };
   }
 
-  buildHtml() {
-    const lecture = this.props.lecture;
-    const mediaRoute = `/courses/${this.props.semester}/${this.props.courseId}/${this.props.lecture.lectureName}`;
+  _buildWatchRouteOptions() {
+    const props = this.props;
+    const lecture = props.lecture;
 
+    return {
+      pathname: `/watch/${props.semester}/${props.courseId}/${lecture.lectureName}`,
+      query: {timestamp: lecture.timestamp}
+    };
+  }
+
+  _buildHtml() {
+    const props = this.props;
+    const lecture = props.lecture;
     return (
       <div className="col-sm-6">
         <h2>Lecture: {lecture.lectureName}</h2>
         <p><em>Date: {lecture.timestamp}</em></p>
         <p>Runtime:{lecture.duration}</p>
-        <Link className="btn btn-success" to={mediaRoute}>
+        <Link className="btn btn-success" to={this._buildWatchRouteOptions()}>
           Load Media
         </Link>
       </div>
@@ -32,7 +41,7 @@ class LectureCard extends React.Component {
     if (!this.state.show) {
       return;
     }
-    const lectureInfo = this.buildHtml();
+    const lectureInfo = this._buildHtml();
     return (
       <div className="container">
         {lectureInfo}

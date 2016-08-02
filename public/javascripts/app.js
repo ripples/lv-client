@@ -21,8 +21,7 @@ ReactDOM.render(
     <Route path="/" component={LVApp}>
       <IndexRoute component={FeedSection} onEnter={loginCheck}/>
       <Route path="/login" component={LoginSection}/>
-      <Route path="/courses/:semester/:courseId"/>
-      <Route path="/courses/:semester/:courseId/:lectureName" component={MediaPage}/>
+      <Route path="/watch/:semester/:courseId/:lectureName" component={MediaPage}/>
     </Route>
   </Router>, app
 );

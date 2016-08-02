@@ -15,4 +15,5 @@ const MediaConstants = keyMirror({
 export default MediaConstants;
 
 export const IMAGE_TYPES = ["computer", "whiteboard"];
+export const THUMBNAIL_SIZE = 100;
 

@@ -1,3 +1,33 @@
+footer {
+    padding-top: 75px;
+}
+
+.backstretch {
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    height: 591px;
+    width: 1845px;
+    z-index: -999999;
+    position: fixed;
+}
+
+.bgimg {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    border: medium none;
+    width: 1845px;
+    height: 1230px;
+    max-height: none;
+    max-width: none;
+    z-index: -999999;
+    left: 0;
+    top: -319.5px;
+}
+
 body {
     padding: 70px 10px 10px !important;
     height: 100%;
@@ -104,6 +134,16 @@ a {
     float: left;
 }
 
+.carousel {
+    padding-top: 50px;
+    width: 200%;
+}
+.carousel img {
+    padding: 0 0 10px 10px;
+    height: 100px;
+    width: 100px;
+}
+
 #contentWrapper {
     position: relative;
     width: 600px;
@@ -118,4 +158,9 @@ a {
 
 #centerContent {
     float: right;
+}
+
+.videoViewContainer {
+    display: flex;
+    justify-content: center;
 }

@@ -16,8 +16,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 class LVApp extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = this.getLoginState();
     this._onChange = this._onChange.bind(this);
     this.iddleTime = null; // holds the set time out function to redirect the page when the token expires

@@ -27,7 +27,6 @@ export default class SideBar extends React.Component {
   }
   
   componentDidMount() {
-    console.log(this.state);
     //this._refineSearch();
   }
   

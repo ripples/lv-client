@@ -12,43 +12,69 @@ import TimelineComponent from "./TimelineComponent";
 import MediaActions from "../actions/MediaAction";
 import mediaStore from "../stores/MediaStore";
 
+const T = React.PropTypes;
+
 export default class MediaPage extends React.Component {
-  constructor() {
-    super();
+  static propTypes = {
+    params: T.shape({
+      semester: T.string.isRequired,
+      courseId: T.string.isRequired,
+      lectureName: T.string.isRequired
+    }).isRequired,
+    location: T.shape({
+      query: T.shape({
+        timestamp: T.string.isRequired
+      }).isRequired
+    }).isRequired
+  };
+
+  constructor(props) {
+    super(props);
     this.state = {
       videoView: null,
       timelineComponent: null
     };
     this.onMediaChangeListener = this.onMediaChangeListener.bind(this);
+    this.sync = this.sync.bind(this);
+    this.fetchMedia = this.fetchMedia.bind(this);
   }
 
   /**
    * Fetch media data for lecture
    * @private
    */
-  _fetchMedia() {
+  _fetchInitMedia() {
     let params = this.props.params;
     MediaActions.fetchInit(params.semester, params.courseId, params.lectureName);
   }
 
   sync(videoTimestamp) {
-    Math.floor(videoTimestamp + )
-    MediaActions.sync(videoTimestamp);
+    const timestamp = Math.floor(videoTimestamp + Number(this.props.location.query.timestamp));
+    MediaActions.sync(timestamp);
+  }
+
+  fetchMedia(images, imageType) {
+    let params = this.props.params;
+    MediaActions.fetchImages(params.semester, params.courseId, params.lectureName, images, imageType, "thumbs");
   }
 
   onMediaChangeListener() {
-    const videoUrl = mediaStore.getVideoUrl();
-    const computerImageUrls = mediaStore.getComputerImageUrls();
-    const whiteboardImageUrls = mediaStore.getWhiteboardImageUrls();
+    const urls = mediaStore.getUrls();
+    const currentIndex = mediaStore.getCurrentIndex();
     this.setState({
-      videoView: <VideoView video={videoUrl} sync={this.sync}/>,
-      timelineComponent: <TimelineComponent computer={computerImageUrls} whiteboard={whiteboardImageUrls}/>
+      videoView: <VideoView video={urls.video} sync={this.sync}/>,
+      timelineComponent: (
+        <TimelineComponent computer={urls.computerThumbs}
+                           whiteboard={urls.whiteboardThumbs}
+                           currentIndex={currentIndex}
+                           fetchMedia={this.fetchMedia}/>
+      )
     });
   }
 
   componentDidMount() {
     mediaStore.addChangeListener(this.onMediaChangeListener);
-    this._fetchMedia();
+    this._fetchInitMedia();
   }
 
   componentWillUnmount() {
@@ -64,11 +90,3 @@ export default class MediaPage extends React.Component {
     );
   }
 }
-
-MediaPage.propTypes = {
-  params: React.PropTypes.shape({
-    semester: React.PropTypes.string.isRequired,
-    courseId: React.PropTypes.string.isRequired,
-    lectureName: React.PropTypes.string.isRequired
-  }).isRequired
-};
