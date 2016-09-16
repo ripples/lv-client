@@ -11,7 +11,7 @@ export default class Lecture extends React.Component {
   onMediaChangeListener() {
     this.setState({
       dialogContent: this.generateMediaView({
-        media: mediaStore.getCurrent(),
+        media: mediaStore.getCurrentIndex(),
         primary: mediaStore.getVideoUrl()
       })
     });

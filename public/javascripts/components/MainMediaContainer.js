@@ -3,7 +3,7 @@
 import React from "react";
 
 import LowerMediaContainer from "./LowerMediaContainer";
-import MediaComponent from "./MediaComponent";
+import MediaComponent from "./MediaPage";
 
 export default class MainMediaContainer extends React.Component {
   render() {

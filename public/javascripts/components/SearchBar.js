@@ -23,7 +23,7 @@ export default class SearchBar extends React.Component {
     const selectCourse = this.getSelectCourses();
     return (
       <div className={styleClasses}>
-        <label for="name">Find</label>
+        <label htmlFor="name">Find</label>
         <input
           id="name"
           ref={(input)=>this.search = input}

@@ -9,7 +9,7 @@ import loginStore from "./stores/LoginStore";
 
 import LoginSection from "./components/LoginSection.js";
 import FeedSection from "./components/FeedSection";
-import MediaComponent from "./components/MediaComponent";
+import MediaPage from "./components/MediaPage";
 
 const app = document.getElementById("lvapp");
 import utils from "./utils/defaultBehavior";
@@ -21,8 +21,7 @@ ReactDOM.render(
     <Route path="/" component={LVApp}>
       <IndexRoute component={FeedSection} onEnter={loginCheck}/>
       <Route path="/login" component={LoginSection}/>
-      <Route path="/courses/:semester/:courseId"/>
-      <Route path="/courses/:semester/:courseId/:lectureName" component={MediaComponent}/>
+      <Route path="/watch/:semester/:courseId/:lectureName" component={MediaPage}/>
     </Route>
   </Router>, app
 );

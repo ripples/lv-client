@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import MediaComponent from "./MediaComponent";
+import MediaComponent from "./MediaPage";
 
 
 export default class LowerMediaContainer extends React.Component {

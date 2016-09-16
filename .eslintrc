@@ -18,6 +18,7 @@
     "react"
   ],
   "parser-options": {
+    "ecmaVersion": 7,
     "ecmaFeatures": {
       "jsx": true
     }

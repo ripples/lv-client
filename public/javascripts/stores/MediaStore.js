@@ -1,66 +1,145 @@
 "use strict";
 
 import EventEmitter from "events";
-
+import {binarySearch, getMaxThumbs, getMaxBuffer} from "../utils/sync";
 import * as Immutable from "immutable";
 // eslint-disable-next-line no-unused-vars
 import regeneratorRuntime from "regenerator-runtime";
 
-import {dispatcher as AppDispatcher} from "../dispatcher/AppDispatcher";
-import {MediaConstants} from "../constants/MediaConstants";
+import appDispatcher from "../dispatcher/AppDispatcher";
+import MediaConstants, {IMAGE_TYPES} from "../constants/MediaConstants";
+import {deepClone} from "../utils/object";
 
 const CHANGE_EVENT = "change";
 
 /**
- * Iterator for images
- * @param {Array<String>} images - list of images
- * @yield {String} - generator for image iteration
+ * Interface for fetching current images
+ * @param {Array<String>} path - path to images
+ * @return {{start: {String}, end: {String}}} - current index of images
  */
-function * imageIterator(images) {
-  for (let image of images) {
-    yield image;
+function * getImages(path) {
+  const current = this._media.getIn(["currentIndex", ...path]);
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    yield current.toObject();
   }
 }
 
 class MediaStore extends EventEmitter {
   constructor() {
     super();
-    this._media = Immutable.fromJS({
+    this._media = Immutable.fromJS(this._getStoreStructure());
+  }
+
+  /**
+   * Current structure of media store
+   * @return {Object} - structure of media store
+   * @private
+   */
+  _getStoreStructure() {
+    return {
       lecture: {
         semester: "",
         courseId: "",
-        name: ""
+        name: "",
+        timestamp: 0
       },
       urls: {
         video: "",
-        whiteboard: "",
-        computer: ""
+        whiteboard: {},
+        whiteboardThumbs: {},
+        computer: {},
+        computerThumbs: {}
       },
-      images: {
-        whiteboard: [],
-        computer: []
+      currentIndex: {
+        whiteboard: {},
+        computer: {}
       }
+    };
+  }
+
+  /**
+   * Initializes media store with data
+   * @param {Object} mediaBlobs - Object of media blobs
+   * @param {Object} images - Object of media data
+   * @param {Object} lecture - Object of current lecture info
+   */
+  initMedia(mediaBlobs, images, lecture) {
+    let initializedStore = this._getStoreStructure();
+    let urls = initializedStore.urls;
+
+    urls.computer = images.computer;
+    urls.computerThumbs = deepClone(images.computer);
+    urls.whiteboard = images.whiteboard;
+    urls.whiteboardThumbs = deepClone(images.whiteboard);
+    urls.video = mediaBlobs.video;
+    // Replace all image names with Object{name, url} denoting the url to image if exists
+    IMAGE_TYPES.forEach(imageType => {
+      let imageTypeIndex = {};
+      initializedStore.currentIndex[imageType] = imageTypeIndex;
+      Object.keys(mediaBlobs[imageType]).forEach(id => {
+        imageTypeIndex[id] = {
+          start: 0,
+          end: getMaxThumbs()
+        };
+        Object.keys(mediaBlobs[imageType][id]).forEach(image => {
+          let mediaSourceImageNames = initializedStore.urls[`${imageType}Thumbs`][id];
+          const imageUrlObject = mediaBlobs[imageType][id];
+          const i = mediaSourceImageNames.indexOf(image);
+          // TODO: garbage collect url pointers (caching?)
+          mediaSourceImageNames[i] = {name: image, url: imageUrlObject[image]};
+        });
+      });
+    });
+    initializedStore.lecture = lecture;
+
+    this._media = Immutable.fromJS(initializedStore);
+  }
+
+  /**
+   * Syncs media if needed
+   * @param {Number} videoTimestamp - timestamp of video to sync media against video timestamp
+   */
+  syncMedia(videoTimestamp) {
+    IMAGE_TYPES.forEach(mediaType => {
+      this._syncIndividualMedia(mediaType, videoTimestamp, getMaxThumbs());
     });
   }
 
   /**
-   * Set media store data
-   * @param {URL} videoUrl - Url of video
-   * @param {Object} images - Object of media data
-   * @param {Object} lecture - Object of current lecture info
+   * Syncs individual media type against video timestamp
+   * @param {String} mediaType - media type to sync
+   * @param {Number} videoTimestamp - video timestamp to sync against
+   * @param {Number} maxThumbs - maximum number of images
+   * @private
    */
-  setMedia(videoUrl, images, lecture) {
-    // TODO: cleanup
-    this._media = this._media.updateIn(["urls", "video"], () => videoUrl);
-    this._media = this._media.updateIn(["images", "whiteboard"], () => images.whiteboard);
-    this._media = this._media.updateIn(["images", "computer"], () => images.computer);
-    this._media = this._media.set("lecture", {
-      semester: lecture.semester,
-      courseId: lecture.courseId,
-      name: lecture.lectureName
+  _syncIndividualMedia(mediaType, videoTimestamp, maxThumbs) {
+    const mediaIndexes = this._media.getIn(["currentIndex", mediaType]);
+    const buffer = getMaxBuffer();
+    let updatedIndex = {};
+    this._media.getIn(["urls", mediaType]).entrySeq().forEach(immutableImages => {
+      const images = immutableImages[1].toArray();
+      const id = immutableImages[0];
+      const currentImageIndexes = mediaIndexes.get(id).toJSON();
+      const centerImageIndex = Math.floor((currentImageIndexes.end - currentImageIndexes.start) / 2);
+      const nextPossibleImageIndex = binarySearch(videoTimestamp, images);
+      // Already in sync
+      if (centerImageIndex >= nextPossibleImageIndex) {
+        return;
+      }
+
+      const offset = maxThumbs - centerImageIndex + buffer;
+      const startIndex = Math.max(0, nextPossibleImageIndex - offset);
+      const endIndex = nextPossibleImageIndex + offset;
+      updatedIndex[id] = Immutable.Map({start: startIndex, end: endIndex});
     });
+    this._media = this._media.setIn(["currentIndex", mediaType], Immutable.Map(updatedIndex));
+    this.emitChange();
   }
 
+  /**
+   * Change emitter
+   */
   emitChange() {
     this.emit(CHANGE_EVENT);
   }
@@ -79,71 +158,48 @@ class MediaStore extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
-  getInfo() {
-    return this._media.get("info").toJSON();
-  }
-
   /**
-   * Get video data
+   * Get urls object
    * @return {Object} - video data
    */
-  getVideoUrl() {
-    return this._media.getIn(["urls", "video"]);
+  getUrls() {
+    return this._media.get("urls").toJSON();
   }
 
   /**
-   * Get video data
-   * @return {Object} - video data
+   * Get current images
    */
-  getWhiteboardUrl() {
-    return this._media.getIn(["urls", "whiteboard"]);
+  getCurrentIndex() {
+    return this._media.get("currentIndex").toJSON();
   }
-
   /**
-   * Get video data
-   * @return {Object} - video data
+   * Sets urls of media type
+   * @param {Array<DOMString>} mediaUrls - list of media urls
+   * @param {String} path - path to media urls to update
    */
-  getComputerUrl() {
-    return this._media.getIn(["urls", "computer"]);
+  setUrls(mediaUrls, path) {
+    this._media.setIn(["urls", ...path], Immutable.Map(mediaUrls));
   }
-
-  /**
-   * Get generator for whiteboard images
-   * @return {Generator} - whiteboard generator
-   */
-  getWhiteboardImagesIterator() {
-    return imageIterator(this._media.getIn(["images", "whiteboard"]));
-  }
-
-  /**
-   * Get generator for computer images
-   * @return {Generator} - computer generator
-   */
-  getComputerImagesIterator() {
-    return imageIterator(this._media.getIn(["images", "computer"]));
-  }
-
 }
 
 const mediaStore = new MediaStore();
 
 // Register callback to handle all updates
-AppDispatcher.register(action => {
+appDispatcher.register(action => {
   switch (action.actionType) {
-    case MediaConstants.FETCH_MEDIA: {
-      mediaStore.setMedia(action.video, action.images, action.lecture);
-      mediaStore.emitChange();
+    case MediaConstants.FETCH_INITIAL_MEDIA:
+      mediaStore.initMedia(action.mediaUrls, action.images, action.lecture);
       break;
-    }
-    case MediaConstants.SYNC: {
-      const timestamp = action.timestamp;
-      synchronize(timestamp);
-      mediaStore.emitChange();
+    case MediaConstants.SYNC:
+      mediaStore.syncMedia(action.videoTimestamp);
       break;
-    }
+    case MediaConstants.FETCH_CURRENT_IMAGES:
+      mediaStore.setUrls(action.imageUrls, action.type);
+      break;
     default:
-      // no op
+    // no op
   }
+  mediaStore.emitChange();
 });
 
 export default mediaStore;

@@ -4,9 +4,13 @@
  * Service layer for interaction with server API
  **/
 import {camelizeKeys} from "humps";
+
 import loginStore from "./stores/LoginStore";
+import {IMAGE_TYPES} from "./constants/MediaConstants";
+import {getMaxThumbs} from "./utils/sync";
 
 const API_VERSION = "v1";
+const BASE_URL = `http://${window.location.host}/api/${API_VERSION}`;
 
 /**
  *
@@ -21,7 +25,7 @@ const API_VERSION = "v1";
  * }
  */
 export function login(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/login`;
+  const url = `${BASE_URL}/login`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify(params.data),
@@ -41,7 +45,7 @@ export function login(params) {
  * }
  */
 export function fetchCourses(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/courses`;
+  const url = `${BASE_URL}/courses`;
   const request = new Request(url, {
     method: "GET",
     headers: new Headers({
@@ -59,7 +63,7 @@ export function fetchCourses(params) {
  * @param {Function} callback - Called on success or error returns (err, result)
  */
 export function fetchLectures(semester, courseId, lectures, callback) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/courses/${semester}/${courseId}`;
+  const url = `${BASE_URL}/courses/${semester}/${courseId}`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify({
@@ -73,21 +77,25 @@ export function fetchLectures(semester, courseId, lectures, callback) {
 }
 
 /**
- * Fetch video data
+ * Fetch video, list of images, and the first image thumbs (If exists)
  * @param {String} semester - semester
  * @param {String} courseId - course id
  * @param {String} lectureName - lecture name
  * @param {Function} callback - Called on success or error returns (err, result)
  */
-export function fetchMedia(semester, courseId, lectureName, callback) {
-  let promises = [];
-  const urls = ["video", "images"].map(location => {
-    return `http://${window.location.host}/api/${API_VERSION}/media/${semester}/${courseId}/${lectureName}/${location}`;
-  });
-
-  urls.forEach(url => {
-    promises.push(new Promise((resolve, reject) => {
-      const request = new Request(url, {
+export function fetchInitialMedia(semester, courseId, lectureName, callback) {
+  const baseUrl = `${BASE_URL}/media/${semester}/${courseId}/${lectureName}`;
+  const maxThumbs = getMaxThumbs();
+  /**
+   * TODO: Current fetch model:
+   * Fully synchronous: (video & image data) -> callback (video & raw images & image data)
+   * We want:
+   * Partially synchronous: callback1 (video, (image data)  -> callback2(index, individual raw image))
+   *                                   video shouldn't wait on image data
+   **/
+  const promises = ["video", "images"].map(location => {
+    return new Promise((resolve, reject) => {
+      const request = new Request(`${baseUrl}/${location}`, {
         method: "GET"
       });
       makeRequest(request, undefined, (err, result) => {
@@ -96,18 +104,62 @@ export function fetchMedia(semester, courseId, lectureName, callback) {
         }
         resolve(result);
       });
-    }));
+    });
   });
 
-  Promise.all(promises).then(values => {
-    callback(null, {
-      video: values[0],
-      images: values[1],
-      lecture: {
-        semester: semester,
-        courseId: courseId,
-        name: lectureName
-      }
+  Promise.all(promises).then(promiseResult1 => {
+    const images = promiseResult1[1];
+
+    const promises = IMAGE_TYPES.reduce((currentPromises, imageType) => {
+      Object.keys(images[imageType]).forEach(id => {
+        const media = images[imageType][id];
+        // No need to check for images that don't exist
+        if (media.length > 0) {
+          for (let i = 0; i < maxThumbs; i++) {
+            currentPromises.push(new Promise((resolve, reject) => {
+              const request = new Request(`${baseUrl}/images/${imageType}/thumb/${media[i]}`, {
+                method: "GET"
+              });
+              makeRequest(request, undefined, (err, result) => {
+                if (err) {
+                  reject(err);
+                }
+                resolve([media[i], result]);
+              });
+            }));
+          }
+        }
+      });
+      return currentPromises;
+    }, []);
+
+    Promise.all(promises).then(promiseResult2 => {
+      const result = {
+        mediaUrls: {
+          video: promiseResult1[0]
+        },
+        images: images,
+        lecture: {
+          semester: semester,
+          courseId: courseId,
+          name: lectureName
+        }
+      };
+      let i = 0;
+      IMAGE_TYPES.forEach(imageType => {
+        const imageTypeMap = {};
+        result.mediaUrls[imageType] = imageTypeMap;
+        Object.keys(images[imageType]).forEach(id => {
+          imageTypeMap[id] = promiseResult2.slice(i, i + maxThumbs).reduce((images, imageInfo) => {
+            images[imageInfo[0]] = imageInfo[1];
+            return images;
+          }, {});
+          i += maxThumbs;
+        });
+      });
+      callback(null, result);
+    }).catch(reason => {
+      callback(reason);
     });
   }).catch(reason => {
     callback(reason);
@@ -115,18 +167,36 @@ export function fetchMedia(semester, courseId, lectureName, callback) {
 }
 
 /**
- * Fetch image data
+ * Fetch list of images
  * @param {String} semester - semester
  * @param {String} courseId - course id
  * @param {String} lectureName - lecture name
+ * @param {Array<String>} images - list of images
+ * @param {String} imageType - type of image
+ * @param {String} size - image size
  * @param {Function} callback - Called on success or error returns (err, result)
  */
-export function fetchImages(semester, courseId, lectureName, callback) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/images/${semester}/${courseId}/${lectureName}`;
-  const request = new Request(url, {
-    method: "GET"
+export function fetchImages(semester, courseId, lectureName, images, imageType, size, callback) {
+  const baseUrl = `${BASE_URL}/media/${semester}/${courseId}/${lectureName}/images/${imageType}/${size}`;
+  const promises = images.map(imageName => {
+    return new Promise((resolve, reject) => {
+      console.log(`${baseUrl}/${imageName}`);
+      const request = new Request(`${baseUrl}/${imageName}`, {
+        method: "GET"
+      });
+      makeRequest(request, undefined, (err, result) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(result);
+      });
+    });
   });
-  makeRequest(request, undefined, callback);
+  Promise.all(promises).then(values => {
+    callback(null, values);
+  }).catch(reason => {
+    callback(reason);
+  });
 }
 
 /**
@@ -139,7 +209,7 @@ export function fetchImages(semester, courseId, lectureName, callback) {
  * }
  */
 export function fetchSearchResults(params) {
-  const url = `http://${window.location.host}/api/${API_VERSION}/courses/search`;
+  const url = `${BASE_URL}/courses/search`;
   const request = new Request(url, {
     method: "POST",
     body: JSON.stringify({
@@ -172,35 +242,27 @@ function makeRequest(request, schema, callback) {
     contentType = response.headers.get("Content-Type").split(";")[0];
     switch (contentType) {
       case "application/json":
-      {
         return response.json();
-      }
       case "video/mp4":
-      {
         return response.blob();
-      }
-      default :
-      {
+      case "image/png":
+        return response.blob();
+      default:
         return response.text();
-      }
     }
   }).then(data => {
     switch (contentType) {
       case "application/javascript":
-      {
-        const result = camelizeKeys(data);
-        callback(null, result);
+        callback(null, camelizeKeys(data));
         break;
-      }
       case "video/mp4":
-      {
         callback(null, URL.createObjectURL(data));
         break;
-      }
+      case "image/png":
+        callback(null, URL.createObjectURL(data));
+        break;
       default:
-      {
         callback(null, data);
-      }
     }
   }).catch(err => {
     callback(err);
