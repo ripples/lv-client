@@ -1,38 +1,23 @@
 "use strict";
 
 import React from "react";
-import ReactDOM from "react-dom";
+import {render} from 'react-dom';
 import {Router, Route, IndexRoute, browserHistory} from "react-router";
+import {createStore, applyMiddleware} from "redux";
+import {Provider} from "react-redux";
+import thunkMiddleware from "redux-thunk";
 
-import LVApp from "./components/LVApp.react";
-import loginStore from "./stores/LoginStore";
+import appReducer from "./reducers/appReducer";
 
-import LoginSection from "./components/LoginSection.js";
-import FeedSection from "./components/FeedSection";
-import MediaPage from "./components/MediaPage";
+const mountNode = document.getElementById("lvapp");
 
-const app = document.getElementById("lvapp");
-import utils from "./utils/defaultBehavior";
-// runs the page behaviors, not sure exactly where to put this yet
-utils();
-
-ReactDOM.render(
-  <Router history={browserHistory}>
-    <Route path="/" component={LVApp}>
-      <IndexRoute component={FeedSection} onEnter={loginCheck}/>
-      <Route path="/login" component={LoginSection}/>
-      <Route path="/watch/:semester/:courseId/:lectureName" component={MediaPage}/>
-    </Route>
-  </Router>, app
+let store = createStore(
+  appReducer,
+  {},
+  applyMiddleware(thunkMiddleware)
 );
 
-function loginCheck(nextState, replace) {
-  if (!loginStore.isLoggedIn()) {
-    replace("/login");
-  }
-}
-function logoutCheck(nextState, replace) {
-  if (loginStore.isLoggedIn()) {
-    replace("/");
-  }
-}
+render((
+  <Provider store={store}>
+  </Provider>
+), mountNode);
