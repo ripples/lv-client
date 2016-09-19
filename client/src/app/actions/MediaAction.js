@@ -19,7 +19,7 @@ class MediaActions {
   static fetchInit(semester, courseId, lectureName) {
     fetchInitialMedia(semester, courseId, lectureName, (err, result) => {
       if (err) {
-        //TODO: error handler
+        // TODO: error handler
         throw err;
       }
       appDispatcher.dispatch(Object.assign(result, {
@@ -51,7 +51,7 @@ class MediaActions {
   static fetchImages(semester, courseId, lectureName, images, imageType, size) {
     fetchImages(semester, courseId, lectureName, images, imageType, size, (err, result) => {
       if (err) {
-        //TODO: error handler
+        // TODO: error handler
         throw err;
       }
       appDispatcher.dispatch({

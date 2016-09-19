@@ -15,7 +15,6 @@ export default class CourseCard extends React.Component {
     };
     this.isDataFetched = false;
   }
-  
   changeDisplay() {
     // TODO: Will be replaced by caching system
     if (!this.isDataFetched) { // only fetches the data once to avoid redundant requests
@@ -23,7 +22,6 @@ export default class CourseCard extends React.Component {
     }
     this.setState({show: !this.state.show});
   }
-  
   /**
    * fetch the lectures tho be displayed on the lecture card
    */

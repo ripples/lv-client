@@ -62,7 +62,7 @@ class CourseAction {
   fetchSearchResult(searchContent) {
     api.fetchSearchResults({
       searchContent,
-      callback: (err, result)=> {
+      callback: (err, result) => {
         if (err) {
           const message = String(err.err.message);
           appDispatcher.dispatch({

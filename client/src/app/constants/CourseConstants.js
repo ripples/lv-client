@@ -13,5 +13,5 @@ export const CourseConstants = keyMirror({
   FILTER: null,
   VIEW: null,
   HIDE: null,
-  ERROR: null,
+  ERROR: null
 });

@@ -26,10 +26,10 @@ const BASE_URL = `http://${window.location.host}/api/${API_VERSION}`;
  */
 export function login(params) {
   const url = `${BASE_URL}/login`;
-  const request = new Request(url, {
+  const request = new window.Request(url, {
     method: "POST",
     body: JSON.stringify(params.data),
-    headers: new Headers({
+    headers: new window.Headers({
       "Content-Type": "application/json"
     })
   });
@@ -46,9 +46,9 @@ export function login(params) {
  */
 export function fetchCourses(params) {
   const url = `${BASE_URL}/courses`;
-  const request = new Request(url, {
+  const request = new window.Request(url, {
     method: "GET",
-    headers: new Headers({
+    headers: new window.Headers({
       "Content-Type": "application/json"
     })
   });
@@ -64,12 +64,12 @@ export function fetchCourses(params) {
  */
 export function fetchLectures(semester, courseId, lectures, callback) {
   const url = `${BASE_URL}/courses/${semester}/${courseId}`;
-  const request = new Request(url, {
+  const request = new window.Request(url, {
     method: "POST",
     body: JSON.stringify({
       lectures: lectures
     }),
-    headers: new Headers({
+    headers: new window.Headers({
       "Content-Type": "application/json"
     })
   });
@@ -95,7 +95,7 @@ export function fetchInitialMedia(semester, courseId, lectureName, callback) {
    **/
   const promises = ["video", "images"].map(location => {
     return new Promise((resolve, reject) => {
-      const request = new Request(`${baseUrl}/${location}`, {
+      const request = new window.Request(`${baseUrl}/${location}`, {
         method: "GET"
       });
       makeRequest(request, undefined, (err, result) => {
@@ -117,7 +117,7 @@ export function fetchInitialMedia(semester, courseId, lectureName, callback) {
         if (media.length > 0) {
           for (let i = 0; i < maxThumbs; i++) {
             currentPromises.push(new Promise((resolve, reject) => {
-              const request = new Request(`${baseUrl}/images/${imageType}/thumb/${media[i]}`, {
+              const request = new window.Request(`${baseUrl}/images/${imageType}/thumb/${media[i]}`, {
                 method: "GET"
               });
               makeRequest(request, undefined, (err, result) => {
@@ -181,7 +181,7 @@ export function fetchImages(semester, courseId, lectureName, images, imageType, 
   const promises = images.map(imageName => {
     return new Promise((resolve, reject) => {
       console.log(`${baseUrl}/${imageName}`);
-      const request = new Request(`${baseUrl}/${imageName}`, {
+      const request = new window.Request(`${baseUrl}/${imageName}`, {
         method: "GET"
       });
       makeRequest(request, undefined, (err, result) => {
@@ -210,12 +210,12 @@ export function fetchImages(semester, courseId, lectureName, images, imageType, 
  */
 export function fetchSearchResults(params) {
   const url = `${BASE_URL}/courses/search`;
-  const request = new Request(url, {
+  const request = new window.Request(url, {
     method: "POST",
     body: JSON.stringify({
       searchContent: params.searchContent
     }),
-    headers: new Headers({
+    headers: new window.Headers({
       "Content-Type": "application/json"
     })
   });
@@ -256,10 +256,10 @@ function makeRequest(request, schema, callback) {
         callback(null, camelizeKeys(data));
         break;
       case "video/mp4":
-        callback(null, URL.createObjectURL(data));
+        callback(null, window.URL.createObjectURL(data));
         break;
       case "image/png":
-        callback(null, URL.createObjectURL(data));
+        callback(null, window.URL.createObjectURL(data));
         break;
       default:
         callback(null, data);

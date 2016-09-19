@@ -6,7 +6,7 @@ window.$ = $;
  * PS: This module is here for test purposes
  */
 
-export default function () {
+export default function() {
   $(document).ready(function() {
     setWindowProps();
   });
