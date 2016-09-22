@@ -2,6 +2,7 @@
 logs
 *.log
 npm-debug.log*
+.DS_Store
 
 # Runtime data
 pids
@@ -16,3 +17,6 @@ node_modules
 bundle.js
 bundle.min.js
 bundleoutput.txt
+
+# build
+client/dist/*
