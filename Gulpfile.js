@@ -44,7 +44,7 @@ gulp.task("sass", ["sasslint"], () => {
     .pipe(gulp.dest(`${DIST_DIR}/css/`));
 });
 
-gulp.task("webpack", [/*"eslint"*/], () => {
+gulp.task("webpack", ["eslint"], () => {
   return gulp.src(`${SRC_DIR}/app/app.js`)
     .pipe(webpack(require("./webpack.config.js")))
     .pipe(gulp.dest(`${DIST_DIR}/app`));
