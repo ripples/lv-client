@@ -27,6 +27,10 @@ module.exports = {
             ["transform-object-rest-spread"]
           ]
         }
+      },
+      {
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"]
       }
     ]
   }
