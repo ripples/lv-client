@@ -11,7 +11,7 @@ import appReducer from "./reducers/app";
 
 const mountNode = document.getElementById("lvapp");
 
-let store = createStore(
+const store = createStore(
   appReducer,
   {},
   applyMiddleware(thunkMiddleware)

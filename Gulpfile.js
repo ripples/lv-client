@@ -1,14 +1,14 @@
 "use strict";
 
-let gulp = require("gulp");
-let del = require("del");
-let sass = require("gulp-sass");
-var webpack = require("webpack-stream");
-let runSequence = require("run-sequence");
-let gutil = require("gulp-util");
-let path = require("path");
-let eslint = require("gulp-eslint");
-let scsslint = require("gulp-scss-lint");
+const gulp = require("gulp");
+const del = require("del");
+const sass = require("gulp-sass");
+const webpack = require("webpack-stream");
+const runSequence = require("run-sequence");
+const gutil = require("gulp-util");
+const path = require("path");
+const eslint = require("gulp-eslint");
+const scsslint = require("gulp-scss-lint");
 
 const DIST_DIR = "./client/dist";
 const SRC_DIR = "./client/src";
@@ -35,7 +35,6 @@ gulp.task("eslint", () => {
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
-    // .on("error", notify.onError({message: "ESLinting Failed. Check console."}));
 });
 
 gulp.task("sass", ["sasslint"], () => {
