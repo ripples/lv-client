@@ -30,8 +30,9 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loaders: ["style", "css", "sass"]
+        loaders: ["style", "css", "sass", "sass-resources"]
       }
     ]
-  }
+  },
+  sassResources: ["./client/src/sass/vars.scss", "./client/src/sass/mixins.scss"]
 };

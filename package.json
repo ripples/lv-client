@@ -63,6 +63,7 @@
     "path": "^0.12.7",
     "run-sequence": "^1.2.2",
     "sass-loader": "^4.0.2",
+    "sass-resources-loader": "^1.1.0",
     "style-loader": "^0.13.1",
     "watchify": "^3.7.0",
     "webpack": "^1.13.2",
