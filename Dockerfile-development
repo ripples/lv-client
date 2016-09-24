@@ -1,10 +1,10 @@
 FROM node:6.2.2
 
+COPY ./package.json /src/package.json
+RUN cd /src && npm install
+
 COPY . /src
-
 WORKDIR /src
-
-RUN npm install
 
 RUN npm run build-dev
 
