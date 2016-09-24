@@ -9,6 +9,9 @@ import thunkMiddleware from "redux-thunk";
 
 import appReducer from "./reducers/app";
 
+// Hello World
+import HelloWorld from "./components/HelloWorld/HelloWorld";
+
 const mountNode = document.getElementById("lvapp");
 
 const store = createStore(
@@ -19,6 +22,6 @@ const store = createStore(
 
 render((
   <Provider store={store}>
-    <div>Hello World</div>
+    <HelloWorld />
   </Provider>
 ), mountNode);
