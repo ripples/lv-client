@@ -20,7 +20,7 @@ module.exports = {
           presets: ["es2015", "react"],
           plugins: [
             ["babel-plugin-module-resolver", [
-              {src: "./client/src/app/shared", expose: "app/shared"},
+              {src: "./client/src/app/components", expose: "app/components"},
               {src: "./client/src/app/actions", expose: "app/actions"},
               {src: "./client/src/app/constants", expose: "app/constants"}
             ]],
