@@ -2,8 +2,6 @@ import React from "react";
 
 import Header from "../../components/Header/header";
 
-import "./app.scss";
-
 class App extends React.Component {
   render() {
     return (
