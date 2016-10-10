@@ -5,7 +5,9 @@
  */
 
 export const DefaultState = {
-  user: {},
+  user: {
+    token: null
+  },
   courses: {},
   lectures: {},
   media: {}

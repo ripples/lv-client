@@ -6,7 +6,10 @@
   "globals": {
     "fetch": true,
     "window": true,
-    "document": true
+    "document": true,
+    "Request": true,
+    "Headers": true,
+    "URL": true
   },
   "rules": {
     "quotes": 1,
@@ -18,9 +21,10 @@
     "react"
   ],
   "parser-options": {
-    "ecmaVersion": 7,
+    "ecmaVersion": 6,
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "spread": true
     }
   }
 }

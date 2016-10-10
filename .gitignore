@@ -20,3 +20,6 @@ bundleoutput.txt
 
 # build
 client/dist/*
+
+# logo
+client/src/images/logo.png
