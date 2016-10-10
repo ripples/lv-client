@@ -20,6 +20,11 @@ gulp.task("clean", () => {
   return del([`${DIST_DIR}/**/*`]);
 });
 
+gulp.task("copy-images", () => {
+  return gulp.src(`${SRC_DIR}/images/**/*`)
+    .pipe(gulp.dest(`${DIST_DIR}/images/`))
+});
+
 gulp.task("sass", () => {
   return gulp.src(`${SRC_DIR}/app/**/*.scss`)
     .pipe(sass({
@@ -55,6 +60,7 @@ gulp.task("watch", ["build"], () => {
 gulp.task("build", callback => {
   runSequence(
     "clean",
+    "copy-images",
     ["webpack", "sass"],
     callback
   );

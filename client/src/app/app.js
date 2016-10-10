@@ -14,9 +14,10 @@ import App from "./pages/App/App";
 
 // ui demonstration component
 import UI from "./pages/UI/ui";
+import Login from "./pages/Login/Login";
+import HelloWorld from "./components/HelloWorld/HelloWorld";
 
 const mountNode = document.getElementById("lvapp");
-
 const store = createStore(
   appReducer,
   {},
@@ -27,8 +28,10 @@ const store = createStore(
 render((
   <Provider store={store}>
     <Router history={browserHistory}>
-        <Route path="/" component={App}></Route>
-        <Route path="/ui" component={UI}></Route>
+      <Route path="/" component={App}/>
+      <Route path="/ui" component={UI}/>
+      <Route path="/hello" component={HelloWorld}/>
+      <Route path="/login" component={Login}/>
     </Router>
   </Provider>
 ), mountNode);

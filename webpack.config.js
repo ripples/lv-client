@@ -10,6 +10,7 @@ module.exports = {
     publicPath: "app/",
     filename: "bundle.js"
   },
+  devtool: 'source-map',
   module: {
     loaders: [
       {
@@ -27,6 +28,10 @@ module.exports = {
             ["transform-object-rest-spread"]
           ]
         }
+      },
+      {
+        test: /\.(jpg|png)$/,
+        loader: "url-loader"
       }
     ]
   }
