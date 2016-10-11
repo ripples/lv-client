@@ -3,6 +3,11 @@
 @import "vars";
 
 .login-page {
+  background: url(/images/login_bg.jpg);
+  background-size: cover;
+  background-position: 50% 50%;
+  min-height: 100vh;
+
   .login-wrap {
     width: 80%;
     max-width: 500px;
