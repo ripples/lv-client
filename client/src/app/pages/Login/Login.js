@@ -5,7 +5,9 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
 import {login} from "../../actions/user";
-import logo from "../../../images/logo.png";
+// import logo from "../../../images/logo.png";
+import Header from "components/Header/header";
+import Logo from "components/Logo/logo";
 
 class Login extends Component {
   constructor(props) {
@@ -30,6 +32,29 @@ class Login extends Component {
   render() {
     return (
       <div className="login-page">
+        <Header />
+        <div className="content">
+          <div className="login-wrap">
+            <div className="login-form-header">
+              <Logo size="25px"/>
+              <span style={{fontSize: "20px"}}>|</span>
+              <img width="135px" src="/images/logo.png" />
+            </div>
+            <form>
+              <h4>Log In</h4>
+              <div className="input-group">
+                <input placeholder="username" />
+              </div>
+              <div className="input-group">
+                <input placeholder="password" />
+              </div>
+            </form>
+            <div style={{fontStyle: "italic", margin: "20px 0"}}>- or -</div>
+            <a href="#" className="button accent">Sign Up</a>
+          </div>
+        </div>
+
+        {/*
         <div className="logo">
           <span className="lecture-viewer">
             lecture
@@ -59,6 +84,7 @@ class Login extends Component {
         <button>
           Sign Up
         </button>
+      */}
       </div>
     );
   }

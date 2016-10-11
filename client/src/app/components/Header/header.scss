@@ -1,7 +1,12 @@
 @import "vars";
 
 .header {
-  background-color: $dark-blue;
-  padding: 15px;
-  color: #fff;
+  background-color: #fff;
+  padding: 15px 20px;
+  color: $body-color;
+  border-bottom: 1px solid $border-color;
+
+  & > :first-child {
+
+  }
 }

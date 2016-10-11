@@ -54,7 +54,7 @@ gulp.task("watch", ["build"], () => {
   };
 
   gulp.watch([`${SRC_DIR}/app/**/*.js`], ["webpack"]).on("change", fileChanged);
-  gulp.watch([`${SRC_DIR}/app/**/*.scss`], ["sass"]).on("change", fileChanged);
+  gulp.watch([`${SRC_DIR}/**/*.scss`], ["sass"]).on("change", fileChanged);
 });
 
 gulp.task("build", callback => {
