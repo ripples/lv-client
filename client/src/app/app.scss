@@ -1,0 +1,81 @@
+@import "vars";
+
+// all app-wide styles
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-family;
+  font-size: $font-size;
+  -webkit-font-smoothing: antialiased;
+}
+
+// forms
+.input-group {
+  margin-bottom: 10px;
+}
+
+input, button, a.button {
+  font-size: 14px;
+  padding: 8px 15px;
+}
+
+input {
+  // padding: 5px 8px;
+  border-radius: $border-radius;
+  color: $body-color;
+  border: 1px solid $light-gray-color;
+
+  &:focus {
+    border-color: $body-color;
+    outline: none;
+  }
+}
+
+// links
+a {
+  &.button {
+    @extend button;
+    display: inline-block;
+    text-decoration: none;
+  }
+}
+
+// buttons
+button {
+  // padding: 5px 13px;
+  background: #fff;
+  border: none;
+  font-size: 13px;
+  border-radius: $border-radius;
+  border: 2px solid #e2e2e2;
+
+  &:focus {
+    outline:none;
+    border-color: $blue-color;
+  }
+
+  &:hover {
+    background: #f7f7f7;
+  }
+
+  &:active {
+    background: #ececec;
+  }
+
+  &.accent {
+    background: $accent-color;
+    color: #fff;
+    border-color: $accent-color;
+
+    &:focus {
+      border-color: darken($accent-color, 10);
+    }
+    &:hover {
+      background: darken($accent-color, 5);
+    }
+    &:active {
+     background: darken($accent-color, 10); 
+    }
+  }
+}

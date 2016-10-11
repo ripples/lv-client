@@ -1,40 +1,80 @@
 @import "bourbon";
 @import "neat";
+@import "vars";
 
 .login-page {
-  @include span-columns(10 of 12);
-  @include shift(2);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: solid 1px #d9d8d7;
-  .logo {
-    .lecture-viewer {
-      @include span-columns(3 of 12);
-      @include shift(1 of 12);
-      font-family: Lato;
-      font-size: 30px;
-      line-height: 1.47;
-      .viewer {
-        font-weight: bold;
+  .login-wrap {
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid rgba(20,25,31,.1);
+    border-radius: $border-radius;
+    text-align: center;
+    margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 35px 0;
+
+    .login-form-header {
+      margin-bottom: 60px;
+      // margin-top: 15px;
+
+      .umass-logo {
+        background-image: url("/images/logo.png");
+        width: 100px;
+        height: 20px;
+        display: inline-block;
+      }
+
+      & > * {
+        margin-right: 10px;
+        
+        &:last-child { 
+          margin-right: 0;
+        }
       }
     }
-    .line {
-      @include span-columns(3 of 12);
-      @include shift(1 of 12);
-      width: 2px;
-      height: 40px;
-      border: solid 2px black;
+
+    form {
+
     }
-    img {
-      @include span-columns(3 of 12);
-      @include shift(1 of 12);
-      height: 1.4em;
-    }
-  }
-  form {
-    @include span-columns(10 of 12);
-    @include shift(2 of 12);
+    
   }
 }
+
+// .login-page {
+//   @include span-columns(10 of 12);
+//   @include shift(2);
+//   display:flex;
+//   justify-content:center;
+//   align-items:center;
+//   background-color: rgba(255, 255, 255, 0.8);
+//   border: solid 1px #d9d8d7;
+//   .logo {
+//     .lecture-viewer {
+//       @include span-columns(3 of 12);
+//       @include shift(1 of 12);
+//       font-family: Lato;
+//       font-size: 30px;
+//       line-height: 1.47;
+//       .viewer {
+//         font-weight: bold;
+//       }
+//     }
+//     .line {
+//       @include span-columns(3 of 12);
+//       @include shift(1 of 12);
+//       width: 2px;
+//       height: 40px;
+//       border: solid 2px black;
+//     }
+//     img {
+//       @include span-columns(3 of 12);
+//       @include shift(1 of 12);
+//       height: 1.4em;
+//     }
+//   }
+//   form {
+//     @include span-columns(10 of 12);
+//     @include shift(2 of 12);
+//   }
+// }

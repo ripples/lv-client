@@ -1,10 +1,11 @@
 import React from "react";
+import Logo from "components/Logo/logo";
 
 class Header extends React.Component {
   render() {
     return (
       <div className="header">
-        this is the header
+        <Logo />
       </div>
     );
   }

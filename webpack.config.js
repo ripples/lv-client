@@ -20,10 +20,10 @@ module.exports = {
         query: {
           presets: ["es2015", "react"],
           plugins: [
-            ["babel-plugin-module-resolver", [
-              {src: "./client/src/app/components", expose: "app/components"},
-              {src: "./client/src/app/actions", expose: "app/actions"},
-              {src: "./client/src/app/constants", expose: "app/constants"}
+            ["module-alias", [
+              {src: "./client/src/app/components", expose: "components"},
+              {src: "./client/src/app/actions", expose: "actions"},
+              {src: "./client/src/app/constants", expose: "constants"}
             ]],
             ["transform-object-rest-spread"]
           ]
