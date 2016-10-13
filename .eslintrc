@@ -23,8 +23,7 @@
   "parser-options": {
     "ecmaVersion": 6,
     "ecmaFeatures": {
-      "jsx": true,
-      "spread": true
+      "jsx": true
     }
   }
 }

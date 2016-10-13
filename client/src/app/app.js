@@ -15,7 +15,6 @@ import App from "./pages/App/App";
 // ui demonstration component
 import UI from "./pages/UI/ui";
 import Login from "./pages/Login/Login";
-import HelloWorld from "./components/HelloWorld/HelloWorld";
 
 const mountNode = document.getElementById("lvapp");
 const store = createStore(
@@ -30,7 +29,6 @@ render((
     <Router history={browserHistory}>
       <Route path="/" component={App}/>
       <Route path="/ui" component={UI}/>
-      <Route path="/hello" component={HelloWorld}/>
       <Route path="/login" component={Login}/>
     </Router>
   </Provider>

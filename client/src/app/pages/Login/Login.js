@@ -37,8 +37,8 @@ class Login extends Component {
           <div className="login-wrap">
             <div className="login-form-header">
               <Logo size="25px"/>
-              <span>|</span>
-              <img src="/images/logo.png" />
+              <div className="divider">|</div>
+              <img src="/images/logo.png"/>
             </div>
             <form onSubmit={this.handleLogin}
               noValidate="novalidate">
@@ -60,13 +60,13 @@ class Login extends Component {
                   required="required"
                 />
               </div>
-            </form>
-            <button
-              type="submit"
-              disabled={!(this.state.email && this.state.password)}
-              className="button accent outline login-button">
+              <button
+                type="submit"
+                disabled={!(this.state.email && this.state.password)}
+                className="button accent outline">
                 Log In
-            </button>
+              </button>
+            </form>
             <div style={{fontStyle: "italic", margin: "20px 0"}}>- or -</div>
             <a href="#" className="button accent">Sign Up</a>
           </div>

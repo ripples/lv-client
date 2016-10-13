@@ -19,7 +19,7 @@ const BASE_URL = `http://${window.location.host}/api/${API_VERSION}`;
  * {
  *   data: {
  *     email: string
- *     password: stringchehyan
+ *     password: string
  *   },
  *   success: function
  * }
