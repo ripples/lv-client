@@ -22,6 +22,14 @@
     .login-form-header {
       margin-bottom: 60px;
 
+      & > span {
+        font-size: 20px;
+      }
+
+      & > img {
+        width: 135px;
+      }
+
       .umass-logo {
         background-image: url("/images/logo.png");
         width: 100px;
