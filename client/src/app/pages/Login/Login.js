@@ -21,6 +21,7 @@ class Login extends Component {
 
   handleLogin(e) {
     e.preventDefault();
+    console.log("Handling login");
     this.props.onLogin(this.state.email, this.state.password);
   }
 
@@ -40,51 +41,37 @@ class Login extends Component {
               <span style={{fontSize: "20px"}}>|</span>
               <img width="135px" src="/images/logo.png" />
             </div>
-            <form>
-              <h4>Log In</h4>
+            <form onSubmit={this.handleLogin}
+              noValidate="novalidate">
               <div className="input-group">
-                <input placeholder="username" />
+                <input
+                  type="text"
+                  placeholder="email"
+                  value={this.state.email}
+                  onChange={e => this.handleChange(e, "email")}
+                  required="required"
+                />
               </div>
               <div className="input-group">
-                <input placeholder="password" />
+                <input
+                  type="password"
+                  placeholder="password"
+                  value={this.state.password}
+                  onChange={e => this.handleChange(e, "password")}
+                  required="required"
+                />
               </div>
             </form>
+            <button
+              type="submit"
+              disabled={!(this.state.email && this.state.password)}
+              className="button accent outline login-button">
+                Log In
+            </button>
             <div style={{fontStyle: "italic", margin: "20px 0"}}>- or -</div>
             <a href="#" className="button accent">Sign Up</a>
           </div>
         </div>
-
-        {/*
-        <div className="logo">
-          <span className="lecture-viewer">
-            lecture
-            <span className="viewer">
-              viewer
-            </span>
-          </span>
-          <span className="line"/>
-          <img src={logo}/>
-        </div>
-        <form onSubmit={this.handleLogin}
-              noValidate="novalidate">
-          <button type="submit">
-            Login
-          </button>
-          <input type="email"
-                 placeholder="Email"
-                 value={this.state.email}
-                 onChange={e => this.handleChange(e, "email")}
-                 required="required"/>
-          <input type="password"
-                 placeholder="Password"
-                 value={this.state.password}
-                 onChange={e => this.handleChange(e, "password")}
-                 required="required"/>
-        </form>
-        <button>
-          Sign Up
-        </button>
-      */}
       </div>
     );
   }

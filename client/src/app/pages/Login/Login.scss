@@ -21,7 +21,6 @@
 
     .login-form-header {
       margin-bottom: 60px;
-      // margin-top: 15px;
 
       .umass-logo {
         background-image: url("/images/logo.png");
@@ -39,47 +38,9 @@
       }
     }
 
-    form {
-
+    .login-button {
+      margin-top: 20px;
     }
     
   }
 }
-
-// .login-page {
-//   @include span-columns(10 of 12);
-//   @include shift(2);
-//   display:flex;
-//   justify-content:center;
-//   align-items:center;
-//   background-color: rgba(255, 255, 255, 0.8);
-//   border: solid 1px #d9d8d7;
-//   .logo {
-//     .lecture-viewer {
-//       @include span-columns(3 of 12);
-//       @include shift(1 of 12);
-//       font-family: Lato;
-//       font-size: 30px;
-//       line-height: 1.47;
-//       .viewer {
-//         font-weight: bold;
-//       }
-//     }
-//     .line {
-//       @include span-columns(3 of 12);
-//       @include shift(1 of 12);
-//       width: 2px;
-//       height: 40px;
-//       border: solid 2px black;
-//     }
-//     img {
-//       @include span-columns(3 of 12);
-//       @include shift(1 of 12);
-//       height: 1.4em;
-//     }
-//   }
-//   form {
-//     @include span-columns(10 of 12);
-//     @include shift(2 of 12);
-//   }
-// }
