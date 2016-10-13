@@ -5,7 +5,6 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
 import {login} from "../../actions/user";
-// import logo from "../../../images/logo.png";
 import Header from "components/Header/header";
 import Logo from "components/Logo/logo";
 
@@ -38,8 +37,8 @@ class Login extends Component {
           <div className="login-wrap">
             <div className="login-form-header">
               <Logo size="25px"/>
-              <span style={{fontSize: "20px"}}>|</span>
-              <img width="135px" src="/images/logo.png" />
+              <span>|</span>
+              <img src="/images/logo.png" />
             </div>
             <form onSubmit={this.handleLogin}
               noValidate="novalidate">

@@ -22,7 +22,7 @@ gulp.task("clean", () => {
 
 gulp.task("copy-images", () => {
   return gulp.src(`${SRC_DIR}/images/**/*`)
-    .pipe(gulp.dest(`${DIST_DIR}/images/`))
+    .pipe(gulp.dest(`${DIST_DIR}/images/`));
 });
 
 gulp.task("sass", () => {
