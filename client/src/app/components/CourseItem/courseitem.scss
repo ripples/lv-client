@@ -4,10 +4,25 @@
 @import "mixins";
 
 .course-item {
+  $leftPad: 20px;
+
+  h4 {
+    padding-left: $leftPad;
+  }
+
   .lecture-list {
     @include outer-container;
     margin:0; //TODO: replace with omega
     max-width: none;  //TODO: replace with omega
+    padding-left: $leftPad;
+  }
+
+  .color-code {
+    width: 2px;
+    height: 150px;
+    background-color: #000;
+    display: inline-block;
+    float: left;
   }
 
   .see-all-lectures {
