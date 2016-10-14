@@ -12,10 +12,11 @@
 
   .see-all-lectures {
     height: $lecture-thumbnail-height;
-    @include span-columns(2);
-    @include omega(6n);
+    @include gridResponsive();
     
     button {
+      max-width: 120px;
+      width: 100%;
       @include verticalAlign();
     }
   }

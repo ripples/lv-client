@@ -56,7 +56,7 @@ button {
 
   &:focus {
     outline:none;
-    border-color: $blue-color;
+    border-color: darken(#e2e2e2, 50);
   }
 
   &:hover {

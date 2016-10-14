@@ -1,14 +1,14 @@
 @import "bourbon";
 @import "neat";
 @import "vars";
+@import "mixins";
 
 .lecture-item {
   display: inline-block;
   padding-bottom: 30px;
   cursor: pointer;
 
-  @include span-columns(2);
-  @include omega(6n);
+  @include gridResponsive();
 
   .thumbnail {
     width: 100%;
@@ -32,12 +32,12 @@
 
 
   &:hover {
-    .thumbnail {
-      border-color: $blue-color;
-    }
+    .thumbnail { border-color: $blue-color; }
+    h5 { color: $blue-color; }
+  }
 
-    h5 {
-      color: $blue-color;
-    }
+  &:active {
+    .thumbnail { border-color: darken($blue-color, 20); }
+    h5 { color: darken($blue-color, 20); }
   }
 }
