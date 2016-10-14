@@ -1,0 +1,22 @@
+@import "bourbon";
+@import "neat";
+@import "vars";
+@import "mixins";
+
+.course-item {
+  .lecture-list {
+    @include outer-container;
+    margin:0; //TODO: replace with omega
+    max-width: none;  //TODO: replace with omega
+  }
+
+  .see-all-lectures {
+    height: $lecture-thumbnail-height;
+    @include span-columns(2);
+    @include omega(6n);
+    
+    button {
+      @include verticalAlign();
+    }
+  }
+}
