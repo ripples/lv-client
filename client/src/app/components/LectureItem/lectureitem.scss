@@ -1,0 +1,43 @@
+@import "bourbon";
+@import "neat";
+@import "vars";
+
+.lecture-item {
+  display: inline-block;
+  padding-bottom: 30px;
+  cursor: pointer;
+
+  @include span-columns(2);
+  @include omega(6n);
+
+  .thumbnail {
+    width: 100%;
+    height: $lecture-thumbnail-height;
+    background: #fff;
+    border: 2px solid $steel-color;
+    border-radius: $border-radius;
+    display: inline-block;
+    @include transition();
+  }
+
+  h5 {
+    margin: 5px 0 0 0;
+    @include transition();
+  }
+  h6 {
+    font-size: 0.75em;
+    margin: 0;
+    color: rgb(130,140,154);
+  }
+
+
+  &:hover {
+    .thumbnail {
+      border-color: $blue-color;
+    }
+
+    h5 {
+      color: $blue-color;
+    }
+  }
+}

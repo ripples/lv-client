@@ -1,8 +1,15 @@
 @import "bourbon";
 @import "neat";
 @import "vars";
+@import "mixins";
 
 .root-app {
+  background-color: #FAFAFA;
+  min-height: 100vh;
+
+  & > .content {
+    @include globalPadding();
+  }
 }
 
 // general styles
