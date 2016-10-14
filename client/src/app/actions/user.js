@@ -2,7 +2,7 @@
 
 import cookie from "react-cookie";
 
-import {BASE_URL, AUTH_COOKIE} from "../constants/ApiConstants";
+import {BASE_URL, AUTH_COOKIE} from "constants/ApiConstants";
 import {request} from "../libs/api";
 
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
@@ -30,7 +30,7 @@ export function login(email, password) {
       if (err) {
         dispatch({
           type: LOGIN_FAILURE,
-          payload: data
+          payload: err
         });
       } else {
         cookie.save(AUTH_COOKIE, data.token);

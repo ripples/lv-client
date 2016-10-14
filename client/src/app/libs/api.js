@@ -17,11 +17,6 @@ export function request(request, callback) {
   }
   let contentType = "";
   fetch(request).then(response => {
-    const status = response.status;
-    if (status < 200 || status >= 400) {
-      callback({err: new Error(response.statusText), status: response.status});
-      return;
-    }
     contentType = response.headers.get("Content-Type").split(";")[0];
     switch (contentType) {
       case "application/json":
@@ -34,6 +29,10 @@ export function request(request, callback) {
         return response.text();
     }
   }).then(data => {
+    if (data.error) {
+      callback(data);
+      return;
+    }
     switch (contentType) {
       case "application/javascript":
         callback(null, camelizeKeys(data));
