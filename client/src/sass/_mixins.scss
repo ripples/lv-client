@@ -1,3 +1,7 @@
+@import "bourbon";
+@import "neat";
+@import "vars";
+
 @mixin transition($duration: 0.1s){
   -webkit-transition: all $bezier $duration;
   transition: all $bezier $duration;
@@ -13,4 +17,29 @@
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+
+/* from: http://www.ryanscherler.com/notes/entry/omega-reset-for-bourbon-neat/ */
+@mixin omegaReset($nth, $context: null) {
+  @if $context == null { 
+    &:nth-child(#{$nth}) { margin-right: flex-gutter(); } 
+  } @else { 
+    &:nth-child(#{$nth}) { margin-right: flex-gutter($context); } 
+  }
+  &:nth-child(#{$nth}+1) { clear: none; }
+}
+
+@mixin gridResponsive($cols: 6, $gridSize: 12) {
+  @include span-columns($gridSize);
+
+  @include media(min-width $sm-break-width, $gridSize) {
+    @include span-columns(floor($gridSize/($cols/2)));
+    @include omega(($cols/2) + "n");
+  }
+
+  @include media(min-width $md-break-width, $gridSize) {
+    @include span-columns(floor($gridSize/$cols));
+    @include omegaReset(($cols/2) + "n", $gridSize)
+    @include omega($cols + "n");
+  }
 }
