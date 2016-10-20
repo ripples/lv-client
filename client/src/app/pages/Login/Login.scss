@@ -1,6 +1,5 @@
-@import "bourbon";
-@import "neat";
 @import "vars";
+@import "mixins";
 
 .login-page {
   background: url(/images/login_bg.jpg);
@@ -12,7 +11,7 @@
     width: 80%;
     max-width: 500px;
     margin: 0 auto;
-    border: 1px solid rgba(20,25,31,.1);
+    border: 1px solid rgba(20, 25, 31, .1);
     border-radius: $border-radius;
     text-align: center;
     margin-top: 50px;
@@ -20,7 +19,12 @@
     padding: 35px 0;
 
     .login-form-header {
-      margin-bottom: 60px;
+      margin-bottom: 3.125vw;
+
+      .divider {
+        display: inline-block;
+        line-height: 1.5;
+      }
 
       & > span {
         font-size: 20px;
@@ -30,25 +34,44 @@
         width: 135px;
       }
 
-      .umass-logo {
-        background-image: url("/images/logo.png");
-        width: 100px;
-        height: 20px;
-        display: inline-block;
-      }
-
       & > * {
         margin-right: 10px;
-        
-        &:last-child { 
+
+        &:last-child {
           margin-right: 0;
+        }
+      }
+
+      @include mobile {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        flex-wrap: wrap;
+        margin-bottom: 6.25vw;
+
+        .divider {
+          display: none;
+        }
+
+        & > img {
+          margin-top: 5px;
+        }
+
+        & > * {
+          margin: 0 5vw;
+
+          &:last-child {
+            margin: inherit;
+            margin-top: 1vh;
+          }
         }
       }
     }
 
-    .login-button {
-      margin-top: 20px;
+    form {
+      button {
+        margin-top: 20px;
+      }
     }
-    
   }
 }

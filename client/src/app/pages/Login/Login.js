@@ -4,9 +4,10 @@ import React, {PropTypes, Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import {login} from "../../actions/user";
+import {login} from "actions/user";
 import Header from "components/Header/header";
 import Logo from "components/Logo/logo";
+import FormError from "components/FormError/formError";
 
 class Login extends Component {
   constructor(props) {
@@ -20,7 +21,6 @@ class Login extends Component {
 
   handleLogin(e) {
     e.preventDefault();
-    console.log("Handling login");
     this.props.onLogin(this.state.email, this.state.password);
   }
 
@@ -30,6 +30,7 @@ class Login extends Component {
   }
 
   render() {
+    const loginError = this.props.error ? <FormError error={this.props.error}/> : null;
     return (
       <div className="login-page">
         <Header />
@@ -37,8 +38,8 @@ class Login extends Component {
           <div className="login-wrap">
             <div className="login-form-header">
               <Logo size="25px"/>
-              <span>|</span>
-              <img src="/images/logo.png" />
+              <div className="divider">|</div>
+              <img src="/images/logo.png"/>
             </div>
             <form onSubmit={this.handleLogin}
               noValidate="novalidate">
@@ -60,13 +61,14 @@ class Login extends Component {
                   required="required"
                 />
               </div>
-            </form>
-            <button
-              type="submit"
-              disabled={!(this.state.email && this.state.password)}
-              className="button accent outline login-button">
+              {loginError}
+              <button
+                type="submit"
+                disabled={!(this.state.email && this.state.password)}
+                className="button accent outline">
                 Log In
-            </button>
+              </button>
+            </form>
             <div style={{fontStyle: "italic", margin: "20px 0"}}>- or -</div>
             <a href="#" className="button accent">Sign Up</a>
           </div>
@@ -77,11 +79,14 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  onLogin: PropTypes.func.isRequired
+  onLogin: PropTypes.func.isRequired,
+  error: PropTypes.string
 };
 
-export default connect(() => {
-  return ({});
+export default connect(state => {
+  return {
+    error: state.user.error
+  };
 }, dispatch => {
   return bindActionCreators({
     onLogin: login

@@ -23,3 +23,11 @@ $lecture-thumbnail-height: 150px;
 // Media Query
 $md-break-width: 961px;
 $sm-break-width: 521px;
+
+// Screen widths
+$mobile-width: 480px !default;
+$tablet-width: 768px !default;
+$desktop-width: 1024px !default;
+
+// Misc
+$bezier: cubic-bezier(.43,.84,.79,.99);
