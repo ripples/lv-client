@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router";
 import LectureItem from "components/LectureItem/LectureItem";
 import Colors from "constants/ColorConstants";
 
@@ -12,10 +13,10 @@ class CourseItem extends React.Component {
         <span className="color-code" style={{
           backgroundColor: colorList[Math.floor(Math.random() * (colorList.length - 0)) + 0]
         }} />
-        <h4>{this.props["course-data"].title}</h4>
+        <h4 className="course-link"><Link to={`/courses/${this.props["course-data"].id}`}>{this.props["course-data"].title}</Link></h4>
         <div className="lecture-list">
           {this.props.lectures.slice(0, NUM_LECTURES).map((lecture, i) => {
-            return <LectureItem key={i} title={lecture.title} date={lecture.date} />;
+            return <LectureItem key={i} courseId={this.props["course-data"].id} lectureId={lecture.lectureId} title={lecture.title} date={lecture.date} />;
           })}
           {
             (this.props.lectures.length > NUM_LECTURES) ?

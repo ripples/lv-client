@@ -10,6 +10,21 @@
     padding-left: $leftPad;
   }
 
+  .course-link {
+    a {
+      color: $body-color;
+      text-decoration: none;
+      @include transition();
+
+      &:hover {
+        color: $blue-color;
+      }
+      &:active {
+        color: darken($blue-color, 20);
+      }
+    }
+  }
+
   .lecture-list {
     @include outer-container;
     margin:0; //TODO: replace with omega

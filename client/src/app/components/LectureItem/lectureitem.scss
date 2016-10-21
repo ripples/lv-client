@@ -10,26 +10,30 @@
 
   @include gridResponsive();
 
-  .thumbnail {
-    width: 100%;
-    height: $lecture-thumbnail-height;
-    background: #fff;
-    border: 2px solid $steel-color;
-    border-radius: $border-radius;
-    display: inline-block;
-    @include transition();
-  }
+  a {
+    text-decoration: none;
+    color: $body-color;
 
-  h5 {
-    margin: 5px 0 0 0;
-    @include transition();
-  }
-  h6 {
-    font-size: 0.75em;
-    margin: 0;
-    color: rgb(130,140,154);
-  }
+    .thumbnail {
+      width: 100%;
+      height: $lecture-thumbnail-height;
+      background: #fff;
+      border: 2px solid $steel-color;
+      border-radius: $border-radius;
+      display: inline-block;
+      @include transition();
+    }
 
+    h5 {
+      margin: 5px 0 0 0;
+      @include transition();
+    }
+    h6 {
+      font-size: 0.75em;
+      margin: 0;
+      color: rgb(130,140,154);
+    }
+  }
 
   &:hover {
     .thumbnail { border-color: $blue-color; }
