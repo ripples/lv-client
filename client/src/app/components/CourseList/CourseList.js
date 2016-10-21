@@ -50,7 +50,7 @@ class CourseList extends React.Component {
 
   getCourseLectures(lectureKeys) {
     // resolve lecture items by key
-    return lectureKeys.map(lectureKey => this._lectures[lectureKey]);
+    return lectureKeys.map(lectureKey => Object.assign({}, this._lectures[lectureKey], {lectureId: lectureKey}));
   }
 
   render() {

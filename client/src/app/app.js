@@ -12,6 +12,8 @@ import appReducer from "./reducers/app";
 // core App component
 import App from "./pages/App/App";
 import Courses from "./pages/App/Courses/Courses";
+import Course from "./pages/App/Course/Course";
+import Lecture from "./pages/App/Lecture/Lecture";
 
 // ui demonstration component
 import UI from "./pages/UI/ui";
@@ -33,6 +35,8 @@ render((
       <Route path="/" component={App}>
         <IndexRedirect to="/courses" />
         <Route path="/courses" component={Courses} />
+        <Route path="/courses/:courseId" component={Course}/>
+        <Route path="/courses/:courseId/lecture/:lectureId" component={Lecture}/>
       </Route>
       <Route path="/ui" component={UI}/>
       <Route path="/login" component={Login}/>

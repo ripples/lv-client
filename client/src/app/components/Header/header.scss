@@ -6,4 +6,13 @@
   @include globalPadding();
   color: $body-color;
   border-bottom: 1px solid $border-color;
+
+  a {
+    color: $body-color;
+    text-decoration: none;
+    @include transition();
+
+    &:hover { color: $blue-color; }
+    &:active { color: darken($blue-color, 20); }
+  }
 }
