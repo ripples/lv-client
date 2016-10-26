@@ -15,7 +15,8 @@
     "quotes": 1,
     "max-len": [1, 120],
     "operator-linebreak": [1, "before"],
-    "no-loop-func": [0]
+    "no-loop-func": [0],
+    no-debugger: 1
   },
   "plugins": [
     "react"

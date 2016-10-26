@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 
 class Course extends React.Component {
   render() {
@@ -14,4 +15,10 @@ Course.propTypes = {
   params: React.PropTypes.object
 };
 
-export default Course;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    course: state.courses.find(course => course.id === ownProps.params.courseId)
+  };
+};
+
+export default connect(mapStateToProps)(Course);
