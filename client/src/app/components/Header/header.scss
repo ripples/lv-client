@@ -6,6 +6,7 @@
   @include globalPadding();
   color: $body-color;
   border-bottom: 1px solid $border-color;
+  height: $header-height;
 
   a {
     color: $body-color;

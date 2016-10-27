@@ -1,0 +1,25 @@
+@import "vars";
+
+.video-view {
+  display: inline-block;
+  flex-grow: 1;
+  // max-width: 80%;
+  margin: 0 20px;
+  text-align: center;
+
+  .video {
+    display:inline-block;
+    max-width: 80vw;
+    width: 100%;
+    border: 2px solid #fff;
+    overflow: hidden;
+    border-radius: $border-radius;
+    font-size: 0;
+    background-color: $dark-gray-blue-color;
+
+    video {
+      border-radius: $border-radius;
+    }
+  }
+  
+}
