@@ -3,11 +3,6 @@ import CourseItem from "components/CourseItem/CourseItem";
 import {connect} from "react-redux";
 
 class CourseList extends React.Component {
-  constructor(props) {
-    console.log(props);
-    super(props);
-  }
-
   getCourseLectures(lectureKeys) {
     // resolve lecture items by key
     return lectureKeys.map(lectureKey => Object.assign({}, this.props.lectures[lectureKey], {lectureId: lectureKey}));

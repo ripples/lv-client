@@ -2,12 +2,9 @@ import React from "react";
 import {Link} from "react-router";
 import Logo from "components/Logo/logo";
 
-import {logout} from "libs/auth";
-
 class Header extends React.Component {
   doLogout() {
-    logout();
-    this.context.router.push("/login");
+    this.context.router.push("/logout");
   }
 
   render() {

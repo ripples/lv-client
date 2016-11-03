@@ -5,14 +5,32 @@ import cookie from "react-cookie";
 import {BASE_URL, AUTH_COOKIE} from "constants/ApiConstants";
 import {request} from "../libs/api";
 
-export const LOGIN_FAILURE = "LOGIN_FAILURE";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+/**
+ * Determines if user is logged in
+ * @return {boolean} - logged in
+ */
+export function isLoggedIn() {
+  return Boolean(cookie.load(AUTH_COOKIE));
+}
+
+/**
+ * Verifies user is logged or else redirects to login page
+ * @param {Function} nextState - next router states
+ * @param {Function} replace - trigger to transition to different url
+ * @param {Function} callback - must be called to trigger transition
+ */
+export function requireAuth(nextState, replace, callback) {
+  if (!isLoggedIn()) {
+    replace("/login");
+  }
+  callback();
+}
 
 /**
  * Login user
  * @param {String} email - user email
  * @param {String} password - user password
- * @return {function(*)} returns Promise
+ * @return {Promise} returns Promise
  */
 export function login(email, password) {
   return new Promise((resolve, reject) => {
@@ -28,13 +46,11 @@ export function login(email, password) {
     }), (err, data) => {
       if (err) {
         reject({
-          type: LOGIN_FAILURE,
           payload: err
         });
       } else {
         cookie.save(AUTH_COOKIE, data.token);
         resolve({
-          type: LOGIN_SUCCESS,
           payload: data
         });
       }
@@ -44,7 +60,12 @@ export function login(email, password) {
 
 /**
  * Logout user
+ * @param {Function} nextState - next router states
+ * @param {Function} replace - trigger to transition to different url
+ * @param {Function} callback - must be called to trigger transition
  */
-export function logout() {
+export function logout(nextState, replace, callback) {
   cookie.remove(AUTH_COOKIE);
+  replace("/login");
+  callback();
 }
