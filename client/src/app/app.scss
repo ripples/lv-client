@@ -100,4 +100,20 @@ button {
   &.outline {
     background: transparent;
   }
+
+  &.small {
+    border: none;
+    background: transparent;
+    padding:0;
+
+    &:focus {
+      color: darken($blue-color, 20);
+    }
+    &:hover {
+      color: darken($blue-color, 5);
+    }
+    &:active {
+      color: darken($blue-color, 10); 
+    }
+  }
 }
