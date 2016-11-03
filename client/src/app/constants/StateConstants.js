@@ -5,14 +5,15 @@
  */
 
 export const DefaultState = {
-  user: {
-    token: null
-  },
+  user: {},
   courses: [
     {
       id: "CMPSCI_377",
       title: "COMPSCI 377: Operating Systems",
-      lectures: ["cs377Lecture01", "cs377Lecture02", "cs377Lecture03", "cs377Lecture04", "cs377Lecture05", "cs377Lecture06"]
+      lectures: [
+        "cs377Lecture01", "cs377Lecture02", "cs377Lecture03",
+        "cs377Lecture04", "cs377Lecture05", "cs377Lecture06"
+      ]
     },
     {
       id: "PHYS_151_02",

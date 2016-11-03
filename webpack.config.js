@@ -24,7 +24,9 @@ module.exports = {
               {src: "./client/src/app/components", expose: "components"},
               {src: "./client/src/app/actions", expose: "actions"},
               {src: "./client/src/app/constants", expose: "constants"},
-              {src: "./client/src/app/libs", expose: "libs"}
+              {src: "./client/src/app/libs", expose: "libs"},
+              {src: "./client/src/app/reducers", expose: "reducers"},
+              {src: "./client/src/app/pages", expose: "pages"}
             ]],
             ["transform-object-rest-spread"]
           ]

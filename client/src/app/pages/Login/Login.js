@@ -4,8 +4,7 @@ import React, {PropTypes, Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-// import {login} from "actions/user";
-import {login} from "libs/auth";
+import {login, isLoggedIn} from "libs/auth";
 import Header from "components/Header/header";
 import Logo from "components/Logo/logo";
 import FormError from "components/FormError/formError";
@@ -18,16 +17,22 @@ class Login extends Component {
       password: "",
       error: null
     };
-    // this.handleLogin = this.handleLogin.bind(this);
+  }
+  componentDidMount() {
+    this.handleAuthed(this.props);
+  }
+
+  handleAuthed() {
+    if (isLoggedIn()) {
+      this.context.router.push("/");
+    }
   }
 
   handleLogin(e) {
     e.preventDefault();
     login(this.state.email, this.state.password).then(() => {
-      // this.props.history.push("/");
       this.context.router.push("/");
     }).catch(err => {
-      console.log("login failed", err);
       this.setState({error: err.payload.error});
     });
   }
