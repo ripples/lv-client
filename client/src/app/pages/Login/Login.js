@@ -4,7 +4,8 @@ import React, {PropTypes, Component} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 
-import {login} from "actions/user";
+// import {login} from "actions/user";
+import {login} from "libs/auth";
 import Header from "components/Header/header";
 import Logo from "components/Logo/logo";
 import FormError from "components/FormError/formError";
@@ -14,14 +15,21 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: null
     };
-    this.handleLogin = this.handleLogin.bind(this);
+    // this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleLogin(e) {
     e.preventDefault();
-    this.props.onLogin(this.state.email, this.state.password);
+    login(this.state.email, this.state.password).then(() => {
+      // this.props.history.push("/");
+      this.context.router.push("/");
+    }).catch(err => {
+      console.log("login failed", err);
+      this.setState({error: err.payload.error});
+    });
   }
 
   handleChange(e, field) {
@@ -30,7 +38,7 @@ class Login extends Component {
   }
 
   render() {
-    const loginError = this.props.error ? <FormError error={this.props.error}/> : null;
+    const loginError = this.state.error ? <FormError error={this.state.error}/> : null;
     return (
       <div className="login-page">
         <Header />
@@ -41,7 +49,7 @@ class Login extends Component {
               <div className="divider">|</div>
               <img src="/images/logo.png"/>
             </div>
-            <form onSubmit={this.handleLogin}
+            <form onSubmit={e => this.handleLogin(e)}
               noValidate="novalidate">
               <div className="input-group">
                 <input
@@ -80,7 +88,12 @@ class Login extends Component {
 
 Login.propTypes = {
   onLogin: PropTypes.func.isRequired,
-  error: PropTypes.string
+  error: PropTypes.string,
+  history: PropTypes.object
+};
+
+Login.contextTypes = {
+  router: React.PropTypes.object.isRequired
 };
 
 export default connect(state => {

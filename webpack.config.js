@@ -23,7 +23,8 @@ module.exports = {
             ["module-alias", [
               {src: "./client/src/app/components", expose: "components"},
               {src: "./client/src/app/actions", expose: "actions"},
-              {src: "./client/src/app/constants", expose: "constants"}
+              {src: "./client/src/app/constants", expose: "constants"},
+              {src: "./client/src/app/libs", expose: "libs"}
             ]],
             ["transform-object-rest-spread"]
           ]
