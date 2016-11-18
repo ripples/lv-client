@@ -21,35 +21,42 @@ export const DefaultState = {
       lectures: ["phys15102Lecture01"]
     }
   ],
-  lectures: {
-    cs377Lecture01: {
+  lectures: [
+    {
+      lectureId: "cs377Lecture01",
       title: "Lecture 01",
       date: 1476333797611
     },
-    cs377Lecture02: {
+    {
+      lectureId: "cs377Lecture02",
       title: "Lecture 02",
       date: 1476333797611
     },
-    cs377Lecture03: {
+    {
+      lectureId: "cs377Lecture03",
       title: "Lecture 03",
       date: 1476333797611
     },
-    cs377Lecture04: {
+    {
+      lectureId: "cs377Lecture04",
       title: "Lecture 04",
       date: 1476333797611
     },
-    cs377Lecture05: {
+    {
+      lectureId: "cs377Lecture05",
       title: "Lecture 05",
       date: 1476333797611
     },
-    cs377Lecture06: {
+    {
+      lectureId: "cs377Lecture06",
       title: "Lecture 06",
       date: 1476333797611
     },
-    phys15102Lecture01: {
+    {
+      lectureId: "phys15102Lecture01",
       title: "Lecture 01",
       date: 1476333797611
     }
-  },
+  ],
   media: {}
 };

@@ -32,7 +32,7 @@ Lecture.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    lecture: Object.assign({}, state.lectures[ownProps.params.lectureId]),
+    lecture: state.lectures.find(lecture => lecture.lectureId === ownProps.params.lectureId),
     course: state.courses.find(course => course.id === ownProps.params.courseId)
   };
 };

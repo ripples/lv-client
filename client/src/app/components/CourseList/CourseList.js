@@ -5,7 +5,8 @@ import {connect} from "react-redux";
 class CourseList extends React.Component {
   getCourseLectures(lectureKeys) {
     // resolve lecture items by key
-    return lectureKeys.map(lectureKey => Object.assign({}, this.props.lectures[lectureKey], {lectureId: lectureKey}));
+    // return lectureKeys.map(lectureKey => Object.assign({}, this.props.lectures[lectureKey], {lectureId: lectureKey}));
+    return this.props.lectures.filter(lecture => lectureKeys.indexOf(lecture.lectureId) >= 0);
   }
 
   render() {
@@ -23,13 +24,13 @@ class CourseList extends React.Component {
 
 CourseList.propTypes = {
   courses: React.PropTypes.array.isRequired,
-  lectures: React.PropTypes.object.isRequired
+  lectures: React.PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => {
   return {
     courses: state.courses,
-    lectures: Object.assign({}, state.lectures)
+    lectures: state.lectures
   };
 };
 
