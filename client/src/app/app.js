@@ -43,6 +43,7 @@ render((
       </Route>
       <Route path="/ui" component={UI}/>
       <Route path="/login" component={Login}/>
+      <Route path="/reset" component={Login}/>
       <Route path="/logout" onEnter={logout}/>
     </Router>
   </Provider>
