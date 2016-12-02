@@ -1,0 +1,10 @@
+@import "vars";
+@import "mixins";
+
+.login-form {
+  .forgot {
+    font-size: 14px;
+    font-style: italic;
+    color: $steel-color;
+  }
+}
