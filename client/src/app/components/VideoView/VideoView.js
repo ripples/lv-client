@@ -1,10 +1,9 @@
 import React from "react";
-import {BASE_URL} from "../../constants/ApiConstants";
 
 class VideoView extends React.Component {
 
   sayVideoTimer() {
-    var video = document.getElementById("player");
+    var video = document.getElementById('player');
     console.log(video.currentTime);
   }
 
@@ -13,13 +12,14 @@ class VideoView extends React.Component {
       <div className="video-view">
         <div className="video">
           <video id="player"
-                 src={BASE_URL+"/videotest/video"}
+                 className="video-js vjs-default-skin"
+                 src="http://192.168.99.100/api/v1/videotest/video"
                  type="video/mp4"
                  height="50%"
                  width="50%"
                  controls preload="auto">
           </video>
-          <img src={BASE_URL+"/videotest/F16/COMPSCI 220/08-29-2016--08-59-01/images/whiteboard/full/whiteBoard-0-1472475961"} width="50%" height="50%"></img>
+          <img src="http://192.168.99.100/api/v1/videotest/F16/COMPSCI 220/08-29-2016--08-59-01/images/whiteboard/full/whiteBoard-0-1472475961" width="50%" height="50%"></img>
           <button onClick={this.sayVideoTimer}>click me</button>
         </div>
       </div>
