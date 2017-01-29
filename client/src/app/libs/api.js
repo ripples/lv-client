@@ -21,8 +21,6 @@ export function request(request, callback) {
     switch (contentType) {
       case "application/json":
         return response.json();
-      case "video/mp4":
-        return response.blob();
       case "image/png":
         return response.blob();
       default:
@@ -36,9 +34,6 @@ export function request(request, callback) {
     switch (contentType) {
       case "application/javascript":
         callback(null, camelizeKeys(data));
-        break;
-      case "video/mp4":
-        callback(null, URL.createObjectURL(data));
         break;
       case "image/png":
         callback(null, URL.createObjectURL(data));
