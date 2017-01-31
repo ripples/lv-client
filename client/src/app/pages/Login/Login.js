@@ -2,23 +2,21 @@
 
 import React, {Component} from "react";
 
-import {isLoggedIn} from "libs/auth";
-import Header from "components/Header/header";
-import Logo from "components/Logo/logo";
-import LoginForm from "components/LoginForm/LoginForm";
-import ForgotForm from "components/ForgotForm/ForgotForm";
-import ResetForm from "components/ResetForm/ResetForm";
+import {isLoggedIn} from "../../libs/auth";
+import Header from "../../components/Header/header";
+import Logo from "../../components/Logo/logo";
+import LoginForm from "../../components/LoginForm/LoginForm";
+import ForgotForm from "../../components/ForgotForm/ForgotForm";
+import ResetForm from "../../components/ResetForm/ResetForm";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     const token = this.props.location.query.token;
-    const email = this.props.location.query.email;
-    this.state = {form: token ? "reset" : "login", reset: {token, email}};
-    this.determineFormState.bind(this);
-    this.handleAuthed.bind(this);
-    this.onForgotForm.bind(this);
-    this.onLoginForm.bind(this);
+    this.state = {form: token ? "reset" : "login", reset: {token}};
+    this.handleAuthed = this.handleAuthed.bind(this);
+    this.onForgotForm = this.onForgotForm.bind(this);
+    this.onLoginForm = this.onLoginForm.bind(this);
   }
   componentDidMount() {
     this.handleAuthed();
@@ -48,7 +46,7 @@ class Login extends Component {
         form = <ForgotForm onLoginForm={this.onLoginForm}/>;
         break;
       case "reset":
-        form = <ResetForm token={this.state.reset.token} email={this.state.reset.email} onLoginForm={this.onLoginForm}/>;
+        form = <ResetForm token={this.state.reset.token} onLoginForm={this.onLoginForm}/>;
         break;
       default:
     }
