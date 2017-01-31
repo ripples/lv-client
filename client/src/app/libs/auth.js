@@ -29,15 +29,14 @@ export function requireAuth(nextState, replace, callback) {
 /**
  * Reset password
  * @param {String} token - reset token provided in email
- * @param {String} email - email to reset for
  * @param {String} password - new password
  * @return {Promise} returns Promise
  */
-export function resetPassword(token, email, password) {
+export function resetPassword(token, password) {
   return new Promise((resolve, reject) => {
     request(new Request(`${BASE_URL}/login/reset`, {
       method: "POST",
-      body: JSON.stringify({token, email, password}),
+      body: JSON.stringify({token, password}),
       headers: new Headers({
         "Content-Type": "application/json"
       })

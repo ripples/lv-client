@@ -2,8 +2,8 @@
 
 import React, {PropTypes, Component} from "react";
 
-import {resetPassword} from "libs/auth";
-import FormError from "components/FormError/formError";
+import {resetPassword} from "../../libs/auth";
+import FormError from "../../components/FormError/formError";
 
 class ResetForm extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class ResetForm extends Component {
     if (this.state.password !== this.state.passwordConfirm) {
       return this.setState(Object.assign({}, this.state, {error: "Passwords do not match."}));
     }
-    resetPassword(this.props.token, this.props.email, this.state.password).then(() => {
+    resetPassword(this.props.token, this.state.password).then(() => {
       this.setState({reset: true});
     }).catch(err => {
       this.setState({error: err.payload.error});
@@ -80,8 +80,7 @@ class ResetForm extends Component {
 
 ResetForm.propTypes = {
   onLoginForm: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired
+  token: PropTypes.string.isRequired
 };
 
 export default ResetForm;

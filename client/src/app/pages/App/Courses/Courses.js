@@ -1,5 +1,6 @@
 import React from "react";
-import CourseList from "components/CourseList/CourseList";
+
+import CourseList from "./../../../components/CourseList/CourseList";
 
 class Courses extends React.Component {
   render() {
