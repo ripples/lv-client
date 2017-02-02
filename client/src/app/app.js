@@ -7,19 +7,16 @@ import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import thunkMiddleware from "redux-thunk";
 
-import appReducer from "reducers/app";
+import appReducer from "./reducers/app";
 
 // utilities
-import {logout, requireAuth} from "libs/auth";
+import {logout, requireAuth} from "./libs/auth";
 
 // core App component
 import App from "./pages/App/App";
 import Courses from "./pages/App/Courses/Courses";
 import Course from "./pages/App/Course/Course";
 import Lecture from "./pages/App/Lecture/Lecture";
-
-// ui demonstration component
-import UI from "./pages/UI/ui";
 import Login from "./pages/Login/Login";
 
 // TODO: wrap in dev env var
@@ -41,8 +38,8 @@ render((
         <Route path="/courses/:courseId" component={Course}/>
         <Route path="/courses/:courseId/lecture/:lectureId" component={Lecture}/>
       </Route>
-      <Route path="/ui" component={UI}/>
       <Route path="/login" component={Login}/>
+      <Route path="/reset" component={Login}/>
       <Route path="/logout" onEnter={logout}/>
     </Router>
   </Provider>

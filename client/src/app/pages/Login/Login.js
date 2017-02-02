@@ -1,25 +1,25 @@
 "use strict";
 
-import React, {PropTypes, Component} from "react";
-import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
+import React, {Component} from "react";
 
-import {login, isLoggedIn} from "libs/auth";
-import Header from "components/Header/header";
-import Logo from "components/Logo/logo";
-import FormError from "components/FormError/formError";
+import {isLoggedIn} from "../../libs/auth";
+import Header from "../../components/Header/header";
+import Logo from "../../components/Logo/logo";
+import LoginForm from "../../components/LoginForm/LoginForm";
+import ForgotForm from "../../components/ForgotForm/ForgotForm";
+import ResetForm from "../../components/ResetForm/ResetForm";
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: "",
-      password: "",
-      error: null
-    };
+    const token = this.props.location.query.token;
+    this.state = {form: token ? "reset" : "login", reset: {token}};
+    this.handleAuthed = this.handleAuthed.bind(this);
+    this.onForgotForm = this.onForgotForm.bind(this);
+    this.onLoginForm = this.onLoginForm.bind(this);
   }
   componentDidMount() {
-    this.handleAuthed(this.props);
+    this.handleAuthed();
   }
 
   handleAuthed() {
@@ -28,22 +28,33 @@ class Login extends Component {
     }
   }
 
-  handleLogin(e) {
-    e.preventDefault();
-    login(this.state.email, this.state.password).then(() => {
-      this.context.router.push("/");
-    }).catch(err => {
-      this.setState({error: err.payload.error});
-    });
+  onLoginForm() {
+    this.setState({form: "login"});
   }
 
-  handleChange(e, field) {
-    e.preventDefault();
-    this.setState(Object.assign({}, this.state, {[field]: e.target.value}));
+  onForgotForm() {
+    this.setState({form: "forgot"});
+  }
+
+  determineFormState() {
+    let form;
+    switch (this.state.form) {
+      case "login":
+        form = <LoginForm onLogin={this.handleAuthed} onForgotForm={this.onForgotForm}/>;
+        break;
+      case "forgot":
+        form = <ForgotForm onLoginForm={this.onLoginForm}/>;
+        break;
+      case "reset":
+        form = <ResetForm token={this.state.reset.token} onLoginForm={this.onLoginForm}/>;
+        break;
+      default:
+    }
+    return form;
   }
 
   render() {
-    const loginError = this.state.error ? <FormError error={this.state.error}/> : null;
+    const form = this.determineFormState();
     return (
       <div className="login-page">
         <Header />
@@ -54,36 +65,7 @@ class Login extends Component {
               <div className="divider">|</div>
               <img src="/images/logo.png"/>
             </div>
-            <form onSubmit={e => this.handleLogin(e)}
-              noValidate="novalidate">
-              <div className="input-group">
-                <input
-                  type="text"
-                  placeholder="email"
-                  value={this.state.email}
-                  onChange={e => this.handleChange(e, "email")}
-                  required="required"
-                />
-              </div>
-              <div className="input-group">
-                <input
-                  type="password"
-                  placeholder="password"
-                  value={this.state.password}
-                  onChange={e => this.handleChange(e, "password")}
-                  required="required"
-                />
-              </div>
-              {loginError}
-              <button
-                type="submit"
-                disabled={!(this.state.email && this.state.password)}
-                className="button accent outline">
-                Log In
-              </button>
-            </form>
-            <div style={{fontStyle: "italic", margin: "20px 0"}}>- or -</div>
-            <a href="#" className="button accent">Sign Up</a>
+            {form}
           </div>
         </div>
       </div>
@@ -91,22 +73,12 @@ class Login extends Component {
   }
 }
 
-Login.propTypes = {
-  onLogin: PropTypes.func.isRequired,
-  error: PropTypes.string,
-  history: PropTypes.object
-};
-
 Login.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default connect(state => {
-  return {
-    error: state.user.error
-  };
-}, dispatch => {
-  return bindActionCreators({
-    onLogin: login
-  }, dispatch);
-})(Login);
+Login.propTypes = {
+  location: React.PropTypes.object.isRequired
+};
+
+export default Login;
