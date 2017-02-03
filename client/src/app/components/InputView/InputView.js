@@ -4,7 +4,7 @@ class InputView extends React.Component {
 
   render() {
     return (
-      <div><span>things</span></div>
+      <div className="input-view"><span>things</span></div>
     );
   }
 }
