@@ -3,4 +3,22 @@
     display: flex;
     margin: 20px 10px;
   }
+  .rectangle-3 {
+	width: 640px;
+	height: 360px;
+	border-radius: 5px;
+	background-color: #32404e;
+	background-color: var(--dark-grey-blue-two);
+	border: solid 1px #fafafa;
+	border: solid 1px var(--white);
+}
+.rectangle-3-copy {
+	width: 640px;
+	height: 360px;
+	border-radius: 5px;
+	background-color: #32404e;
+	background-color: var(--dark-grey-blue-two);
+	border: solid 1px #fafafa;
+	border: solid 1px var(--white);
+}
 }

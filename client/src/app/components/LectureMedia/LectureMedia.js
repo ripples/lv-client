@@ -6,7 +6,10 @@ class LectureMedia extends React.Component {
   render() {
     return (
       <div className="lecture-media">
-        <div className="video-wrapper">
+        <div className="video-wrapper rectangle-3">
+          <VideoView/>
+        </div>
+        <div className="video-wrapper rectangle-3-copy">
           <VideoView/>
         </div>
         <div className="input-wrapper">
