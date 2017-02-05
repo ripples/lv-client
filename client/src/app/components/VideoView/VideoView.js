@@ -2,10 +2,21 @@ import React from "react";
 
 class VideoView extends React.Component {
 
+  // TODO Replace the iframe in here with the video:
   render() {
     return (
-      <div className="video-view">
-        <span>video here</span>
+      <div>
+        <div className="video-view">
+          <iframe
+            className="video"
+            src={"https://www.youtube.com/embed/vtvnE1l98I4"}
+            allowFullScreen
+            height={"358"}
+            width={"638"}/>
+        </div>
+        <div>
+          <span>playback controls</span>
+        </div>
       </div>
     );
   }
