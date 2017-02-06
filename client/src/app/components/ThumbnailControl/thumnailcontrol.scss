@@ -1,16 +1,13 @@
-@import "mixins";
+@import "bourbon";
+@import "neat";
 
 .thumbnail-control {
-    .thumbail {
-        width: 89.3px;
-        height: 50px;
-        border-radius: 4px;
-        background-color: #32404e;
-        background-color: var(--dark-grey-blue-two);
-        border: solid 1px #fafafa;
-        border: solid 1px var(--white);
-    }
-    .arrow-left{
-      @include arrow(left, #fafafa, 15px);
+    @include outer-container(95%);
+    padding-left: 15px;
+    margin-top: 15px;
+    .arrow{
+      @include  span-columns(1);
+      @include omega;
+      font-size: 35px;
     }
 }
