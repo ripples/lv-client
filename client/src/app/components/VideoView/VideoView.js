@@ -14,9 +14,6 @@ class VideoView extends React.Component {
             height={"358"}
             width={"638"}/>
         </div>
-        <div>
-          <span>playback controls</span>
-        </div>
       </div>
     );
   }

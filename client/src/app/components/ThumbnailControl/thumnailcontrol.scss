@@ -1,0 +1,16 @@
+@import "mixins";
+
+.thumbnail-control {
+    .thumbail {
+        width: 89.3px;
+        height: 50px;
+        border-radius: 4px;
+        background-color: #32404e;
+        background-color: var(--dark-grey-blue-two);
+        border: solid 1px #fafafa;
+        border: solid 1px var(--white);
+    }
+    .arrow-left{
+      @include arrow(left, #fafafa, 15px);
+    }
+}

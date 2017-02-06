@@ -1,7 +1,8 @@
 import React from "react";
-// src="https://www.youtube.com/embed/rh88-WCOF0E"
+
 class InputView extends React.Component {
 
+  // TODO Replace the iframe in here with the video:
   render() {
     return (
       <div>
@@ -13,9 +14,6 @@ class InputView extends React.Component {
             height={"358"}
             width={"638"}/>
         </div>
-      <div>
-        <span>thumbnail</span>
-      </div>
     </div>
     );
   }
