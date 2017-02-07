@@ -14,10 +14,19 @@ class ThumbnailControl extends React.Component {
       ],
       number: 0};
   }
+
+  handleArrowClick(clickEvent) {
+    clickEvent.preventDefault();
+    console.log("Clicked");
+  }
+  /* handleClickEvent(clickEvent, id) {
+    clickEvent.preventDefault();
+    console.log(id);
+  }*/
   render() {
     return (
       <div className="thumbnail-control">
-        <div className="arrow">
+        <div className="arrow" onClick={e => this.handleArrowClick(e)}>
           &lt;
         </div>
         {
@@ -27,7 +36,7 @@ class ThumbnailControl extends React.Component {
             }
           )
         }
-        <div className="arrow">
+        <div className="arrow" onClick={e => this.handleArrowClick(e)}>
           &gt;
         </div>
     </div>
