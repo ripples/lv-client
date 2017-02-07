@@ -10,13 +10,17 @@ class InputThumbnail extends React.Component {
     return (
       <div className="thumbnail">
         <div className="thumb">
-          <img src="https://i.imgur.com/4mXH4XM.jpg" onClick={(e, i) => this.handleClickEvent(e, i)}/>
+          <img src={this.props.image} onClick={(e, i) => this.handleClickEvent(e, i)}/>
         </div>
+        {this.props.time}
       </div>
     );
   }
 }
 
-InputThumbnail.propTypes = {};
+InputThumbnail.propTypes = {
+  image: React.PropTypes.string,
+  time: React.PropTypes.number
+};
 
 export default InputThumbnail;
