@@ -20,7 +20,7 @@ class InputThumbnail extends React.Component {
 
 InputThumbnail.propTypes = {
   image: React.PropTypes.string,
-  time: React.PropTypes.number
+  time: React.PropTypes.string
 };
 
 export default InputThumbnail;

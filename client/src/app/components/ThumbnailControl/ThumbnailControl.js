@@ -17,8 +17,7 @@ class ThumbnailControl extends React.Component {
       x[c].time += c;
     }
     this.state = {
-      data: x,
-      number: 0
+      data: x
     };
   }
 
@@ -26,10 +25,7 @@ class ThumbnailControl extends React.Component {
     clickEvent.preventDefault();
     console.log("Clicked");
   }
-  /* handleClickEvent(clickEvent, id) {
-    clickEvent.preventDefault();
-    console.log(id);
-  }*/
+
   render() {
     return (
       <div className="thumbnail-control">
