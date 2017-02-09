@@ -26,9 +26,9 @@ class Course extends React.Component {
                 justThumb={true}
               />
             <div className="lecture-info">
-                <h5>{lecture.title}</h5>
-                <h6>{(new Date(lecture.date)).toDateString()}</h6>
-                <h6>TIME</h6>
+                <h5><Link to={`/courses/${courseId}/lecture/${lecture.lectureId}`}>{lecture.title}</Link></h5>
+                <h6><Link to={`/courses/${courseId}/lecture/${lecture.lectureId}`}>{(new Date(lecture.date)).toDateString()}</Link></h6>
+                <h6><Link to={`/courses/${courseId}/lecture/${lecture.lectureId}`}>TIME</Link></h6>
               </div>
             </div>
           );
