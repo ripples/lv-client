@@ -7,15 +7,17 @@ class VideoView extends React.Component {
     const videoJsOptions = {
       autoPlay: true,
       controls: true,
+      height: 800,
+      width: 800,
       sources: [{
-        src: BASE_URL + "/a/F16/COMPSCI 220/08-29-2016--08-59-01/video",
+        src: BASE_URL + "/media/F16/COMPSCI 220/08-29-2016--08-59-01/video",
         type: "video/mp4"
       }]
     };
     return (
-      <div className="video-view">
-        <div className="video">
-          <VideoPlayer height="400px" width="400px" { ...videoJsOptions } />
+      <div className="video-view" height="800px" width="800px">
+        <div className="video" height="800px" width="800px">
+          <VideoPlayer height="800px" width="800px" { ...videoJsOptions } />
         </div>
       </div>
     );
