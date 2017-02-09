@@ -16,4 +16,12 @@
     color: $steel-color;
     font-weight: 400;
   }
+  a {
+    text-decoration: none;
+    color: white;
+  }
+  a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }

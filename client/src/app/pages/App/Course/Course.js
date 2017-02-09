@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import {Link} from 'react-router';
 
 import LectureItem from "components/LectureItem/LectureItem";
 
@@ -9,6 +10,7 @@ class Course extends React.Component {
 
     return (
       <div className="course">
+        <Link to="/courses">My Courses</Link> / <Link to={`/courses/${this.props.course.id}`}>{this.props.course.title.split(":")[0]}</Link>
         <h1>{this.props.course.title}</h1>
 
         {this.props.lectures.map((lecture, i) => {

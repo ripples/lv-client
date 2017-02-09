@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import {Link} from 'react-router';
 import moment from "moment";
 
 import LectureMedia from "components/LectureMedia/LectureMedia";
@@ -9,8 +10,9 @@ class Lecture extends React.Component {
     return (
       <div className="lecture">
         <div className="lecture-header">
+          <Link to="/courses">My Courses</Link> / <Link to={`/courses/${this.props.course.id}`}>{this.props.course.title.split(":")[0]}</Link> / {this.props.lecture.title}
           <h1>
-            {this.props.course.title.split(":")[0]}: {this.props.lecture.title}
+            {this.props.course.title}: {this.props.lecture.title}
           </h1>
           <h4>
             {moment(this.props.lecture.date).format("dddd, MMMM Do YYYY")}
