@@ -15,14 +15,21 @@ class Course extends React.Component {
 
         {this.props.lectures.map((lecture, i) => {
           return (
-            <div key={i}>
+            <div className="lecture-row" key={i}>
               <LectureItem
                 key={courseId + lecture.lectureId}
                 courseId={courseId}
                 lectureId={lecture.lectureId}
                 title={lecture.title}
                 date={lecture.date}
+                compact={true}
+                justThumb={true}
               />
+            <div className="lecture-info">
+                <h5>{lecture.title}</h5>
+                <h6>{(new Date(lecture.date)).toDateString()}</h6>
+                <h6>TIME</h6>
+              </div>
             </div>
           );
         })}

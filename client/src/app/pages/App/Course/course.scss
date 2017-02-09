@@ -1,10 +1,22 @@
 @import "mixins";
+@import "bourbon";
+@import "neat";
 
 .course {
   @include globalPadding();
+  @include outer-container(90%);
 
+  .lecture-row{
+    @include row();
+  }
+  .lecture-info{
+    margin-left: 245px;
+    padding-left: 50px;
+    padding-top: 28px;
+  }
   h1{
       margin-top: 0px;
+      margin-bottom: 25px;
   }
   a {
     text-decoration: none;
@@ -13,5 +25,17 @@
   a:hover {
     text-decoration: underline;
     cursor: pointer;
+  }
+  h5{
+    font-size: 28px;
+    margin: 0px;
+    font-weight: lighter;
+    //text-align: center;
+  }
+  h6{
+    font-weight: lighter;
+    font-size: 16px;
+    margin: 0px;
+    //text-align: center;
   }
 }
