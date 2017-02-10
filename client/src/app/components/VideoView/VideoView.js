@@ -3,7 +3,7 @@ import React from "react";
 class VideoView extends React.Component {
 
   sayVideoTimer() {
-    var video = document.getElementById('player');
+    var video = document.getElementById("player");
     console.log(video.currentTime);
   }
 

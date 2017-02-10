@@ -1,9 +1,9 @@
 "use strict";
 
 import cookie from "react-cookie";
+import axios from "axios";
 
-import {BASE_URL, AUTH_COOKIE} from "constants/ApiConstants";
-import {request} from "../libs/api";
+import {AUTH_COOKIE} from "../constants/ApiConstants";
 
 /**
  * Determines if user is logged in
@@ -33,25 +33,7 @@ export function requireAuth(nextState, replace, callback) {
  * @return {Promise} returns Promise
  */
 export function resetPassword(token, password) {
-  return new Promise((resolve, reject) => {
-    request(new Request(`${BASE_URL}/login/reset`, {
-      method: "POST",
-      body: JSON.stringify({token, password}),
-      headers: new Headers({
-        "Content-Type": "application/json"
-      })
-    }), (err, data) => {
-      if (err) {
-        reject({
-          payload: err
-        });
-      } else {
-        resolve({
-          payload: data
-        });
-      }
-    });
-  });
+  return axios.post("/login/reset", {token, password});
 }
 
 /**
@@ -60,25 +42,7 @@ export function resetPassword(token, password) {
  * @return {Promise} returns Promise
  */
 export function requestResetEmail(email) {
-  return new Promise((resolve, reject) => {
-    request(new Request(`${BASE_URL}/login/forgot`, {
-      method: "POST",
-      body: JSON.stringify({email}),
-      headers: new Headers({
-        "Content-Type": "application/json"
-      })
-    }), (err, data) => {
-      if (err) {
-        reject({
-          payload: err
-        });
-      } else {
-        resolve({
-          payload: data
-        });
-      }
-    });
-  });
+  return axios.post("/login/forgot", {email});
 }
 
 /**
@@ -88,25 +52,8 @@ export function requestResetEmail(email) {
  * @return {Promise} returns Promise
  */
 export function login(email, password) {
-  return new Promise((resolve, reject) => {
-    request(new Request(`${BASE_URL}/login`, {
-      method: "POST",
-      body: JSON.stringify({email, password}),
-      headers: new Headers({
-        "Content-Type": "application/json"
-      })
-    }), (err, data) => {
-      if (err) {
-        reject({
-          payload: err
-        });
-      } else {
-        cookie.save(AUTH_COOKIE, data.token);
-        resolve({
-          payload: data
-        });
-      }
-    });
+  return axios.post("/login", {email, password}).then(response => {
+    cookie.save(AUTH_COOKIE, response.data.token);
   });
 }
 

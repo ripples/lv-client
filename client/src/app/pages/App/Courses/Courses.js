@@ -3,6 +3,7 @@ import React from "react";
 import CourseList from "./../../../components/CourseList/CourseList";
 
 class Courses extends React.Component {
+
   render() {
     return (
       <div className="courses">

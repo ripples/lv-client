@@ -24,7 +24,7 @@ class ForgotForm extends Component {
     requestResetEmail(this.state.email).then(() => {
       this.setState({success: true});
     }).catch(err => {
-      this.setState({error: err.payload.error});
+      this.setState({error: err.error});
     });
   }
 
