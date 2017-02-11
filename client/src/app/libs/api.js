@@ -3,7 +3,16 @@
 import cookie from "react-cookie";
 import {camelizeKeys} from "humps";
 
-import {AUTH_COOKIE} from "../constants/ApiConstants";
+import {AUTH_COOKIE, BASE_URL} from "../constants/ApiConstants";
+
+export function getCourses(callback) {
+  const url = `${BASE_URL}/courses`;
+  const req = new Request(url, {
+    method: "GET"
+  });
+
+  return request(req, callback);
+}
 
 /**
  * Wrapper function for fetch API, used to make requests to server
