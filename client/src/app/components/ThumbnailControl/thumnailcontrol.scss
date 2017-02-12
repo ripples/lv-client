@@ -1,0 +1,14 @@
+@import "bourbon";
+@import "neat";
+
+.thumbnail-control {
+    @include outer-container(95%);
+    padding-left: 15px;
+    margin-top: 15px;
+    .arrow{
+      @include  span-columns(1);
+      @include omega;
+      font-size: 35px;
+      cursor: pointer;
+    }
+}

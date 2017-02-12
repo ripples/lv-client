@@ -8,6 +8,7 @@ const gutil = require("gulp-util");
 const path = require("path");
 const eslint = require("gulp-eslint");
 const sass = require("gulp-sass");
+const plumber = require('gulp-plumber');
 const concatCSS = require("gulp-concat-css");
 
 // sass libraries
@@ -15,6 +16,13 @@ const neat = require("node-neat").includePaths;
 
 const DIST_DIR = "./client/dist";
 const SRC_DIR = "./client/src";
+
+function errorHandler() {
+  return plumber(function(error) {
+    gutil.log(error.message);
+    this.emit("end");
+  });
+}
 
 gulp.task("clean", () => {
   return del([`${DIST_DIR}/**/*`]);
@@ -27,6 +35,7 @@ gulp.task("copy-images", () => {
 
 gulp.task("sass", () => {
   return gulp.src(`${SRC_DIR}/app/**/*.scss`)
+    .pipe(errorHandler())
     .pipe(sass({
       outputStyle: "compressed",
       includePaths: [`${SRC_DIR}/sass/`, ...neat]
@@ -44,6 +53,7 @@ gulp.task("eslint", () => {
 
 gulp.task("webpack", ["eslint"], () => {
   return gulp.src(`${SRC_DIR}/app/app.js`)
+    .pipe(errorHandler())
     .pipe(webpack(require("./webpack.config.js")))
     .pipe(gulp.dest(`${DIST_DIR}/app`));
 });

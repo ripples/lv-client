@@ -4,6 +4,10 @@ import LectureItem from "components/LectureItem/LectureItem";
 import Colors from "constants/ColorConstants";
 
 class CourseItem extends React.Component {
+  toCoursePage() {
+    this.context.router.push(`/courses/${this.props["course-data"].id}`);
+  }
+
   render() {
     const NUM_LECTURES = 5;
     const colorList = [Colors.BLUE, Colors.PURPLE, Colors.YELLOW, Colors.GREEN];
@@ -19,13 +23,13 @@ class CourseItem extends React.Component {
         <div className="lecture-list">
           {this.props.lectures.slice(0, NUM_LECTURES).map(lecture => {
             const courseId = this.props["course-data"].id;
-            return <LectureItem key={courseId + lecture.lectureId} courseId={courseId} lectureId={lecture.lectureId}
+            return <LectureItem compact={true} key={courseId + lecture.lectureId} courseId={courseId} lectureId={lecture.lectureId}
                                 title={lecture.title} date={lecture.date} />;
           })}
           {
             (this.props.lectures.length > NUM_LECTURES)
                 ? <div className="see-all-lectures">
-                    <button>See All ></button>
+                    <button onClick={() => this.toCoursePage()}>See All ></button>
                   </div> : null
           }
         </div>
@@ -37,6 +41,10 @@ class CourseItem extends React.Component {
 CourseItem.propTypes = {
   "course-data": React.PropTypes.object.isRequired, // TODO: define shape
   "lectures": React.PropTypes.array.isRequired
+};
+
+CourseItem.contextTypes = {
+  router: React.PropTypes.object.isRequired
 };
 
 export default CourseItem;

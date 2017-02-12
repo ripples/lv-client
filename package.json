@@ -26,7 +26,9 @@
     "del": "^2.2.2",
     "express": "~4.13.1",
     "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
     "gulp-concat-css": "^2.3.0",
+    "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.3.2",
     "gulp-util": "^3.0.7",
     "history": "^3.0.0",
@@ -46,6 +48,7 @@
     "run-sequence": "^1.2.2",
     "serve-favicon": "~2.3.0",
     "style-loader": "^0.13.1",
+    "validator": "^6.2.1",
     "webpack": "^1.13.2",
     "webpack-stream": "^3.2.0",
     "video.js": "^5.16.0"
@@ -54,7 +57,6 @@
     "babel-eslint": "^6.1.0",
     "eslint": "^2.13.1",
     "eslint-config-google": "^0.5.0",
-    "eslint-plugin-react": "^5.1.1",
-    "gulp-eslint": "^3.0.1"
+    "eslint-plugin-react": "^5.1.1"
   }
 }

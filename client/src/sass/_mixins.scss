@@ -21,10 +21,10 @@
 
 /* from: http://www.ryanscherler.com/notes/entry/omega-reset-for-bourbon-neat/ */
 @mixin omegaReset($nth, $context: null) {
-  @if $context == null { 
-    &:nth-child(#{$nth}) { margin-right: flex-gutter(); } 
-  } @else { 
-    &:nth-child(#{$nth}) { margin-right: flex-gutter($context); } 
+  @if $context == null {
+    &:nth-child(#{$nth}) { margin-right: flex-gutter(); }
+  } @else {
+    &:nth-child(#{$nth}) { margin-right: flex-gutter($context); }
   }
   &:nth-child(#{$nth}+1) { clear: none; }
 }

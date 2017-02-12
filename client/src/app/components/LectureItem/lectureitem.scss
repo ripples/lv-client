@@ -4,11 +4,14 @@
 @import "mixins";
 
 .lecture-item {
-  display: inline-block;
+  display: block;
   padding-bottom: 30px;
   cursor: pointer;
 
-  @include gridResponsive();
+  &.compact {
+    display: inline-block;
+    @include gridResponsive();
+  }
 
   a {
     text-decoration: none;

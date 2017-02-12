@@ -17,7 +17,8 @@
     "operator-linebreak": [1, "before"],
     "no-loop-func": [0],
     "no-debugger": 1,
-    "no-return-assign": "off"
+    "no-return-assign": "off",
+    "linebreak-style": "off"
   },
   "plugins": [
     "react"
