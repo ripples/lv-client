@@ -11,6 +11,7 @@ import appReducer from "./reducers/app";
 
 // utilities
 import {logout, requireAuth} from "./libs/auth";
+import {configureAxios} from "./libs/api";
 
 // core App component
 import App from "./pages/App/App";
@@ -18,6 +19,9 @@ import Courses from "./pages/App/Courses/Courses";
 import Course from "./pages/App/Course/Course";
 import Lecture from "./pages/App/Lecture/Lecture";
 import Login from "./pages/Login/Login";
+
+// Configure globals
+configureAxios();
 
 // TODO: wrap in dev env var
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

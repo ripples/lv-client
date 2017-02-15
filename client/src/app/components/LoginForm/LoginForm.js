@@ -2,7 +2,7 @@
 
 import React, {PropTypes, Component} from "react";
 
-import {login} from "libs/auth";
+import {login} from "../../libs/auth";
 import FormError from "components/FormError/formError";
 
 class LoginForm extends Component {
@@ -20,7 +20,7 @@ class LoginForm extends Component {
     login(this.state.email, this.state.password).then(() => {
       this.props.onLogin();
     }).catch(err => {
-      this.setState({error: err.payload.error});
+      this.setState({error: err.error});
     });
   }
 

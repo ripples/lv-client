@@ -4,11 +4,8 @@
     "plugin:react/recommended"
   ],
   "globals": {
-    "fetch": true,
     "window": true,
     "document": true,
-    "Request": true,
-    "Headers": true,
     "URL": true
   },
   "rules": {

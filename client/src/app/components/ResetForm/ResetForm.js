@@ -24,7 +24,7 @@ class ResetForm extends Component {
     resetPassword(this.props.token, this.state.password).then(() => {
       this.setState({reset: true});
     }).catch(err => {
-      this.setState({error: err.payload.error});
+      this.setState({error: err.error});
     });
   }
 
