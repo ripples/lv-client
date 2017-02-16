@@ -3,9 +3,12 @@ FROM node:6.2.2
 RUN npm install -g yarn
 
 COPY ./package.json /src/package.json
+COPY ./yarn.lock /src/yarn.lock
+
 RUN cd /src && yarn install
 
 COPY . /src
+
 WORKDIR /src
 
 RUN yarn run build-dev

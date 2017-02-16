@@ -6,7 +6,6 @@ const webpack = require("webpack-stream");
 const runSequence = require("run-sequence");
 const gutil = require("gulp-util");
 const path = require("path");
-const eslint = require("gulp-eslint");
 const sass = require("gulp-sass");
 const plumber = require('gulp-plumber');
 const concatCSS = require("gulp-concat-css");
@@ -24,6 +23,7 @@ function errorHandler() {
   });
 }
 
+/* ========== GLOBAL ===========*/
 gulp.task("clean", () => {
   return del([`${DIST_DIR}/**/*`]);
 });
@@ -44,6 +44,7 @@ gulp.task("sass", () => {
     .pipe(gulp.dest(`${DIST_DIR}/css`));
 });
 
+const eslint = require("gulp-eslint");
 gulp.task("eslint", () => {
   return gulp.src([`${SRC_DIR}/app/**/*.js`])
     .pipe(eslint())
@@ -51,14 +52,24 @@ gulp.task("eslint", () => {
     .pipe(eslint.failAfterError());
 });
 
-gulp.task("webpack", ["eslint"], () => {
+/* ========== DEVELOPMENT ===========*/
+gulp.task("webpack:dev", ["eslint"], () => {
   return gulp.src(`${SRC_DIR}/app/app.js`)
     .pipe(errorHandler())
     .pipe(webpack(require("./webpack.config.js")))
     .pipe(gulp.dest(`${DIST_DIR}/app`));
 });
 
-gulp.task("watch", ["build"], () => {
+gulp.task("build:dev", callback => {
+  runSequence(
+    "clean",
+    "copy-images",
+    ["webpack:dev", "sass"],
+    callback
+  );
+});
+
+gulp.task("watch", ["build:dev"], () => {
   const fileChanged = file => {
     let filePath = path.relative(__dirname, file.path);
   };
@@ -67,13 +78,22 @@ gulp.task("watch", ["build"], () => {
   gulp.watch([`${SRC_DIR}/**/*.scss`], ["sass"]).on("change", fileChanged);
 });
 
-gulp.task("build", callback => {
+
+
+/* ========== PRODUCTION ===========*/
+gulp.task("webpack:prod", [], () => {
+  return gulp.src(`${SRC_DIR}/app/app.js`)
+    .pipe(webpack(require("./webpack.config.js")))
+    .pipe(gulp.dest(`${DIST_DIR}/app`));
+});
+
+gulp.task("build:prod", callback => {
   runSequence(
     "clean",
     "copy-images",
-    ["webpack", "sass"],
+    ["webpack:prod", "sass"],
     callback
   );
 });
 
-gulp.task("default", ["build"]);
+gulp.task("default", ["build:dev"]);
