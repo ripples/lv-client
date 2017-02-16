@@ -4,8 +4,8 @@ COPY . /src
 
 WORKDIR /src
 
-RUN npm install
+RUN npm install -g yarn
+RUN yarn install --production
+RUN yarn run build-prod
 
-RUN npm run build-prod
-
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
