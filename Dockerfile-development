@@ -1,11 +1,16 @@
 FROM node:6.2.2
 
+RUN npm install -g yarn
+
 COPY ./package.json /src/package.json
-RUN cd /src && npm install
+COPY ./yarn.lock /src/yarn.lock
+
+RUN cd /src && yarn install
 
 COPY . /src
+
 WORKDIR /src
 
-RUN npm run build-dev
+RUN yarn run build-dev
 
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
