@@ -1,56 +1,15 @@
 "use strict";
 
-import cookie from "react-cookie";
 import {camelizeKeys} from "humps";
-
-import {AUTH_COOKIE, BASE_URL} from "../constants/ApiConstants";
-
-export function getCourses(callback) {
-  const url = `${BASE_URL}/courses`;
-  const req = new Request(url, {
-    method: "GET"
-  });
-
-  return request(req, callback);
-}
+import axios from "axios";
+import {BASE_URL} from "../constants/ApiConstants";
 
 /**
- * Wrapper function for fetch API, used to make requests to server
- * @param {Request} request - Request object used with fetch
- * @param {Function} callback - Called on success or error returns (err, result)
+ * Configure axios globals
  */
-export function request(request, callback) {
-  const token = cookie.load(AUTH_COOKIE);
-  if (token) {
-    request.headers.set("Authorization", token);
-  }
-  let contentType = "";
-  fetch(request).then(response => {
-    contentType = response.headers.get("Content-Type").split(";")[0];
-    switch (contentType) {
-      case "application/json":
-        return response.json();
-      case "image/png":
-        return response.blob();
-      default:
-        return response.text();
-    }
-  }).then(data => {
-    if (data.error) {
-      callback(data);
-      return;
-    }
-    switch (contentType) {
-      case "application/javascript":
-        callback(null, camelizeKeys(data));
-        break;
-      case "image/png":
-        callback(null, URL.createObjectURL(data));
-        break;
-      default:
-        callback(null, data);
-    }
-  }).catch(err => {
-    callback(err);
-  });
+export function configureAxios() {
+  axios.defaults.baseURL = BASE_URL;
+  axios.defaults.withCredentials = true;
+  axios.defaults.responseType = "json";
+  axios.defaults.transformResponse = data => camelizeKeys(data);
 }

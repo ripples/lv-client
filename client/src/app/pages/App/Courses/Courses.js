@@ -5,6 +5,7 @@ import CourseList from "./../../../components/CourseList/CourseList";
 // getCourses will callback, dispatch to redux, pass to redux state thingy, pull data from state and pass down to whatever needs the data
 
 class Courses extends React.Component {
+
   render() {
     return (
       <div className="courses">
