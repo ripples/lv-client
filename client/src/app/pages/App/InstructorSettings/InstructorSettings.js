@@ -7,7 +7,7 @@ class InstructorSettings extends React.Component {
     return (
       <div className="instructor-settings">
         <Link to="/courses">My Courses</Link> <span>/</span>
-        <h1>Instructor Settings</h1>
+        <h1>Course Instructor Options</h1>
         <InstructorCourseList />
       </div>
     );
