@@ -1,16 +1,25 @@
 import React from "react";
+import {getCourses} from "../../libs/courses.js";
 
 class InputThumbnail extends React.Component {
 
-  handleClickEvent(clickEvent, id) {
+  handleClickEvent(clickEvent) {
     clickEvent.preventDefault();
-    console.log(id);
+    // just getting testing ready
+    getCourses().then(
+      response => {
+        console.log(response.data);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
   render() {
     return (
       <div className="thumbnail">
         <div className="thumb">
-          <img src={this.props.image} onClick={(e, i) => this.handleClickEvent(e, i)}/>
+          <img src={this.props.image} onClick={e => this.handleClickEvent(e)}/>
         </div>
         {this.props.time}
       </div>

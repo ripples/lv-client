@@ -19,6 +19,7 @@ import Courses from "./pages/App/Courses/Courses";
 import Course from "./pages/App/Course/Course";
 import Lecture from "./pages/App/Lecture/Lecture";
 import Login from "./pages/Login/Login";
+import InstructorSettings from './pages/App/InstructorSettings/InstructorSettings';
 
 // Configure globals
 configureAxios();
@@ -37,6 +38,7 @@ render((
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" onEnter={requireAuth} component={App}>
+        <Route path="/instructor-settings" component={InstructorSettings}/>
         <IndexRedirect to="/courses" />
         <Route path="/courses" component={Courses} />
         <Route path="/courses/:courseId" component={Course}/>

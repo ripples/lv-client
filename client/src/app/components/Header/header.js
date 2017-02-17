@@ -7,6 +7,11 @@ class Header extends React.Component {
     this.context.router.push("/logout");
   }
 
+  toInstructorPage() {
+    // TODO check if admin...
+    this.context.router.push("/instructor-settings");
+  }
+
   render() {
     return (
       <div className="header">
@@ -14,6 +19,7 @@ class Header extends React.Component {
           <Link to="/"><Logo /></Link>
         </div>
         <div className="right">
+          <button className="small" onClick={() => this.toInstructorPage()}>Instructor Settings</button>
           {
             (this.context.router.isActive("/login"))
               ? null : <button className="small" onClick={() => this.doLogout()}>Logout</button>
