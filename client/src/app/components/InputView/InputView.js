@@ -9,7 +9,7 @@ class InputView extends React.Component {
       <div>
         <div className="video-view">
           <img
-            src={BASE_URL + "/media/F16/COMPSCI 220/08-29-2016--08-59-01/images/computer/full/computer-0-1472475598"}
+            src={BASE_URL + "/media/F16/COMPSCI 460/08-26-2016--08-59-01/images/computer/full/computer-0-1472216342"}
             height={"358"}
             width={"638"}
           />

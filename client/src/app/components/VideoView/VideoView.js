@@ -3,16 +3,13 @@ import {BASE_URL} from "../../constants/ApiConstants";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 
 class VideoView extends React.Component {
-  sayVideoTimer() {
-    var video = document.getElementById("player");
-    console.log(video.currentTime);
-  }
+
   render() {
     const videoJsOptions = {
       autoPlay: true,
       controls: true,
       sources: [{
-        src: BASE_URL + "/media/F16/COMPSCI 220/08-29-2016--08-59-01/video",
+        src: BASE_URL + "/media/F16/COMPSCI 460/08-26-2016--08-59-01/video",
         type: "video/mp4"
       }]
     };
@@ -23,6 +20,7 @@ class VideoView extends React.Component {
             height={"358"}
             width={"638"}
             { ...videoJsOptions }
+            bufferImages={this.props.bufferImages}
           />
         </div>
       </div>
@@ -31,6 +29,7 @@ class VideoView extends React.Component {
 }
 
 VideoView.propTypes = {
+  bufferImages: React.PropTypes.func.isRequired
   // video: React.PropTypes.any.isRequired,
   // sync: React.PropTypes.func.isRequired
 };

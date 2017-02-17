@@ -3,8 +3,11 @@ import videojs from "video.js";
 
 export default class VideoPlayer extends React.Component {
   componentDidMount() {
-    this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
+    this.player = videojs(this.videoNode, this.props, () => {
       console.log("onPlayerReady", this);
+      this.player.on("timeupdate", () => {
+        this.props.bufferImages(this.player.currentTime());
+      });
     });
   }
 
@@ -22,3 +25,7 @@ export default class VideoPlayer extends React.Component {
     );
   }
 }
+
+VideoPlayer.propTypes = {
+  bufferImages: React.PropTypes.func.isRequired
+};
