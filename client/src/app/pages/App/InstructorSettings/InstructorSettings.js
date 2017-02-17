@@ -1,6 +1,6 @@
 import React from "react";
 import InstructorCourseList from "../../../components/InstructorCourseList/InstructorCourseList";
-import Link from "react-router";
+import {Link} from "react-router";
 
 class InstructorSettings extends React.Component {
   render() {
