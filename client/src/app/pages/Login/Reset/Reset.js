@@ -1,11 +1,13 @@
 "use strict";
 
 import React, {PropTypes, Component} from "react";
+import {Link} from "react-router";
 
-import {resetPassword} from "../../libs/auth";
-import FormError from "../../components/FormError/formError";
+import {resetPassword} from "../../../libs/auth";
+import FormError from "../../../components/FormError/formError";
+import {handleChange} from "../../../utils/react";
 
-class ResetForm extends Component {
+class Reset extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,16 +23,13 @@ class ResetForm extends Component {
     if (this.state.password !== this.state.passwordConfirm) {
       return this.setState(Object.assign({}, this.state, {error: "Passwords do not match."}));
     }
-    resetPassword(this.props.token, this.state.password).then(() => {
+
+    const token = this.props.location.query.token;
+    resetPassword(token, this.state.password).then(() => {
       this.setState({reset: true});
     }).catch(err => {
       this.setState({error: err.error});
     });
-  }
-
-  handleChange(e, field) {
-    e.preventDefault();
-    this.setState(Object.assign({}, this.state, {[field]: e.target.value}));
   }
 
   render() {
@@ -40,7 +39,7 @@ class ResetForm extends Component {
       return (
         <div>
           Password successfully reset.
-          <a href="#" className="button accent" onClick={this.props.onLoginForm}>Login</a>
+          <Link to="/login" className="button accent">Login</Link>
         </div>
       );
     }
@@ -53,7 +52,7 @@ class ResetForm extends Component {
             type="password"
             placeholder="Password"
             value={this.state.password}
-            onChange={e => this.handleChange(e, "password")}
+            onChange={e => handleChange(this, e, "password")}
             required="required"
           />
         </div>
@@ -62,7 +61,7 @@ class ResetForm extends Component {
             type="password"
             placeholder="Confirm Password"
             value={this.state.passwordConfirm}
-            onChange={e => this.handleChange(e, "passwordConfirm")}
+            onChange={e => handleChange(this, e, "passwordConfirm")}
             required="required"
           />
         </div>
@@ -78,9 +77,12 @@ class ResetForm extends Component {
   }
 }
 
-ResetForm.propTypes = {
-  onLoginForm: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired
+Reset.propTypes = {
+  location: PropTypes.shape({
+    query: PropTypes.shape({
+      token: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired
 };
 
-export default ResetForm;
+export default Reset;
