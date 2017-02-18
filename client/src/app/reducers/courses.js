@@ -12,7 +12,7 @@ const courses = (state = DefaultState.courses, action) => {
         ...state, ...action.payload.map(e => {
           return {
             id: e.id,
-            title: e.id,
+            title: e.id ,
             lectures: [e.lectures].concat("testlecture100")
           };
         })
