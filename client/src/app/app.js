@@ -6,6 +6,7 @@ import {Router, Route, browserHistory, IndexRedirect} from "react-router";
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import thunkMiddleware from "redux-thunk";
+import promise from "redux-promise-middleware";
 
 import appReducer from "./reducers/app";
 
@@ -27,10 +28,11 @@ configureAxios();
 // TODO: wrap in dev env var
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const mountNode = document.getElementById("lvapp");
+const middleware = applyMiddleware(promise(), thunkMiddleware);
 const store = createStore(
   appReducer,
   {},
-  composeEnhancers(applyMiddleware(thunkMiddleware))
+  composeEnhancers(middleware)
 );
 
 /* note: UI component will be used to develop/test our base styles, and will be removed before production */
