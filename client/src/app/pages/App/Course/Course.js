@@ -1,13 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Link} from 'react-router';
-
+import {getCoursesAction} from "./../../../libs/actions";
 import LectureItem from "components/LectureItem/LectureItem";
 
 class Course extends React.Component {
+  componentWillMount() {
+    this.props.dispatch(getCoursesAction());
+  }
   render() {
     const courseId = this.props.params.courseId;
-
     return (
       <div className="course">
         <Link to="/courses">My Courses</Link> / <Link to={`/courses/${this.props.course.id}`}>{this.props.course.title.split(":")[0]}</Link>
@@ -41,7 +43,8 @@ class Course extends React.Component {
 Course.propTypes = {
   params: React.PropTypes.object,
   lectures: React.PropTypes.array.isRequired,
-  course: React.PropTypes.object.isRequired
+  course: React.PropTypes.object.isRequired,
+  dispatch: React.PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
