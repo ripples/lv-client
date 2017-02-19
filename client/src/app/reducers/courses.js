@@ -2,7 +2,6 @@
 
 import {DefaultState} from "../constants/StateConstants";
 
-// TODO propper diffing...
 const courses = (state = DefaultState.courses, action) => {
   switch (action.type) {
     case "GET_COURSES":
@@ -10,7 +9,9 @@ const courses = (state = DefaultState.courses, action) => {
       // break;
     case "GET_COURSES_FULFILLED":
       return [
-        ...state, ...action.payload.map(e => {
+        // TODO remove the DefaultState.Courses, I only have it appear so that
+        // things render if data is not hooked in right. Also rm testlecture100
+        ...DefaultState.courses, ...action.payload.map(e => {
           return {
             id: e.id,
             title: e.id,

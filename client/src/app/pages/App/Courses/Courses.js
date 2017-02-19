@@ -5,7 +5,7 @@ import {getCoursesAction} from "./../../../libs/actions";
 
 class Courses extends React.Component {
   componentWillMount() {
-    this.props.dispatch(getCoursesAction());
+    this.props.getCourses();
   }
   render() {
     return (
@@ -20,7 +20,7 @@ class Courses extends React.Component {
 Courses.propTypes = {
   courses: React.PropTypes.array.isRequired,
   lectures: React.PropTypes.array.isRequired,
-  dispatch: React.PropTypes.func.isRequired
+  getCourses: React.PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -30,4 +30,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Courses);
+const mapDispatchToProps = dispatch => {
+  return {
+    getCourses: () => dispatch(getCoursesAction())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Courses);

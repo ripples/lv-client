@@ -6,7 +6,7 @@ import LectureItem from "components/LectureItem/LectureItem";
 
 class Course extends React.Component {
   componentWillMount() {
-    this.props.dispatch(getCoursesAction());
+    this.props.getCourses();
   }
   render() {
     const courseId = this.props.params.courseId;
@@ -44,7 +44,7 @@ Course.propTypes = {
   params: React.PropTypes.object,
   lectures: React.PropTypes.array.isRequired,
   course: React.PropTypes.object.isRequired,
-  dispatch: React.PropTypes.func.isRequired
+  getCourses: React.PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -53,4 +53,10 @@ const mapStateToProps = (state, ownProps) => {
   return {course, lectures};
 };
 
-export default connect(mapStateToProps)(Course);
+const mapDispatchToProps = dispatch => {
+  return {
+    getCourses: () => dispatch(getCoursesAction())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Course);
