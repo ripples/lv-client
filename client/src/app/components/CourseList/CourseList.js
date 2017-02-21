@@ -1,6 +1,5 @@
 import React from "react";
 import CourseItem from "components/CourseItem/CourseItem";
-import {connect} from "react-redux";
 
 class CourseList extends React.Component {
   getCourseLectures(lectureKeys) {
@@ -27,11 +26,4 @@ CourseList.propTypes = {
   lectures: React.PropTypes.array.isRequired
 };
 
-const mapStateToProps = state => {
-  return {
-    courses: state.courses,
-    lectures: state.lectures
-  };
-};
-
-export default connect(mapStateToProps)(CourseList);
+export default CourseList;

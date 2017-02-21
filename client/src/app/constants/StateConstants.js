@@ -2,6 +2,7 @@
 
 /*
  * StateConstants
+ * this needs to be wiped to {} once we actually hook into the db
  */
 
 export const DefaultState = {
@@ -55,6 +56,11 @@ export const DefaultState = {
     {
       lectureId: "phys15102Lecture01",
       title: "Lecture 01",
+      date: 1476333797611
+    },
+    {
+      lectureId: "testlecture100",
+      title: "Lecture 100",
       date: 1476333797611
     }
   ],

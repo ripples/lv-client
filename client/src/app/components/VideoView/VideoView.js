@@ -4,6 +4,11 @@ import VideoPlayer from "../VideoPlayer/VideoPlayer";
 
 class VideoView extends React.Component {
 
+  sayVideoTimer() {
+    var video = document.getElementById("player");
+    console.log(video.currentTime);
+  }
+
   render() {
     const videoJsOptions = {
       autoPlay: true,

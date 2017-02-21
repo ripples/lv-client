@@ -1,0 +1,6 @@
+@import "mixins";
+
+.InstructorSettings {
+  background-color: #FAFAFA;
+  @include globalPadding();
+}
