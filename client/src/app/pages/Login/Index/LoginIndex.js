@@ -22,7 +22,11 @@ class LoginForm extends Component {
     login(this.state.email, this.state.password).then(() => {
       this.props.router.push("/");
     }).catch(err => {
-      this.setState({error: err.response.data.error});
+      const data = err.response.data;
+      if (data) {
+        return this.setState({error: data.error});
+      }
+      this.setState({error: "Something went wrong."});
     });
   }
 

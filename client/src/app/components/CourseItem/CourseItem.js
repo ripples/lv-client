@@ -21,10 +21,12 @@ class CourseItem extends React.Component {
             {this.props["course-data"].title}
         </Link></h4>
         <div className="lecture-list">
-          {this.props.lectures.slice(0, NUM_LECTURES).map(lecture => {
-            const courseId = this.props["course-data"].id;
-            return <LectureItem compact={true} key={courseId + lecture.lectureId} courseId={courseId} lectureId={lecture.lectureId}
-                                title={lecture.title} date={lecture.date} />;
+          {Object.keys(this.props.lectures).slice(0, NUM_LECTURES).map(lectureKey => {
+            const course = this.props["course-data"];
+            const courseId = course.id;
+            return <LectureItem compact={true} key={courseId + lectureKey} courseId={courseId} lectureId={lectureKey}
+                                // TODO change title
+                                title={lectureKey} date={course.lectures[lectureKey].timestamp} />;
           })}
           {
             (this.props.lectures.length > NUM_LECTURES)
@@ -40,7 +42,7 @@ class CourseItem extends React.Component {
 
 CourseItem.propTypes = {
   "course-data": React.PropTypes.object.isRequired, // TODO: define shape
-  "lectures": React.PropTypes.array.isRequired
+  "lectures": React.PropTypes.object.isRequired
 };
 
 CourseItem.contextTypes = {
