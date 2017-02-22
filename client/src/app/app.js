@@ -20,7 +20,7 @@ import Courses from "./pages/App/Courses/Courses";
 import Course from "./pages/App/Course/Course";
 import Lecture from "./pages/App/Lecture/Lecture";
 import Login from "./pages/Login/Login";
-import InstructorSettings from './pages/App/InstructorSettings/InstructorSettings';
+import InstructorSettings from "./pages/App/InstructorSettings/InstructorSettings";
 
 // Configure globals
 configureAxios();

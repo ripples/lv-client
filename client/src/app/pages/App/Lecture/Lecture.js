@@ -10,8 +10,13 @@ class Lecture extends React.Component {
     return (
       <div className="lecture">
         <div className="lecture-header">
-          <link href="//vjs.zencdn.net/5.11/video-js.min.css" rel="stylesheet" />
-          <Link to="/courses">My Courses</Link> / <Link to={`/courses/${this.props.course.id}`}>{this.props.course.title.split(":")[0]}</Link> / {this.props.lecture.title}
+          <Link to="/courses">My Courses</Link>
+          /
+          <Link to={`/courses/${this.props.course.id}`}>
+            {this.props.course.title.split(":")[0]}
+          </Link>
+          /
+          {this.props.lecture.title}
           <h1>
             {this.props.course.title}: {this.props.lecture.title}
           </h1>
@@ -20,7 +25,9 @@ class Lecture extends React.Component {
           </h4>
         </div>
         <div className="lecture-body">
-          <LectureMedia lecture={this.props.lecture} />
+          <LectureMedia
+            lecture={this.props.lecture}
+          />
         </div>
       </div>
     );
@@ -33,11 +40,24 @@ Lecture.propTypes = {
   course: React.PropTypes.object.isRequired
 };
 
+// TODO figure out a way to avoid courses ever being empty
 const mapStateToProps = (state, ownProps) => {
+  if (state.courses.length <= 2) {
+    return {
+      lecture: {
+        id: "",
+        title: "",
+        date: ""
+      },
+      course: {
+        title: "",
+        id: ""
+      }
+    };
+  }
   return {
     lecture: state.lectures.find(lecture => lecture.lectureId === ownProps.params.lectureId),
     course: state.courses.find(course => course.id === ownProps.params.courseId)
   };
 };
-
 export default connect(mapStateToProps)(Lecture);

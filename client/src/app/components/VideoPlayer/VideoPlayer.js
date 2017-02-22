@@ -1,10 +1,14 @@
 import React from "react";
 import videojs from "video.js";
+import {connect} from "react-redux";
+import {updateVideoTimeStampAction} from "./../../libs/actions";
 
-export default class VideoPlayer extends React.Component {
+class VideoPlayer extends React.Component {
   componentDidMount() {
-    this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
-      console.log("onPlayerReady", this);
+    this.player = videojs(this.videoNode, this.props, () => {
+      this.player.on("timeupdate", () => {
+        this.props.updateVideoTimeStamp(this.player.currentTime());
+      });
     });
   }
 
@@ -18,7 +22,24 @@ export default class VideoPlayer extends React.Component {
     return (
       <video
         ref={node => this.videoNode = node}
-        className="video-js vjs-default-skin"></video>
+        className="video-js vjs-default-skin">
+      </video>
     );
   }
 }
+
+VideoPlayer.propTypes = {
+  updateVideoTimeStamp: React.PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => {
+  return state;
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    updateVideoTimeStamp: newTime => dispatch(updateVideoTimeStampAction(newTime))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(VideoPlayer);
