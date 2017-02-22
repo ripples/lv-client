@@ -30,6 +30,7 @@
         height: 100%;
         background-color: $almost-black-color;
         margin: 0;
+        vertical-align: middle;
       }
 
       & > span {
@@ -38,15 +39,14 @@
         display: inline-block;
         margin-right: 31.5px;
         line-height: 32px;
-        vertical-align: top;
+        vertical-align: middle;
       }
 
       & > img {
         width: 128px;
-        // height: 32px;
         margin-left: 31.5px;
         display: inline-block;
-        vertical-align: top;
+        vertical-align: middle;
       }
 
       & > * {

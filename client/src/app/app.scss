@@ -42,6 +42,9 @@ a {
     @extend button;
     display: inline-block;
     text-decoration: none;
+    &.forgot {
+      margin-top: 16px;
+    }
   }
 }
 

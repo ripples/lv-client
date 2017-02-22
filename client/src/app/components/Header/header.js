@@ -16,6 +16,7 @@ class Header extends React.Component {
     return (
       <div className="header">
         <div className="left">
+          <span></span>
           <Link to="/"><Logo size="20px"/></Link>
         </div>
         <div className="right">

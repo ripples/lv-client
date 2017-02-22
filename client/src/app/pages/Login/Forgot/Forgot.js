@@ -78,7 +78,7 @@ class ForgotForm extends Component {
         {form}
         <Link
           to="/login"
-          className="button accent outline">
+          className="button accent outline forgot">
           Login
         </Link>
       </div>
