@@ -58,7 +58,7 @@ class LoginForm extends Component {
             Log In
           </button>
         </form>
-        <div style={{fontStyle: "italic", margin: "20px 0"}}>- or -</div>
+        <div style={{fontStyle: "italic", margin: "16px 0", fontSize: "14px"}}>- or -</div>
         <a href="#" className="button accent">Sign Up</a>
         <Link to="/forgot" className="forgot">Forgot your password?</Link>
       </div>

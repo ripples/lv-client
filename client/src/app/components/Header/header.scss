@@ -25,6 +25,10 @@
     padding-left: 10px;
   }
 
+.left, .right {
+  vertical-align: top;
+}
+
   .left { text-align: left; }
   .right { text-align: right; }
 }

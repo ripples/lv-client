@@ -13,19 +13,21 @@ body {
 
 // forms
 .input-group {
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 input, button, a.button {
   font-size: 14px;
-  padding: 8px 15px;
+  // padding: 6.5px 8px;
 }
 
 input {
-  // padding: 5px 8px;
+  padding: 6.5px 8px;
   border-radius: $border-radius;
   color: $body-color;
   border: 1px solid $light-gray-color;
+  width: 192px;
+  height: 32px;
   @include transition();
 
   &:focus {
@@ -46,12 +48,16 @@ a {
 // buttons
 button {
   background: #fff;
-  border: none;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
-  border-radius: $border-radius;
-  border: 2px solid #e2e2e2;
+  font-style: normal;
+  line-height: normal;
+  height: 32px;
+  width: 96px;
+  border-radius: $border-radius-button;
+  border: 1px solid #e2e2e2;
   cursor: pointer;
+  padding-top: 3px;
   @include transition();
 
   &:focus {
@@ -76,10 +82,10 @@ button {
       border-color: darken($accent-color, 20);
     }
     &:hover {
-      background: darken($accent-color, 5);
+      background: darken($accent-color, 0);
     }
     &:active {
-     background: darken($accent-color, 10); 
+     background: darken($accent-color, 10);
     }
 
     &.outline {
@@ -113,7 +119,7 @@ button {
       color: darken($blue-color, 5);
     }
     &:active {
-      color: darken($blue-color, 10); 
+      color: darken($blue-color, 10);
     }
   }
 }
