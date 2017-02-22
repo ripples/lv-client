@@ -3,4 +3,11 @@
 .InstructorSettings {
   background-color: #FAFAFA;
   @include globalPadding();
+  .mycourses {
+    margin-left: 39px;
+    margin-top: 20px;
+  }
+  .course-options {
+    margin-left: 64px;
+  }
 }

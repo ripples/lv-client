@@ -6,8 +6,10 @@ class InstructorSettings extends React.Component {
   render() {
     return (
       <div className="instructor-settings">
+        <div className="my-courses">
         <Link to="/courses">My Courses</Link> <span>/</span>
-        <h1>Course Instructor Options</h1>
+        </div>
+        <h1 className="course-options">Course Instructor Options</h1>
         <InstructorCourseList />
       </div>
     );
