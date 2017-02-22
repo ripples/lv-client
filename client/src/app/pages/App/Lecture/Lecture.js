@@ -11,7 +11,13 @@ class Lecture extends React.Component {
       <div className="lecture">
         <div className="lecture-header">
           <link href="//vjs.zencdn.net/5.11/video-js.min.css" rel="stylesheet" />
-          <Link to="/courses">My Courses</Link> / <Link to={`/courses/${this.props.course.id}`}>{this.props.course.title.split(":")[0]}</Link> / {this.props.lecture.title}
+          <Link to="/courses">My Courses</Link>
+          /
+          <Link to={`/courses/${this.props.course.id}`}>
+            {this.props.course.title.split(":")[0]}
+          </Link>
+          /
+          {this.props.lecture.title}
           <h1>
             {this.props.course.title}: {this.props.lecture.title}
           </h1>

@@ -10,7 +10,7 @@
   },
   "rules": {
     "quotes": 1,
-    "max-len": [1, 120],
+    "max-len": [1, 150],
     "operator-linebreak": [1, "before"],
     "no-loop-func": [0],
     "no-debugger": 1,

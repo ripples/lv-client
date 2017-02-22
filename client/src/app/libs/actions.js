@@ -1,6 +1,10 @@
 import {getCourses} from "./courses";
 
-// TODO error handeling.... .catch( error => {})
+/**
+ * Action to handle getting user's courses from the DB
+ * TODO error handling.... .catch( error => {})
+ * @return {Function} Function to dispatch the action to the reducer
+ */
 export function getCoursesAction() {
   return function(dispatch) {
     getCourses().then(

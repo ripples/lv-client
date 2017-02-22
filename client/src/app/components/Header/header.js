@@ -20,12 +20,12 @@ class Header extends React.Component {
         </div>
         <div className="right">
           {
-            (this.context.router.isActive("/login"))
-              ? null :
+            (this.context.router.isActive("/login")) ? null : (
               <div>
                 <button className="small" onClick={() => this.toInstructorPage()}>Instructor Settings</button>
                 <button className="small" onClick={() => this.doLogout()}>Logout</button>
               </div>
+            )
           }
         </div>
       </div>

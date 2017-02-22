@@ -9,11 +9,12 @@ class LectureItem extends React.Component {
           <span>
             <span className="thumbnail"></span>
               {
-                (this.props.justThumb) ? null :
+                (this.props.justThumb) ? null : (
                   <div>
                     <h5>{this.props.title}</h5>
                     <h6>{(new Date(this.props.date)).toDateString()}</h6>
                   </div>
+                )
               }
           </span>
         </Link>
