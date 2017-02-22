@@ -1,18 +1,20 @@
 import React from "react";
 import {BASE_URL} from "../../constants/ApiConstants";
+import {connect} from "react-redux";
 
 class InputView extends React.Component {
 
-  // TODO Replace the iframe in here with the video:
   render() {
     return (
       <div>
         <div className="video-view">
-          <img
-            src={BASE_URL + "/media/F16/COMPSCI 460/08-26-2016--08-59-01/images/computer/full/computer-0-1472216342"}
-            height={"358"}
-            width={"638"}
-          />
+          {this.props.image ?
+            <img
+              src={BASE_URL + this.props.image}
+              height={"358"}
+              width={"638"}
+            />
+            : "No Image Found" }
         </div>
     </div>
     );
@@ -20,7 +22,13 @@ class InputView extends React.Component {
 }
 
 InputView.propTypes = {
-  //
+  image: React.PropTypes.string.isRequired
 };
 
-export default InputView;
+const mapStateToProps = state => {
+  return {
+    image: state.media.computerImage || ""
+  };
+};
+
+export default connect(mapStateToProps)(InputView);

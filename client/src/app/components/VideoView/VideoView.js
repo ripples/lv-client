@@ -4,11 +4,6 @@ import VideoPlayer from "../VideoPlayer/VideoPlayer";
 
 class VideoView extends React.Component {
 
-  sayVideoTimer() {
-    var video = document.getElementById("player");
-    console.log(video.currentTime);
-  }
-
   render() {
     const videoJsOptions = {
       autoPlay: true,
@@ -25,7 +20,6 @@ class VideoView extends React.Component {
             height={"358"}
             width={"638"}
             { ...videoJsOptions }
-            bufferImages={this.props.bufferImages}
           />
         </div>
       </div>
@@ -34,9 +28,6 @@ class VideoView extends React.Component {
 }
 
 VideoView.propTypes = {
-  bufferImages: React.PropTypes.func.isRequired
-  // video: React.PropTypes.any.isRequired,
-  // sync: React.PropTypes.func.isRequired
 };
 
 export default VideoView;
