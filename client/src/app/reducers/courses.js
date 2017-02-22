@@ -15,7 +15,7 @@ const courses = (state = DefaultState.courses, action) => {
           return {
             id: e.id,
             title: e.id,
-            lectures: [e.lectures].concat("testlecture100")
+            lectures: e.lectures
           };
         })
       ];
