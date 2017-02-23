@@ -57,6 +57,7 @@ const mapStateToProps = (state, ownProps) => {
   }
   let course = state.courses.find(course => course.id === ownProps.params.courseId);
   let lecture = course.lectures[ownProps.params.lectureId];
+  lecture.videoRoute = "/media/F16/" + course.id + "/" + ownProps.params.lectureId + "/video";
   return {
     course,
     lecture

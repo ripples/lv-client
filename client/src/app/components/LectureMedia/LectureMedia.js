@@ -10,7 +10,7 @@ class LectureMedia extends React.Component {
       <div className="lecture-media">
         <div className="container">
           <div className="video-wrapper">
-            <VideoView/>
+            <VideoView videoRoute={this.props.lecture.videoRoute}/>
           </div>
         </div>
         <div className="container">
