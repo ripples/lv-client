@@ -10,7 +10,7 @@ class LectureMedia extends React.Component {
       <div className="lecture-media">
         <div className="container">
           <div className="video-wrapper">
-            <VideoView videoRoute={this.props.lecture.videoRoute}/>
+            <VideoView startTime={this.props.lecture.timestamp || 0} ids={this.props.ids}/>
           </div>
         </div>
         <div className="container">
@@ -25,7 +25,8 @@ class LectureMedia extends React.Component {
 }
 
 LectureMedia.propTypes = {
-  lecture: React.PropTypes.object.isRequired
+  lecture: React.PropTypes.object.isRequired,
+  ids: React.PropTypes.object.isRequired
 };
 
 export default LectureMedia;

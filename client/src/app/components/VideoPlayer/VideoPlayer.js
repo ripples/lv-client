@@ -7,7 +7,7 @@ class VideoPlayer extends React.Component {
   componentDidMount() {
     this.player = videojs(this.videoNode, this.props, () => {
       this.player.on("timeupdate", () => {
-        this.props.updateVideoTimeStamp(this.player.currentTime());
+        this.props.updateVideoTimeStamp(this.props.startTime, this.player.currentTime(), this.props.ids);
       });
     });
   }
@@ -29,6 +29,8 @@ class VideoPlayer extends React.Component {
 }
 
 VideoPlayer.propTypes = {
+  startTime: React.PropTypes.number.isRequired,
+  ids: React.PropTypes.object.isRequired,
   updateVideoTimeStamp: React.PropTypes.func.isRequired
 };
 
@@ -38,7 +40,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateVideoTimeStamp: newTime => dispatch(updateVideoTimeStampAction(newTime))
+    updateVideoTimeStamp: (startTime, newTime, ids) => dispatch(updateVideoTimeStampAction(startTime, newTime, ids))
   };
 };
 

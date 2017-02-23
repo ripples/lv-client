@@ -27,6 +27,7 @@ class Lecture extends React.Component {
         <div className="lecture-body">
           <LectureMedia
             lecture={this.props.lecture}
+            ids={{courseId: this.props.course.title, lectureId: this.props.lecture.title}}
           />
         </div>
       </div>
@@ -57,7 +58,7 @@ const mapStateToProps = (state, ownProps) => {
   }
   let course = state.courses.find(course => course.id === ownProps.params.courseId);
   let lecture = course.lectures[ownProps.params.lectureId];
-  lecture.videoRoute = "/media/F16/" + course.id + "/" + ownProps.params.lectureId + "/video";
+  lecture.title = ownProps.params.lectureId;
   return {
     course,
     lecture
