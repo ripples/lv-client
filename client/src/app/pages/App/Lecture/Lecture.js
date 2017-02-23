@@ -21,7 +21,7 @@ class Lecture extends React.Component {
             {this.props.course.title}: {this.props.lecture.title}
           </h1>
           <h4>
-            {moment(this.props.lecture.date).format("dddd, MMMM Do YYYY")}
+            {moment(this.props.lecture.timestamp * 1000).format("dddd, MMMM Do YYYY")}
           </h4>
         </div>
         <div className="lecture-body">
@@ -42,7 +42,7 @@ Lecture.propTypes = {
 
 // TODO figure out a way to avoid courses ever being empty
 const mapStateToProps = (state, ownProps) => {
-  if (state.courses.length <= 2) {
+  if (state.courses.length === 0) {
     return {
       lecture: {
         id: "",
@@ -55,9 +55,11 @@ const mapStateToProps = (state, ownProps) => {
       }
     };
   }
+  let course = state.courses.find(course => course.id === ownProps.params.courseId);
+  let lecture = course.lectures[ownProps.params.lectureId];
   return {
-    lecture: state.lectures.find(lecture => lecture.lectureId === ownProps.params.lectureId),
-    course: state.courses.find(course => course.id === ownProps.params.courseId)
+    course,
+    lecture
   };
 };
 export default connect(mapStateToProps)(Lecture);

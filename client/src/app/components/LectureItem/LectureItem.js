@@ -11,8 +11,7 @@ class LectureItem extends React.Component {
               {
                 (this.props.justThumb) ? null : (
                   <div>
-                    <h5>{this.props.title}</h5>
-                    <h6>{(new Date(this.props.date)).toDateString()}</h6>
+                    <h6>{(new Date(this.props.date * 1000)).toDateString()}</h6>
                   </div>
                 )
               }
@@ -24,10 +23,10 @@ class LectureItem extends React.Component {
 }
 
 LectureItem.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  date: React.PropTypes.number.isRequired,
-  courseId: React.PropTypes.string.isRequired,
-  lectureId: React.PropTypes.string.isRequired,
+  title: React.PropTypes.string,
+  date: React.PropTypes.number,
+  courseId: React.PropTypes.string,
+  lectureId: React.PropTypes.string,
   compact: React.PropTypes.bool,
   justThumb: React.PropTypes.bool
 };

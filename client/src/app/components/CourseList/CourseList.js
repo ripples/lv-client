@@ -1,19 +1,13 @@
 import React from "react";
-import CourseItem from "components/CourseItem/CourseItem";
+import CourseItem from "../../components/CourseItem/CourseItem";
 
 class CourseList extends React.Component {
-  getCourseLectures(lectureKeys) {
-    // resolve lecture items by key
-    // return lectureKeys.map(lectureKey => Object.assign({}, this.props.lectures[lectureKey], {lectureId: lectureKey}));
-    return this.props.lectures.filter(lecture => lectureKeys.indexOf(lecture.lectureId) >= 0);
-  }
-
   render() {
+    const courses = this.props.courses;
     return (
       <ul className="course-list">
-      {this.props.courses.map((course, i) => {
-        let lectures = this.getCourseLectures(course.lectures);
-        return <li key={i}><CourseItem course-data={course} lectures={lectures}/></li>;
+      {courses.map((course, i) => {
+        return <li key={i}><CourseItem course-data={course} lectures={courses[i].lectures}/></li>;
       })
       }
       </ul>
@@ -22,8 +16,7 @@ class CourseList extends React.Component {
 }
 
 CourseList.propTypes = {
-  courses: React.PropTypes.array.isRequired,
-  lectures: React.PropTypes.array.isRequired
+  courses: React.PropTypes.array.isRequired
 };
 
 export default CourseList;
