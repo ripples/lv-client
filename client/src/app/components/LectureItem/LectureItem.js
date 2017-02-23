@@ -11,8 +11,7 @@ class LectureItem extends React.Component {
               {
                 (this.props.justThumb) ? null : (
                   <div>
-                    <h5>{this.props.title}</h5>
-                    <h6>{(new Date(this.props.date)).toDateString()}</h6>
+                    <h6>{(new Date(this.props.date * 1000)).toDateString()}</h6>
                   </div>
                 )
               }

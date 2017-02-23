@@ -21,7 +21,7 @@ class CourseItem extends React.Component {
             {this.props["course-data"].title}
         </Link></h4>
         <div className="lecture-list">
-          {Object.keys(this.props.lectures).slice(0, NUM_LECTURES).map(lectureKey => {
+          {Object.keys(this.props.lectures).reverse().slice(0, NUM_LECTURES).map(lectureKey => {
             const course = this.props["course-data"];
             const courseId = course.id;
             return <LectureItem compact={true} key={courseId + lectureKey} courseId={courseId} lectureId={lectureKey}
