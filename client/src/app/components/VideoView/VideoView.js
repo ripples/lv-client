@@ -32,7 +32,7 @@ class VideoView extends React.Component {
         <div className="video-view">
           <video
             ref={node => this.videoNode = node}
-            className="video-js vjs-default-skin">
+            className="video-js vjs-default-skin vjs-big-play-centered">
           </video>
         </div>
       </div>
