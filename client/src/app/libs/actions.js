@@ -38,6 +38,24 @@ export function getLectureImagesAction(lecture) {
   };
 }
 
+/**
+ * Action to handle initializing computer image
+ * TODO error handling.... .catch( error => {})
+ * @param {object} lecture - which lecture to init the image for
+ * @return {Function} Function to dispatch the action to the reducer
+ */
+export function initImageAction(lecture) {
+  return function(dispatch) {
+    dispatch({
+      type: "UPDATE_CURRENT_LECTURE_IMAGE",
+      payload: {
+        lecture,
+        image: ""
+      }
+    });
+  };
+}
+
 function getNextImage(lecture, images, newTime, dispatch) {
   let currentTime = Number(lecture.timestamp) + Number(newTime);
   for (let x = 1; x < images.length; x++) {

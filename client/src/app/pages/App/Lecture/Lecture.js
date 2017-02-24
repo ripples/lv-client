@@ -4,9 +4,12 @@ import {Link} from "react-router";
 import moment from "moment";
 
 import LectureMedia from "components/LectureMedia/LectureMedia";
-import {getLectureImagesAction, updateVideoTimeStampAction} from "./../../../libs/actions";
+import {getLectureImagesAction, initImageAction, updateVideoTimeStampAction} from "./../../../libs/actions";
 
 class Lecture extends React.Component {
+  componentWillUnmount() {
+    this.props.initImage(this.props.lecture);
+  }
   componentWillReceiveProps(nextProps) {
     if (!nextProps.lecture.images) {
       this.props.getLectureImages(nextProps.lecture);
@@ -50,6 +53,7 @@ Lecture.propTypes = {
   lecture: React.PropTypes.object.isRequired,
   course: React.PropTypes.object.isRequired,
   getLectureImages: React.PropTypes.func.isRequired,
+  initImage: React.PropTypes.func.isRequired,
   updateVideoTimeStamp: React.PropTypes.func.isRequired
 };
 
@@ -74,6 +78,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    initImage: lecture => dispatch(initImageAction(lecture)),
     getLectureImages: lecture => dispatch(getLectureImagesAction(lecture)),
     updateVideoTimeStamp: (lecture, newTime) => dispatch(updateVideoTimeStampAction(lecture, newTime))
   };
