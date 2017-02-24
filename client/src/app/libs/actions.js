@@ -57,24 +57,33 @@ export function initImageAction(lecture) {
 }
 
 function getNextImage(lecture, images, newTime, dispatch) {
-  let currentTime = Number(lecture.timestamp) + Number(newTime);
-  for (let x = 1; x < images.length; x++) {
-    let imageTime = Number(images[x].split("-")[2]);
-    let lastImageTime = Number(images[x - 1].split("-")[2]);
-    if (currentTime >= lastImageTime && currentTime < imageTime) {
-      let currentImage = lecture.currentComputerImage;
-      if (!currentImage || images[x - 1] !== currentImage.substring(currentImage.lastIndexOf("/") + 1, currentImage.length)) {
-        dispatch({
-          type: "UPDATE_CURRENT_LECTURE_IMAGE",
-          payload: {
-            lecture,
-            image: "/media/F16/" + lecture.courseId + "/" + lecture.lectureId + "/images/computer/full/" + images[x - 1]
-          }
-        });
-        return;
-      }
+  const currentTime = Number(lecture.timestamp) + Number(newTime);
+  let mid;
+  let low = 0;
+  let high = images.length - 1;
+
+  // Binary search
+  while (high - low > 1) {
+    mid = Math.floor((high + low) / 2);
+    if (Number(images[mid].split("-")[2]) < currentTime) {
+      low = mid;
+    } else {
+      high = mid;
     }
   }
+
+  const imageFound = images[low];
+  if (Number(imageFound.split("-")[2]) > currentTime) {
+    return;
+  }
+
+  dispatch({
+    type: "UPDATE_CURRENT_LECTURE_IMAGE",
+    payload: {
+      lecture,
+      image: "/media/F16/" + lecture.courseId + "/" + lecture.lectureId + "/images/computer/full/" + imageFound
+    }
+  });
 }
 
 /**
