@@ -20,6 +20,18 @@ const courses = (state = DefaultState.courses, action) => {
         })
       ];
       // break;
+    case "GET_LECTURE_IMAGES":
+      let newState = [...state];
+      if (newState.length > 0) {
+        newState.find(course => course.id === action.payload.lecture.courseId).lectures[action.payload.lecture.lectureId].images = action.payload.images;
+      }
+      return newState;
+    case "UPDATE_CURRENT_LECTURE_IMAGE":
+      let nState = [...state];
+      if (nState.length > 0) {
+        nState.find(course => course.id === action.payload.lecture.courseId).lectures[action.payload.lecture.lectureId].currentComputerImage = action.payload.image;
+      }
+      return nState;
     default:
       return state;
   }

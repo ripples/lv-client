@@ -1,40 +1,48 @@
 import React from "react";
-import {BASE_URL} from "../../constants/ApiConstants";
-import VideoPlayer from "../VideoPlayer/VideoPlayer";
+import videojs from "video.js";
 
 class VideoView extends React.Component {
+  componentDidMount() {
+    const videoJsOptions = {
+      height: 358,
+      width: 638,
+      autoPlay: true,
+      controls: true,
+      sources: [{
+        src: this.props.videoSrc,
+        type: "video/mp4"
+      }]
+    };
+    this.player = videojs(this.videoNode, videoJsOptions, () => {
+      this.player.on("timeupdate", () => {
+        this.props.updateVideoTimeStamp(this.player.currentTime());
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.player) {
+      this.player.dispose();
+    }
+  }
 
   render() {
-    if (this.props.ids.lectureId) {
-      const videoJsOptions = {
-        autoPlay: true,
-        controls: true,
-        sources: [{
-          src: BASE_URL + "/media/F16/" + this.props.ids.courseId + "/" + this.props.ids.lectureId + "/video",
-          type: "video/mp4"
-        }]
-      };
-      return (
-        <div>
-          <div className="video-view">
-            <VideoPlayer
-              height={"358"}
-              width={"638"}
-              startTime={this.props.startTime}
-              ids={this.props.ids}
-              { ...videoJsOptions }
-            />
-          </div>
+    return (
+      <div>
+        <div className="video-view">
+          <video
+            ref={node => this.videoNode = node}
+            className="video-js vjs-default-skin">
+          </video>
         </div>
-      );
-    }
-    return (<div></div>);
+      </div>
+    );
   }
 }
 
 VideoView.propTypes = {
-  startTime: React.PropTypes.number.isRequired,
-  ids: React.PropTypes.object.isRequired
+  videoSrc: React.PropTypes.string.isRequired,
+  updateVideoTimeStamp: React.PropTypes.func.isRequired
 };
 
 export default VideoView;

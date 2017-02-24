@@ -20,36 +20,59 @@ export function getCoursesAction() {
 }
 
 /**
- * Action to handle getting user's courses from the DB
+ * Action to handle getting lecture images
  * TODO error handling.... .catch( error => {})
- * @param {number} startTime - new TimeStamp time
- * @param {number} newTime - new TimeStamp time
- * @param {object} ids - ids for course and lecture
- * @return {function} to pass dispatch to
+ * @param {object} lecture - which lecture to get the images for
+ * @return {Function} Function to dispatch the action to the reducer
  */
-export function updateVideoTimeStampAction(startTime, newTime, ids) {
+export function getLectureImagesAction(lecture) {
   return function(dispatch) {
-    getImages("F16", ids.courseId, ids.lectureId).then(
+    getImages(lecture.semester, lecture.courseId, lecture.lectureId).then(
       response => {
-        let currentTime = Number(startTime) + Number(newTime);
-        let arr = response.data.computer[0];
-        for (let x = 1; x < arr.length; x++) {
-          let imageTime = Number(arr[x].split("-")[2]);
-          let lastImageTime = Number(arr[x - 1].split("-")[2]);
-          if (currentTime >= lastImageTime && currentTime < imageTime) {
-            console.log("found a match, " + arr[x - 1]);
-            dispatch({
-              type: "UPDATE_VIDEO_TIMESTAMP",
-              payload: {
-                newTime,
-                image: "/media/F16/" + ids.courseId + "/" + ids.lectureId + "/images/computer/full/" + arr[x - 1]
-              }
-            });
-            return;
-          }
-        }
+        dispatch({
+          type: "GET_LECTURE_IMAGES",
+          payload: {lecture, images: response.data}
+        });
       }
     );
+  };
+}
+
+function getNextImage(lecture, images, newTime, dispatch) {
+  let currentTime = Number(lecture.timestamp) + Number(newTime);
+  for (let x = 1; x < images.length; x++) {
+    let imageTime = Number(images[x].split("-")[2]);
+    let lastImageTime = Number(images[x - 1].split("-")[2]);
+    if (currentTime >= lastImageTime && currentTime < imageTime) {
+      let currentImage = lecture.currentComputerImage;
+      if (!currentImage || images[x - 1] !== currentImage.substring(currentImage.lastIndexOf("/") + 1, currentImage.length)) {
+        dispatch({
+          type: "UPDATE_CURRENT_LECTURE_IMAGE",
+          payload: {
+            lecture,
+            image: "/media/F16/" + lecture.courseId + "/" + lecture.lectureId + "/images/computer/full/" + images[x - 1]
+          }
+        });
+        return;
+      }
+    }
+  }
+}
+
+/**
+ * Action to handle getting lecture image names
+ * TODO error handling.... .catch( error => {})
+ * @param {object} lecture - lecture object with info
+ * @param {number} newTime - new TimeStamp time
+ * @return {function} to pass dispatch to
+ */
+export function updateVideoTimeStampAction(lecture, newTime) {
+  return function(dispatch) {
+    if (!lecture.images) {
+      dispatch(getLectureImagesAction(lecture));
+      return;
+    }
+    getNextImage(lecture, lecture.images.computer[0], newTime, dispatch);
   };
 }
 
