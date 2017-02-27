@@ -72,18 +72,21 @@ function getNextImage(lecture, images, newTime, dispatch) {
     }
   }
 
-  const imageFound = images[low];
-  if (Number(imageFound.split("-")[2]) > currentTime) {
+  if (Number(images[low].split("-")[2]) > currentTime) {
     return;
   }
 
-  dispatch({
-    type: "UPDATE_CURRENT_LECTURE_IMAGE",
-    payload: {
-      lecture,
-      image: "/media/F16/" + lecture.courseId + "/" + lecture.lectureId + "/images/computer/full/" + imageFound
-    }
-  });
+  const imageFound = "/media/" + lecture.semester + "/" + lecture.courseId + "/" + lecture.lectureId + "/images/computer/full/" + images[low];
+
+  if (lecture.currentComputerImage !== imageFound) {
+    dispatch({
+      type: "UPDATE_CURRENT_LECTURE_IMAGE",
+      payload: {
+        lecture,
+        image: imageFound
+      }
+    });
+  }
 }
 
 /**

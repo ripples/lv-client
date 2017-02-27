@@ -10,11 +10,6 @@ class Lecture extends React.Component {
   componentWillUnmount() {
     this.props.initImage(this.props.lecture);
   }
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.lecture.images) {
-      this.props.getLectureImages(nextProps.lecture);
-    }
-  }
   render() {
     if (this.props.course.empty) {
       return (<div></div>);
@@ -59,7 +54,7 @@ Lecture.propTypes = {
 
 // TODO figure out a way to avoid courses ever being empty
 const mapStateToProps = (state, ownProps) => {
-  let course = state.courses.find(course => course.id === ownProps.params.courseId);
+  let course = state.courses[ownProps.params.courseId];
   if (!course) {
     return {course: {empty: true}, lecture: {empty: true}};
   }

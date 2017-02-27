@@ -7,6 +7,6 @@
 
 export const DefaultState = {
   user: {},
-  courses: [],
+  courses: {},
   media: {}
 };

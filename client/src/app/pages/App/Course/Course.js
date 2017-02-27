@@ -48,7 +48,7 @@ Course.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let course = state.courses.find(course => course.id === ownProps.params.courseId);
+  let course = state.courses[ownProps.params.courseId];
   let lectures = state.lectures.filter(lecture => course.lectures.indexOf(lecture.lectureId) >= 0);
   return {course, lectures};
 };

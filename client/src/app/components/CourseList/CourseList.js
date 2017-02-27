@@ -3,20 +3,24 @@ import CourseItem from "../../components/CourseItem/CourseItem";
 
 class CourseList extends React.Component {
   render() {
-    const courses = this.props.courses;
     return (
       <ul className="course-list">
-      {courses.map((course, i) => {
-        return <li key={i}><CourseItem course-data={course} lectures={courses[i].lectures}/></li>;
-      })
-      }
+        {
+          Object.keys(this.props.courses).map((key, i) => {
+            return (
+              <li key={i}>
+                <CourseItem course={this.props.courses[key]} lectures={this.props.courses[key].lectures}/>
+              </li>
+            );
+          })
+        }
       </ul>
     );
   }
 }
 
 CourseList.propTypes = {
-  courses: React.PropTypes.array.isRequired
+  courses: React.PropTypes.object.isRequired
 };
 
 export default CourseList;
