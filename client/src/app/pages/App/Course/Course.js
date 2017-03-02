@@ -8,7 +8,7 @@ class Course extends React.Component {
   render() {
     return (
       <div className="course">
-        <Link to="/courses">My Courses</Link> / <Link to={`/courses/${this.props.course.id}`}>{this.props.course.title.split(":")[0]}</Link>
+        <Link to="/courses">My Courses</Link> / {this.props.course.title.split(":")[0]} /
         <h1>{this.props.course.title}</h1>
         <LectureList course={this.props.course} params={this.props.params}/>
       </div>
