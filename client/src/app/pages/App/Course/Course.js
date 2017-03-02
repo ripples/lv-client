@@ -7,7 +7,7 @@ class Course extends React.Component {
 
   render() {
     return (
-      <div className="course">
+      <div className="course-page">
         <Link to="/courses">My Courses</Link> / {this.props.course.title.split(":")[0]} /
         <h1>{this.props.course.title}</h1>
         <LectureList course={this.props.course} params={this.props.params}/>
@@ -23,7 +23,7 @@ Course.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    course: state.courses[ownProps.params.courseId]
+    course: (typeof state.courses[ownProps.params.courseId] === "undefined") ? {title: " : "} : state.courses[ownProps.params.courseId]
   };
 };
 
