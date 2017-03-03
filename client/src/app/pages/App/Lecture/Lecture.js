@@ -20,9 +20,9 @@ class Lecture extends React.Component {
           <h1>
             {this.props.course.title}: {this.props.lecture.title}
           </h1>
-          <h4>
+          <h3>
             {moment(this.props.lecture.date).format("dddd, MMMM Do YYYY")}
-          </h4>
+          </h3>
         </div>
         <div className="lecture-body">
           <LectureMedia

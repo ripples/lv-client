@@ -9,20 +9,22 @@
   @include globalPadding();
 
   h1 {
-    margin-top: 0px;
+    margin-top: 24px;
     margin-bottom:0;
-  }
-  h4 {
-    margin:0;
-    color: $steel-color;
-    font-weight: 400;
-  }
-  a {
-    text-decoration: none;
+    padding-left: 32px;
     color: white;
   }
-  a:hover {
+  h3 {
+    margin:0;
+    padding-left: 32px;
+  }
+  a {
     text-decoration: underline;
+    font-size: 14px;
+    color: white;
+    @include transition();
+  }
+  a:hover {
     cursor: pointer;
   }
 }

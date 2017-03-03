@@ -17,17 +17,17 @@
     text-decoration: none;
     @include transition();
 
-    &:hover { color: $blue-color; }
-    &:active { color: darken($blue-color, 20); }
+    // &:hover { color: $blue-color; }
+    // &:active { color: darken($blue-color, 20); }
 
   }
 
   & > * {
     flex-grow: 1;
   }
-  button{
-    padding-left: 10px;
-  }
+  // button{
+  //   padding-right: 32px;
+  // }
 
   .left { text-align: left; }
   .right { text-align: right; }
