@@ -5,10 +5,12 @@
 
 .instructor-course-item {
   .rectangle-big {
-	  width: 671px;
-	  height: 400px;
+	  width: 840px;
+	  height: 836px;
+    border-radius: 2px;
 	  background-color: rgba(255, 255, 255, 0.8);
 	  border: solid 1px #d9d8d7;
+    border: solid 1px var(--light-grey);
     .course-header {
       white-space: nowrap;
       padding-left: 25px;
@@ -54,26 +56,15 @@
       border-radius: 4px;
       box-sizing: border-box;
     }
-    textarea[type=text], select {
-      width: 600px;
-      height: 149px;
-      padding: 9px;
-      margin: 8px 0;
-      margin-left: 25px;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      resize: none;
-    }
     ::-webkit-input-placeholder {
       padding-top: 5px;
     }
     .enrolled-users {
       white-space: nowrap;
+      padding-right: 19px;
       padding-left: 25px;
       padding-top: 19px;
-      padding-bottom: 16px;
+      padding-bottom: 26px;
       width: 117px;
 	    height: 19px;
 	    font-family: OpenSans;
@@ -86,12 +77,74 @@
 	    color: #32404e;
       color: var(--dark-grey-blue-two);
     }
-    .users-list {
+    .add-users {
+      width: 93px;
+	    height: 20px;
+	    border-radius: 20px;
+	    background-color: #ffffff;
+	    border: solid 1px #ff6a00;
+    }
+    .add-users-text {
+      padding-left: 19px;
+      width: 59px;
+	    height: 17px;
+	    font-family: OpenSans;
+	    font-size: 12px;
+	    font-weight: 600;
+	    font-style: normal;
+	    font-stretch: normal;
+	    line-height: normal;
+	    letter-spacing: normal;
+	    text-align: center;
+	    color: #ff6a00;
+    }
+    table {
       width: 760px;
-	    height: 541px;
 	    border-radius: 2px;
+      padding-left: 25px;
 	    border: solid 1px #32404e;
 	    border: solid 1px var(--dark-grey-blue-two);
+    }
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    .dropbtn {
+      cursor: pointer;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+    }
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .remove-button {
+      width: 70px;
+	    height: 20px;
+	    border-radius: 2px;
+	    border: solid 1px #e74c3c;
+    }
+    .remove-text {
+      width: 48px;
+	    height: 17px;
+	    font-family: OpenSans;
+	    font-size: 12px;
+	    font-weight: normal;
+	    font-style: normal;
+	    font-stretch: normal;
+	    line-height: normal;
+	    letter-spacing: normal;
+	    color: #e74c3c;
     }
   }
 }

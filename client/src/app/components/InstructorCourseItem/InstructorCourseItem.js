@@ -1,5 +1,5 @@
 import React from "react";
-import InstructorUserItem from "components/InstructorUserItem/InstructorUserItem";
+// import InstructorUserItem from "components/InstructorUserItem/InstructorUserItem";
 
 class InstructorCourseItem extends React.Component {
   render() {
@@ -9,18 +9,214 @@ class InstructorCourseItem extends React.Component {
           <div className="course-header">{this.props.data.title}</div>
           <div className="course-title">COURSE TITLE</div>
           <input name="course-title-text" type="text" placeholder={this.props.data.title}></input>
-          <div className="enrolled-users">ENROLLED USERS</div>
+          <div className="enrolled-users">ENROLLED USERS
+            <button className="add-users">
+              <div className="add-users-text">Add Users</div>
+            </button>
+          </div>
           <table className="users-list">
             <tr>
               <th>USERS</th>
               <th>PRIVILEGE LEVEL</th>
               <th></th>
             </tr>
-            {
-              this.props.users.map((user, i) => {
-                return <tr key={i}><InstructorUserItem userdata={user}/></tr>;
-              })
-            }
+            <tr>
+              <td>Douglas Gandle</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Cheyan Setayesh</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Dylan Fischer</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Mary Moser</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Douglas Gandle</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Cheyan Setayesh</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Dylan Fischer</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Mary Moser</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Douglas Gandle</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Cheyan Setayesh</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Dylan Fischer</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Mary Moser</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">REMOVE</div>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>Douglas Gandle</td>
+              <td>
+                <select>
+                  <option value="administrator">Administrator</option>
+                  <option value="instructor">Instructor</option>
+                  <option value="student">Student</option>
+                </select>
+              </td>
+              <td>
+                <button className="remove-button">
+                  <div className="remove-text">
+                    <div className="remove-text">REMOVE</div>
+                  </div>
+                  </button>
+              </td>
+            </tr>
           </table>
         </div>
       </div>
@@ -30,10 +226,6 @@ class InstructorCourseItem extends React.Component {
 
 InstructorCourseItem.propTypes = {
   data: React.PropTypes.object
-};
-
-InstructorCourseItem.propTypes = {
-  users: React.PropTypes.object
 };
 
 export default InstructorCourseItem;

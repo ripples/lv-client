@@ -23,8 +23,8 @@ class Header extends React.Component {
           {
             (this.context.router.isActive("/login")) ? null : (
               <div>
-                <button className="small" onClick={() => this.toInstructorPage()}>Instructor Settings</button>
-                <button className="small" onClick={() => this.doLogout()}>Logout</button>
+                <button className="small instructor-settings" onClick={() => this.toInstructorPage()}>Instructor Settings</button>
+                <button className="small logout-button" onClick={() => this.doLogout()}>Logout</button>
               </div>
             )
           }

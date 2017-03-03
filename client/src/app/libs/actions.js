@@ -105,4 +105,3 @@ export function updateVideoTimeStampAction(lecture, newTime) {
     getNextImage(lecture, lecture.images.computer[0], newTime, dispatch);
   };
 }
-
