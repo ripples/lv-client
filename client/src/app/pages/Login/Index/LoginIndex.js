@@ -1,7 +1,7 @@
 "use strict";
 
 import React, {PropTypes, Component} from "react";
-import {Link, withRouter} from "react-router";
+import {withRouter} from "react-router";
 
 import {login} from "../../../libs/auth";
 import FormError from "../../../components/FormError/formError";
@@ -64,7 +64,6 @@ class LoginForm extends Component {
           </button>
         </form>
         <a href="#" className="button accent">SIGN UP</a>
-        <Link to="/forgot" className="forgot">forgot your password?</Link>
       </div>
     );
   }
