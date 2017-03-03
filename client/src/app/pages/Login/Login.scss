@@ -9,29 +9,44 @@
 
   .login-wrap {
     width: 80%;
-    max-width: 500px;
+    max-width: 512px;
+    height: 432px;
+    max-height: 432px;
     margin: 0 auto;
     border: 1px solid rgba(20, 25, 31, .1);
     border-radius: $border-radius;
     text-align: center;
-    margin-top: 50px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 35px 0;
+    margin-top: 48px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 32px 0;
 
     .login-form-header {
-      margin-bottom: 3.125vw;
+      margin-bottom: 32px;
+      height: 32px;
 
       .divider {
         display: inline-block;
-        line-height: 1.5;
+        width: 1px;
+        height: 100%;
+        background-color: $almost-black-color;
+        margin: 0;
+        vertical-align: middle;
       }
 
       & > span {
         font-size: 20px;
+        width: 128px;
+        display: inline-block;
+        margin-right: 31.5px;
+        line-height: 32px;
+        vertical-align: middle;
       }
 
       & > img {
-        width: 135px;
+        width: 128px;
+        margin-left: 31.5px;
+        display: inline-block;
+        vertical-align: middle;
       }
 
       & > * {
@@ -70,7 +85,7 @@
 
     form {
       button {
-        margin-top: 20px;
+        margin-top: 16px;
       }
     }
   }

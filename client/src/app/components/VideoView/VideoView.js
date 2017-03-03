@@ -1,31 +1,39 @@
 import React from "react";
-import {BASE_URL} from "../../constants/ApiConstants";
-import VideoPlayer from "../VideoPlayer/VideoPlayer";
+import videojs from "video.js";
 
 class VideoView extends React.Component {
-
-  sayVideoTimer() {
-    var video = document.getElementById("player");
-    console.log(video.currentTime);
-  }
-
-  render() {
+  componentDidMount() {
     const videoJsOptions = {
+      height: 358,
+      width: 638,
       autoPlay: true,
       controls: true,
       sources: [{
-        src: BASE_URL + "/media/F16/COMPSCI 220/08-29-2016--08-59-01/video",
+        src: this.props.videoSrc,
         type: "video/mp4"
       }]
     };
+    this.player = videojs(this.videoNode, videoJsOptions, () => {
+      this.player.on("timeupdate", () => {
+        this.props.updateVideoTimeStamp(this.player.currentTime());
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.player) {
+      this.player.dispose();
+    }
+  }
+
+  render() {
     return (
       <div>
         <div className="video-view">
-          <VideoPlayer
-            height={"358"}
-            width={"638"}
-            { ...videoJsOptions }
-          />
+          <video
+            ref={node => this.videoNode = node}
+            className="video-js vjs-default-skin vjs-big-play-centered">
+          </video>
         </div>
       </div>
     );
@@ -33,8 +41,8 @@ class VideoView extends React.Component {
 }
 
 VideoView.propTypes = {
-  // video: React.PropTypes.any.isRequired,
-  // sync: React.PropTypes.func.isRequired
+  videoSrc: React.PropTypes.string.isRequired,
+  updateVideoTimeStamp: React.PropTypes.func.isRequired
 };
 
 export default VideoView;

@@ -2,7 +2,7 @@
 
 import React from "react";
 import {render} from "react-dom";
-import {Router, Route, browserHistory, IndexRedirect} from "react-router";
+import {Router, Route, browserHistory, IndexRedirect, IndexRoute} from "react-router";
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import thunkMiddleware from "redux-thunk";
@@ -20,7 +20,10 @@ import Courses from "./pages/App/Courses/Courses";
 import Course from "./pages/App/Course/Course";
 import Lecture from "./pages/App/Lecture/Lecture";
 import Login from "./pages/Login/Login";
-import InstructorSettings from './pages/App/InstructorSettings/InstructorSettings';
+import InstructorSettings from "./pages/App/InstructorSettings/InstructorSettings";
+import LoginIndex from "./pages/Login/Index/LoginIndex";
+import Reset from "./pages/Login/Reset/Reset";
+import Forgot from "./pages/Login/Forgot/Forgot";
 
 // Configure globals
 configureAxios();
@@ -46,8 +49,11 @@ render((
         <Route path="/courses/:courseId" component={Course}/>
         <Route path="/courses/:courseId/lecture/:lectureId" component={Lecture}/>
       </Route>
-      <Route path="/login" component={Login}/>
-      <Route path="/reset" component={Login}/>
+      <Route path="/login" component={Login}>
+        <IndexRoute components={LoginIndex}/>
+        <Route path="/reset" component={Reset}/>
+        <Route path="/forgot" component={Forgot}/>
+      </Route>
       <Route path="/logout" onEnter={logout}/>
     </Router>
   </Provider>

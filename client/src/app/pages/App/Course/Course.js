@@ -1,62 +1,30 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Link} from 'react-router';
-import {getCoursesAction} from "./../../../libs/actions";
-import LectureItem from "components/LectureItem/LectureItem";
+import {Link} from "react-router";
+import LectureList from "components/LectureList/LectureList";
 
 class Course extends React.Component {
-  componentWillMount() {
-    this.props.getCourses();
-  }
-  render() {
-    const courseId = this.props.params.courseId;
-    return (
-      <div className="course">
-        <Link to="/courses">My Courses</Link> / <Link to={`/courses/${this.props.course.id}`}>{this.props.course.title.split(":")[0]}</Link>
-        <h1>{this.props.course.title}</h1>
 
-        {this.props.lectures.map((lecture, i) => {
-          return (
-            <div className="lecture-row" key={i}>
-              <LectureItem
-                key={courseId + lecture.lectureId}
-                courseId={courseId}
-                lectureId={lecture.lectureId}
-                title={lecture.title}
-                date={lecture.date}
-                compact={true}
-                justThumb={true}
-              />
-            <div className="lecture-info">
-                <h5><Link to={`/courses/${courseId}/lecture/${lecture.lectureId}`}>{lecture.title}</Link></h5>
-                <h6><Link to={`/courses/${courseId}/lecture/${lecture.lectureId}`}>{(new Date(lecture.date)).toDateString()}</Link></h6>
-                <h6><Link to={`/courses/${courseId}/lecture/${lecture.lectureId}`}>TIME</Link></h6>
-              </div>
-            </div>
-          );
-        })}
+  render() {
+    return (
+      <div className="course-page">
+        <Link to="/courses">My Courses</Link> / {this.props.course.title.split(":")[0]} /
+        <h1>{this.props.course.title}</h1>
+        <LectureList course={this.props.course} params={this.props.params}/>
       </div>
     );
   }
 }
 
 Course.propTypes = {
-  params: React.PropTypes.object,
-  lectures: React.PropTypes.array.isRequired,
   course: React.PropTypes.object.isRequired,
-  getCourses: React.PropTypes.func.isRequired
+  params: React.PropTypes.object
 };
 
 const mapStateToProps = (state, ownProps) => {
-  let course = state.courses.find(course => course.id === ownProps.params.courseId);
-  let lectures = state.lectures.filter(lecture => course.lectures.indexOf(lecture.lectureId) >= 0);
-  return {course, lectures};
-};
-
-const mapDispatchToProps = dispatch => {
   return {
-    getCourses: () => dispatch(getCoursesAction())
+    course: (typeof state.courses[ownProps.params.courseId] === "undefined") ? {title: " : "} : state.courses[ownProps.params.courseId]
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Course);
+export default connect(mapStateToProps)(Course);

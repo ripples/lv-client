@@ -3,7 +3,10 @@
 
 .header {
   background-color: rgba(255, 255, 255, 0.95);
-  @include globalPadding();
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   color: $body-color;
   border-bottom: 1px solid $border-color;
   height: $header-height;
@@ -16,6 +19,7 @@
 
     &:hover { color: $blue-color; }
     &:active { color: darken($blue-color, 20); }
+
   }
 
   & > * {

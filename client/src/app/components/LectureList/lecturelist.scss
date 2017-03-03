@@ -1,0 +1,33 @@
+@import "mixins";
+@import "bourbon";
+@import "neat";
+
+.lecture-list {
+
+  .lecture-row{
+    @include row();
+  }
+  .lecture-info{
+    margin-left: 245px;
+    padding-left: 50px;
+    padding-top: 28px;
+
+    h5{
+      font-size: 28px;
+      margin: 0px;
+      font-weight: lighter;
+      //text-align: center;
+    }
+    h6{
+      font-weight: lighter;
+      font-size: 16px;
+      margin: 0px;
+      //text-align: center;
+    }
+  }
+  .lecture-info:hover {
+    font-weight: lighter;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

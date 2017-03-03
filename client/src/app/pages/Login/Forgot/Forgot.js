@@ -1,10 +1,12 @@
 "use strict";
 
-import React, {PropTypes, Component} from "react";
+import React, {Component} from "react";
 import {isEmail} from "validator";
+import {Link} from "react-router";
 
-import {requestResetEmail} from "../../libs/auth";
-import FormError from "../../components/FormError/formError";
+import {requestResetEmail} from "../../../libs/auth";
+import FormError from "../../../components/FormError/formError";
+import {handleChange} from "../../../utils/react";
 
 class ForgotForm extends Component {
   constructor(props) {
@@ -26,11 +28,6 @@ class ForgotForm extends Component {
     }).catch(err => {
       this.setState({error: err.error});
     });
-  }
-
-  handleChange(e, field) {
-    e.preventDefault();
-    this.setState(Object.assign({}, this.state, {[field]: e.target.value}));
   }
 
   buildFormErrorIfNecessary() {
@@ -57,7 +54,7 @@ class ForgotForm extends Component {
             type="text"
             placeholder="email"
             value={this.state.email}
-            onChange={e => this.handleChange(e, "email")}
+            onChange={e => handleChange(this, e, "email")}
             required="required"
           />
         </div>
@@ -66,7 +63,7 @@ class ForgotForm extends Component {
           type="submit"
           disabled={!this.state.email}
           className="button accent outline">
-          Send Email
+          Reset
         </button>
       </form>
     );
@@ -79,19 +76,14 @@ class ForgotForm extends Component {
     return (
       <div>
         {form}
-        <button
-          onClick={this.props.onLoginForm}
-          className="button accent outline">
+        <Link
+          to="/login"
+          className="button accent outline forgot">
           Login
-        </button>
+        </Link>
       </div>
     );
   }
 }
 
-ForgotForm.propTypes = {
-  onLoginForm: PropTypes.func.isRequired
-};
-
 export default ForgotForm;
-

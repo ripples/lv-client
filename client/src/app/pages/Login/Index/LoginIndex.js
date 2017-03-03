@@ -1,9 +1,11 @@
 "use strict";
 
 import React, {PropTypes, Component} from "react";
+import {Link, withRouter} from "react-router";
 
-import {login} from "../../libs/auth";
-import FormError from "components/FormError/formError";
+import {login} from "../../../libs/auth";
+import FormError from "../../../components/FormError/formError";
+import {handleChange} from "../../../utils/react";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -18,15 +20,14 @@ class LoginForm extends Component {
   handleLogin(e) {
     e.preventDefault();
     login(this.state.email, this.state.password).then(() => {
-      this.props.onLogin();
+      this.props.router.push("/");
     }).catch(err => {
-      this.setState({error: err.error});
+      const data = err.response.data;
+      if (data) {
+        return this.setState({error: data.error});
+      }
+      this.setState({error: "Something went wrong."});
     });
-  }
-
-  handleChange(e, field) {
-    e.preventDefault();
-    this.setState(Object.assign({}, this.state, {[field]: e.target.value}));
   }
 
   render() {
@@ -40,7 +41,7 @@ class LoginForm extends Component {
               type="text"
               placeholder="email"
               value={this.state.email}
-              onChange={e => this.handleChange(e, "email")}
+              onChange={e => handleChange(this, e, "email")}
               required="required"
             />
           </div>
@@ -49,7 +50,7 @@ class LoginForm extends Component {
               type="password"
               placeholder="password"
               value={this.state.password}
-              onChange={e => this.handleChange(e, "password")}
+              onChange={e => handleChange(this, e, "password")}
               required="required"
             />
           </div>
@@ -61,17 +62,16 @@ class LoginForm extends Component {
             Log In
           </button>
         </form>
-        <div style={{fontStyle: "italic", margin: "20px 0"}}>- or -</div>
+        <div style={{fontStyle: "italic", margin: "16px 0", fontSize: "14px"}}>- or -</div>
         <a href="#" className="button accent">Sign Up</a>
-        <a href="#" className="forgot" onClick={this.props.onForgotForm}>Forgot your password?</a>
+        <Link to="/forgot" className="forgot">forgot your password?</Link>
       </div>
     );
   }
 }
 
 LoginForm.propTypes = {
-  onLogin: PropTypes.func.isRequired,
-  onForgotForm: PropTypes.func.isRequired
+  router: PropTypes.object.isRequired
 };
 
-export default LoginForm;
+export default withRouter(LoginForm);
