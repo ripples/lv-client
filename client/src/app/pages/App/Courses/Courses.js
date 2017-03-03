@@ -7,22 +7,21 @@ class Courses extends React.Component {
   render() {
     return (
       <div className="courses">
+        My Courses /
         <h1>My Courses</h1>
-        <CourseList courses={this.props.courses} lectures={this.props.lectures} />
+        <CourseList courses={this.props.courses}/>
       </div>
     );
   }
 }
 
 Courses.propTypes = {
-  courses: React.PropTypes.array.isRequired,
-  lectures: React.PropTypes.array.isRequired
+  courses: React.PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    courses: state.courses,
-    lectures: state.lectures
+    courses: state.courses
   };
 };
 

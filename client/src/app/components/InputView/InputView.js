@@ -1,6 +1,4 @@
 import React from "react";
-import {BASE_URL} from "../../constants/ApiConstants";
-import {connect} from "react-redux";
 
 class InputView extends React.Component {
 
@@ -8,9 +6,9 @@ class InputView extends React.Component {
     return (
       <div>
         <div className="video-view">
-          {this.props.image ?
+          {this.props.imageSrc ?
             <img
-              src={BASE_URL + this.props.image}
+              src={this.props.imageSrc}
               height={"358"}
               width={"638"}
             />
@@ -22,13 +20,7 @@ class InputView extends React.Component {
 }
 
 InputView.propTypes = {
-  image: React.PropTypes.string.isRequired
+  imageSrc: React.PropTypes.string
 };
 
-const mapStateToProps = state => {
-  return {
-    image: state.media.computerImage || ""
-  };
-};
-
-export default connect(mapStateToProps)(InputView);
+export default InputView;

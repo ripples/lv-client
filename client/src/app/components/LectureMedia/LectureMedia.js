@@ -2,20 +2,31 @@ import React from "react";
 import VideoView from "components/VideoView/VideoView";
 import InputView from "components/InputView/InputView";
 import ThumbnailControl from "components/ThumbnailControl/ThumbnailControl";
+import {BASE_URL} from "../../constants/ApiConstants";
 
 class LectureMedia extends React.Component {
 
   render() {
+    let updateVideoTimeStamp = newTimeStamp => {
+      this.props.updateVideoTimeStamp(this.props.lecture, newTimeStamp);
+    };
+    let lecture = this.props.lecture;
     return (
       <div className="lecture-media">
         <div className="container">
           <div className="video-wrapper">
-            <VideoView/>
+            <VideoView
+              videoSrc={`${BASE_URL}/media/${lecture.semester}/${lecture.courseId}/${lecture.lectureId}/video`}
+              updateVideoTimeStamp={updateVideoTimeStamp}
+            />
           </div>
         </div>
         <div className="container">
           <div className="video-wrapper">
-            <InputView/>
+            <InputView imageSrc={lecture.currentComputerImage ?
+                BASE_URL + lecture.currentComputerImage : "/images/no-image-found.png"
+              }
+            />
             <ThumbnailControl/>
           </div>
         </div>
@@ -25,7 +36,8 @@ class LectureMedia extends React.Component {
 }
 
 LectureMedia.propTypes = {
-  lecture: React.PropTypes.object.isRequired
+  lecture: React.PropTypes.object.isRequired,
+  updateVideoTimeStamp: React.PropTypes.func.isRequired
 };
 
 export default LectureMedia;

@@ -8,18 +8,25 @@ const courses = (state = DefaultState.courses, action) => {
       return state;
       // break;
     case "GET_COURSES_FULFILLED":
-      return [
-        // TODO remove the DefaultState.Courses, I only have it appear so that
-        // things render if data is not hooked in right. Also rm testlecture100
-        ...DefaultState.courses, ...action.payload.map(e => {
-          return {
-            id: e.id,
-            title: e.id,
-            lectures: [e.lectures].concat("testlecture100")
-          };
-        })
-      ];
+      let neState = {...DefaultState.courses};
+      Object.keys(action.payload).forEach(key => {
+        let course = action.payload[key];
+        neState[course.id] = {...course, title: course.id};
+      });
+      return neState;
       // break;
+    case "GET_LECTURE_IMAGES":
+      let newState = {...state};
+      if (Object.keys(newState).length > 0) {
+        newState[action.payload.lecture.courseId].lectures[action.payload.lecture.lectureId].images = action.payload.images;
+      }
+      return newState;
+    case "UPDATE_CURRENT_LECTURE_IMAGE":
+      let nState = {...state};
+      if (Object.keys(nState).length > 0) {
+        nState[action.payload.lecture.courseId].lectures[action.payload.lecture.lectureId].currentComputerImage = action.payload.image;
+      }
+      return nState;
     default:
       return state;
   }
