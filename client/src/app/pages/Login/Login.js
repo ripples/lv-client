@@ -2,6 +2,7 @@
 
 import React, {Component} from "react";
 
+import {Link} from "react-router";
 import {isLoggedIn} from "../../libs/auth";
 import Header from "../../components/Header/header";
 import Logo from "../../components/Logo/logo";
@@ -35,6 +36,7 @@ class Login extends Component {
                 <img src="/images/logo.png"/>
               </div>
               {this.props.children}
+              <Link to="/forgot" className="forgot">forgot your password?</Link>
             </div>
             <div className="login-splash"></div>
           </div>
