@@ -2,11 +2,21 @@
 @import "mixins";
 
 .login-form {
+  position: relative;
+
   .forgot {
     display: block;
     font-size: 14px;
     font-style: italic;
     color: $steel-color;
-    margin-top: 48px;
+    margin-top: 196px;
+  }
+
+  .input-divider {
+    width: 192px;
+    height: 1px;
+    background-color: $light-gray-color;
+    text-align: center;
+    margin: auto;
   }
 }

@@ -45,6 +45,7 @@ class LoginForm extends Component {
               required="required"
             />
           </div>
+          <div className="input-divider"></div>
           <div className="input-group">
             <input
               type="password"
@@ -59,11 +60,10 @@ class LoginForm extends Component {
             type="submit"
             disabled={!(this.state.email && this.state.password)}
             className="button accent outline">
-            Log In
+            LOG IN
           </button>
         </form>
-        <div style={{fontStyle: "italic", margin: "16px 0", fontSize: "14px"}}>- or -</div>
-        <a href="#" className="button accent">Sign Up</a>
+        <a href="#" className="button accent">SIGN UP</a>
         <Link to="/forgot" className="forgot">forgot your password?</Link>
       </div>
     );

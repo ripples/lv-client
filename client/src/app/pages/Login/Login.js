@@ -27,13 +27,16 @@ class Login extends Component {
       <div className="login-page">
         <Header />
         <div className="content">
-          <div className="login-wrap">
-            <div className="login-form-header">
-              <Logo size="20px"/>
-              <div className="divider"></div>
-              <img src="/images/logo.png"/>
+          <div className="login-container">
+            <div className="login-wrap">
+              <div className="login-form-header">
+                <Logo size="16px"/>
+                <div className="divider"></div>
+                <img src="/images/logo.png"/>
+              </div>
+              {this.props.children}
             </div>
-            {this.props.children}
+            <div className="login-splash"></div>
           </div>
         </div>
       </div>

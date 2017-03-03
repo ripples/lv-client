@@ -4,13 +4,17 @@
 @import "mixins";
 
 .course-item {
-  $leftPad: 20px;
+  $leftPad: 32px;
+  padding-bottom: 64px;
 
   h4 {
     padding-left: $leftPad;
   }
 
   .course-link {
+    margin: 0;
+    margin-bottom: 10px;
+
     a {
       color: $body-color;
       text-decoration: none;
@@ -42,8 +46,8 @@
 
   .see-all-lectures {
     height: $lecture-thumbnail-height;
-    @include gridResponsive();
-    
+    // @include gridResponsive();
+
     button {
       max-width: 120px;
       width: 100%;
