@@ -4,13 +4,12 @@ import {Link} from "react-router";
 class LectureItem extends React.Component {
   render() {
     return (
-      <div className={`lecture-item ${this.props.compact ? "compact" : ""}`}>
+      <div className="lecture-item">
         <Link to={`/courses/${this.props.courseId}/lecture/${this.props.lectureId}`}>
-          <span>
-            <span className="thumbnail"></span>
+          <span className="thumbnail">
               {
                 (this.props.justThumb) ? null : (
-                  <div>
+                  <div className="thumbnail-caption">
                     <h6>{(new Date(this.props.date * 1000)).toDateString()}</h6>
                   </div>
                 )
