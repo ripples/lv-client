@@ -4,12 +4,14 @@
 @import "mixins";
 
 .lecture-item {
-  display: block;
+  display: inline-block;
   cursor: pointer;
+  margin-right: 48px;
+  width: 244px;
 
   &.compact {
     display: inline-block;
-    @include gridResponsive();
+    // @include gridResponsive();
   }
 
   a {
@@ -19,11 +21,24 @@
     .thumbnail {
       width: 100%;
       height: $lecture-thumbnail-height;
-      background: #fff;
-      border: 1px solid $steel-color;
-      border-radius: $border-radius;
+      background-image: $item-gradient;
       display: inline-block;
+      position: relative;
       @include transition();
+      box-shadow: $item-shadow;
+      border-radius: $border-radius;
+    }
+
+    .thumbnail-caption {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 32px;
+      background: #fff;
+      color: $body-color;
+      text-align: left;
+      padding: 6px 10px;
+      border-radius: 0px 0px $border-radius $border-radius;
     }
 
     h5 {
@@ -32,6 +47,7 @@
     }
     h6 {
       margin: 0;
+      color: $body-color;
     }
   }
 

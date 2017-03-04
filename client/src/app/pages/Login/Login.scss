@@ -8,10 +8,15 @@
   min-height: 100vh;
 
   .forgot {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     display: block;
     font-size: 14px;
     font-style: italic;
     color: $steel-color;
+    margin-bottom: 16px;
+    text-align: center;
   }
 
   .login-container {
@@ -38,6 +43,7 @@
   }
 
   .login-wrap {
+    position: relative;
     width: 100%;
     max-width: 385px;
     height: 100%;
