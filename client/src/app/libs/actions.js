@@ -47,7 +47,7 @@ export function getLectureImagesAction(lecture) {
 export function initImageAction(lecture) {
   return function(dispatch) {
     dispatch({
-      type: "UPDATE_CURRENT_LECTURE_IMAGE",
+      type: "UPDATE_CURRENT_COMPUTER_IMAGE",
       payload: {
         lecture,
         image: ""
@@ -56,8 +56,8 @@ export function initImageAction(lecture) {
   };
 }
 
-function getNextImage(lecture, images, newTime) {
-  const currentTime = Number(lecture.timestamp) + Number(newTime);
+function getNextImage(lecture, newTimeStamp, images, type) {
+  const currentTime = Number(lecture.timestamp) + Number(newTimeStamp);
   let mid;
   let low = 0;
   let high = images.length - 1;
@@ -76,7 +76,7 @@ function getNextImage(lecture, images, newTime) {
     return "";
   }
 
-  return "/media/" + lecture.semester + "/" + lecture.courseId + "/" + lecture.lectureId + "/images/computer/full/" + images[low];
+  return "/media/" + lecture.semester + "/" + lecture.courseId + "/" + lecture.lectureId + "/images/" + type + "/full/" + images[low];
 }
 
 /**
@@ -92,17 +92,16 @@ export function updateVideoTimeStampAction(lecture, newTime) {
       dispatch(getLectureImagesAction(lecture));
       return;
     }
-    let computerImage = getNextImage(lecture, lecture.images.computer[0], newTime);
-    if (lecture.currentComputerImage !== computerImage) {
-      dispatch({
-        type: "UPDATE_CURRENT_COMPUTER_IMAGE",
-        payload: {
-          lecture,
-          image: computerImage
-        }
-      });
-    }
-    // let whiteboardImage = getNextImage(lecture, lecture.images.whiteboard, newTime);
+    let newImages = {
+      computer: getNextImage(lecture, newTime, lecture.images.computer[0], "computer"),
+      whiteboard: getNextImage(lecture, newTime, lecture.images.whiteboard[0], "whiteboard")
+    };
+    dispatch({
+      type: "UPDATE_CURRENT_IMAGES",
+      payload: {
+        lecture,
+        newImages
+      }
+    });
   };
 }
-
