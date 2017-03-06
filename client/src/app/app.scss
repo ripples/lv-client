@@ -152,13 +152,6 @@ button {
 
 // text
 
-//Page Title
-h1 {
-  font-family: "Lato", "Open Sans", sans-serif;
-  font-weight: bold;
-  font-size: 36px;
-}
-
 //Media Page - Subtitle
 h3 {
   font-family: "Open Sans", sans-serif;
@@ -189,4 +182,9 @@ h6 {
   font-weight: normal;
   font-size: 16px;
   color: $steel-color;
+}
+
+.breadcrumbs {
+  font-size: 14px;
+  padding: 16px 0 0 32px;
 }

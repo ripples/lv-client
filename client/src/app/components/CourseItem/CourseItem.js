@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router";
-import LectureItem from "components/LectureItem/LectureItem";
-import Colors from "constants/ColorConstants";
+import LectureItem from "../../components/LectureItem/LectureItem";
+import Colors from "../../constants/ColorConstants";
 
 class CourseItem extends React.Component {
   constructor(props) {

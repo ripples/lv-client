@@ -1,35 +1,38 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Link} from "react-router";
-import moment from "moment";
-
-import LectureMedia from "components/LectureMedia/LectureMedia";
-import {getLectureImagesAction, initImageAction, updateVideoTimeStampAction} from "./../../../libs/actions";
+import LectureMedia from "../../components/LectureMedia/LectureMedia";
+import {getLectureImagesAction, initImageAction, updateVideoTimeStampAction} from "../../libs/actions";
+import {lectureNameToDate} from "../../utils/react";
 
 class Lecture extends React.Component {
+
+  // TODO: this is the result of limited css selectors + breadcrumbs preceding the Lecture page sibling wise.
+  // We can either force the breadcrumbs to be imported into every page, or change the scss build pipeline
+  // such that local scss is imported on a per file basis rather than be injected into the global styling scope.
+  // I'd rather the latter, but this fix will do until it becomes a problem again.
+  componentDidMount() {
+    window.document.getElementsByClassName("content")[0].style.backgroundColor = "#0f1419";
+    window.document.getElementsByClassName("breadcrumbs")[0].style.color = "white";
+  }
+
   componentWillUnmount() {
+    window.document.getElementsByClassName("content")[0].style.backgroundColor = "";
+    window.document.getElementsByClassName("breadcrumbs")[0].style.color = "";
     this.props.initImage(this.props.lecture);
   }
+
   render() {
     if (this.props.course.empty) {
       return (<div></div>);
     }
-    let lectureTimeStamp = moment(this.props.lecture.timestamp * 1000);
     return (
       <div className="lecture">
         <div className="lecture-header">
-          <Link to="/courses">My Courses</Link>
-          {" / "}
-          <Link to={`/courses/${this.props.course.id}`}>
-            {this.props.course.title.split(":")[0]}
-          </Link>
-          {" / "}
-          {lectureTimeStamp.format("MMMM Do YYYY")}
           <h1>
             {this.props.course.title}
           </h1>
           <h3>
-            {lectureTimeStamp.format("dddd, MMMM Do YYYY")}
+            {lectureNameToDate(this.props.lecture.lectureId)}
           </h3>
         </div>
         <div className="lecture-body">

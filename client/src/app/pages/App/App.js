@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import Breadcrumbs from "react-breadcrumbs";
 import Header from "../../components/Header/header";
 import {getCoursesAction} from "./../../libs/actions";
 
@@ -14,6 +15,12 @@ class App extends React.Component {
       <div className="root-app">
         <Header />
         <div className="content">
+          <Breadcrumbs
+            separator=" / "
+            excludes={["App"]}
+            routes={this.props.routes}
+            params={this.props.params}
+          />
           {this.props.children}
         </div>
       </div>
@@ -22,8 +29,10 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  children: React.PropTypes.object,
-  getCourses: React.PropTypes.func.isRequired
+  getCourses: React.PropTypes.func.isRequired,
+  routes: React.PropTypes.array.isRequired,
+  params: React.PropTypes.object.isRequired,
+  children: React.PropTypes.object
 };
 
 const mapStateToProps = state => {

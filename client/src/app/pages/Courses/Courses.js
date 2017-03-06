@@ -1,14 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
-import CourseList from "./../../../components/CourseList/CourseList";
+import CourseList from "../../components/CourseList/CourseList";
 
 class Courses extends React.Component {
 
   render() {
     return (
       <div className="courses">
-        My Courses /
-        <h1>My Courses</h1>
+        <div className="title">My Courses</div>
         <CourseList courses={this.props.courses}/>
       </div>
     );

@@ -2,10 +2,9 @@
 
 import React, {PropTypes, Component} from "react";
 import {Link} from "react-router";
-
-import {resetPassword} from "../../../libs/auth";
-import FormError from "../../../components/FormError/formError";
-import {handleChange} from "../../../utils/react";
+import {resetPassword} from "../../libs/auth";
+import FormError from "../../components/FormError/formError";
+import {handleChange} from "../../utils/react";
 
 class Reset extends Component {
   constructor(props) {
