@@ -1,7 +1,21 @@
 .course-list {
   padding-left: 0px;
+  display: inline-block;
+  float: left;
+  overflow-x: hidden;
 
   li {
     list-style-type: none;
+    margin-bottom: 64px;
+    display: inline-block;
+    float: left;
+
+    .see-all-lectures {
+      height: 144px;
+      width: 244px;
+      background: #aaaaaa;
+      display: inline-block;
+      float: right;
+    }
   }
 }

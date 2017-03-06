@@ -7,6 +7,18 @@
   background-position: 50% 50%;
   min-height: 100vh;
 
+  .forgot {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    font-style: italic;
+    color: $steel-color;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
   .login-container {
     width: 1024px;
     max-width: 1024px;
@@ -20,7 +32,8 @@
   }
 
   .login-splash {
-    background-image: linear-gradient(to bottom, #577288, #2c3e50);
+    background-image: url("/images/splash.jpg");
+    background-size: cover;
     min-width: 385px;
     width: 100%;
     max-width: 639px;
@@ -31,6 +44,7 @@
   }
 
   .login-wrap {
+    position: relative;
     width: 100%;
     max-width: 385px;
     height: 100%;
