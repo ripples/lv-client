@@ -56,7 +56,7 @@ export function initImageAction(lecture) {
   };
 }
 
-function getNextImage(lecture, images, newTime, dispatch) {
+function getNextImage(lecture, images, newTime) {
   const currentTime = Number(lecture.timestamp) + Number(newTime);
   let mid;
   let low = 0;
@@ -73,20 +73,10 @@ function getNextImage(lecture, images, newTime, dispatch) {
   }
 
   if (Number(images[low].split("-")[2]) > currentTime) {
-    return;
+    return "";
   }
 
-  const imageFound = "/media/" + lecture.semester + "/" + lecture.courseId + "/" + lecture.lectureId + "/images/computer/full/" + images[low];
-
-  if (lecture.currentComputerImage !== imageFound) {
-    dispatch({
-      type: "UPDATE_CURRENT_LECTURE_IMAGE",
-      payload: {
-        lecture,
-        image: imageFound
-      }
-    });
-  }
+  return "/media/" + lecture.semester + "/" + lecture.courseId + "/" + lecture.lectureId + "/images/computer/full/" + images[low];
 }
 
 /**
@@ -102,7 +92,17 @@ export function updateVideoTimeStampAction(lecture, newTime) {
       dispatch(getLectureImagesAction(lecture));
       return;
     }
-    getNextImage(lecture, lecture.images.computer[0], newTime, dispatch);
+    let computerImage = getNextImage(lecture, lecture.images.computer[0], newTime);
+    if (lecture.currentComputerImage !== computerImage) {
+      dispatch({
+        type: "UPDATE_CURRENT_COMPUTER_IMAGE",
+        payload: {
+          lecture,
+          image: computerImage
+        }
+      });
+    }
+    // let whiteboardImage = getNextImage(lecture, lecture.images.whiteboard, newTime);
   };
 }
 
