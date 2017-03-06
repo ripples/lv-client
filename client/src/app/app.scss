@@ -151,12 +151,15 @@ button {
 }
 
 // text
+
+//Page Title
 h1 {
   font-family: "Lato", "Open Sans", sans-serif;
   font-weight: bold;
   font-size: 36px;
 }
 
+//Media Page - Subtitle
 h3 {
   font-family: "Open Sans", sans-serif;
   font-weight: 300;
@@ -164,18 +167,22 @@ h3 {
   color: $steel-color;
 }
 
+//Course Page - Course Title
 h4 {
   font-family: "Open Sans", sans-serif;
   font-weight: 600;
   font-size: 20px;
-  color: $body-color;
+  color: $steel-color;
   vertical-align: top;
 }
 
+//Course Page - Item Caption
 h5 {
+  font-family: "Open Sans", sans-serif;
   font-weight: normal;
-  font-size: 16px;
+  font-size: 14px;
   color: $body-color;
+  vertical-align: top;
 }
 
 h6 {
