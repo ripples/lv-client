@@ -32,7 +32,8 @@
   }
 
   .login-splash {
-    background-image: linear-gradient(to bottom, #577288, #2c3e50);
+    background-image: url("/images/splash.jpg");
+    background-size: cover;
     min-width: 385px;
     width: 100%;
     max-width: 639px;

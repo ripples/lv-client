@@ -6,15 +6,15 @@ class LectureItem extends React.Component {
     return (
       <div className="lecture-item">
         <Link to={`/courses/${this.props.courseId}/lecture/${this.props.lectureId}`}>
-          <span className="thumbnail">
+          <div className="thumbnail">
               {
                 (this.props.justThumb) ? null : (
                   <div className="thumbnail-caption">
-                    <h6>{(new Date(this.props.date * 1000)).toDateString()}</h6>
+                    <h5>{(new Date(this.props.date * 1000)).toDateString()}</h5>
                   </div>
                 )
               }
-          </span>
+          </div>
         </Link>
       </div>
     );

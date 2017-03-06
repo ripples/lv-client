@@ -8,6 +8,7 @@
   cursor: pointer;
   margin-right: 48px;
   width: 244px;
+  @include transition();
 
   &.compact {
     display: inline-block;
@@ -21,10 +22,11 @@
     .thumbnail {
       width: 100%;
       height: $lecture-thumbnail-height;
-      background-image: $item-gradient;
+      background-image: url("/images/item-bg.png");
+      background-size: contain;
       display: inline-block;
+      // @include transition();
       position: relative;
-      @include transition();
       box-shadow: $item-shadow;
       border-radius: $border-radius;
     }
@@ -42,7 +44,7 @@
     }
 
     h5 {
-      margin: 5px 0 0 0;
+      margin: 0;
       @include transition();
     }
     h6 {
@@ -53,7 +55,8 @@
 
   &:hover {
     .thumbnail { border-color: $blue-color; }
-    h5 { color: $blue-color; }
+    // h5 { color: $blue-color; }
+    transform: scale(1.05);
   }
 
   &:active {

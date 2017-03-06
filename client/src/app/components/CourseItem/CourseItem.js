@@ -4,14 +4,35 @@ import LectureItem from "components/LectureItem/LectureItem";
 import Colors from "constants/ColorConstants";
 
 class CourseItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      numberOfLectures: Math.floor((window.innerWidth - 256) / 264) - 1
+    };
+    this.updateNumberOfLectures = this.updateNumberOfLectures.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.updateNumberOfLectures);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateNumberOfLectures);
+  }
+
   toCoursePage() {
     this.context.router.push(`/courses/${this.props.course.id}`);
   }
 
-  render() {
-    const NUM_LECTURES = 5;
-    const colorList = [Colors.BLUE, Colors.PURPLE, Colors.YELLOW, Colors.GREEN];
+  updateNumberOfLectures() {
+    this.setState({
+      numberOfLectures: Math.floor((window.innerWidth - 256) / 264) - 1
+    });
+  }
 
+  render() {
+    const colorList = [Colors.BLUE, Colors.PURPLE, Colors.YELLOW, Colors.GREEN];
+    const lectures = Object.keys(this.props.lectures);
     return (
       <div className="course-item">
         <span
@@ -27,7 +48,7 @@ class CourseItem extends React.Component {
         </h4>
         <div className="lecture-list">
           {
-            Object.keys(this.props.lectures).reverse().slice(0, NUM_LECTURES).map(lectureId => {
+            lectures.reverse().slice(0, this.state.numberOfLectures).map(lectureId => {
               const course = this.props.course;
               return <LectureItem
                       compact={true}
@@ -39,12 +60,9 @@ class CourseItem extends React.Component {
                       />;
             })
           }
-          {
-            (this.props.lectures.length > NUM_LECTURES)
-                ? <div className="see-all-lectures">
-                    <button onClick={() => this.toCoursePage()}>See All ></button>
-                  </div> : null
-          }
+          <div className="see-all-lectures">
+            <button onClick={() => this.toCoursePage()}>See All ></button>
+          </div>
         </div>
       </div>
     );
