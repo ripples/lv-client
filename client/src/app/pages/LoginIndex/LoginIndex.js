@@ -2,10 +2,9 @@
 
 import React, {PropTypes, Component} from "react";
 import {withRouter} from "react-router";
-
-import {login} from "../../../libs/auth";
-import FormError from "../../../components/FormError/formError";
-import {handleChange} from "../../../utils/react";
+import {login} from "../../libs/auth";
+import FormError from "../../components/FormError/formError";
+import {handleChange} from "../../utils/react";
 
 class LoginForm extends Component {
   constructor(props) {

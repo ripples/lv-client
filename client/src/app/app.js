@@ -13,17 +13,18 @@ import appReducer from "./reducers/app";
 // utilities
 import {logout, requireAuth} from "./libs/auth";
 import {configureAxios} from "./libs/api";
+import {lectureNameToDate} from "./utils/react";
 
 // core App component
 import App from "./pages/App/App";
-import Courses from "./pages/App/Courses/Courses";
-import Course from "./pages/App/Course/Course";
-import Lecture from "./pages/App/Lecture/Lecture";
+import Courses from "./pages/Courses/Courses";
+import Course from "./pages/Course/Course";
+import Lecture from "./pages/Lecture/Lecture";
 import Login from "./pages/Login/Login";
-import InstructorSettings from "./pages/App/InstructorSettings/InstructorSettings";
-import LoginIndex from "./pages/Login/Index/LoginIndex";
-import Reset from "./pages/Login/Reset/Reset";
-import Forgot from "./pages/Login/Forgot/Forgot";
+import InstructorSettings from "./pages/InstructorSettings/InstructorSettings";
+import LoginIndex from "./pages/LoginIndex/LoginIndex";
+import Reset from "./pages/Reset/Reset";
+import Forgot from "./pages/Forgot/Forgot";
 
 // Configure globals
 configureAxios();
@@ -42,15 +43,21 @@ const store = createStore(
 render((
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" onEnter={requireAuth} component={App}>
-        <Route path="/instructor-settings" component={InstructorSettings}/>
-        <IndexRedirect to="/courses" />
-        <Route path="/courses" component={Courses} />
-        <Route path="/courses/:courseId" component={Course}/>
-        <Route path="/courses/:courseId/lecture/:lectureId" component={Lecture}/>
+      <Route name="App" path="/" onEnter={requireAuth} component={App}>
+        <IndexRedirect to="/courses"/>
+        <Route path="/courses" name="My Courses">
+          <IndexRoute component={Courses}/>
+          <Route path=":courseId" name="Course">
+            <IndexRoute component={Course}/>
+            <Route path="lecture/:lectureId" name="Lecture" prettifyParam={lectureNameToDate}>
+              <IndexRoute component={Lecture}/>
+            </Route>
+          </Route>
+        </Route>
+        <Route name="" path="/instructor-settings" component={InstructorSettings}/>
       </Route>
       <Route path="/login" component={Login}>
-        <IndexRoute components={LoginIndex}/>
+        <IndexRoute component={LoginIndex}/>
         <Route path="/reset" component={Reset}/>
         <Route path="/forgot" component={Forgot}/>
       </Route>

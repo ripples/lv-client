@@ -1,0 +1,14 @@
+@import "mixins";
+
+.courses {
+  background-color: #FFFFFF;
+  @include globalPadding();
+  padding-left: 64px;
+  padding-top: 25px;
+
+  .title {
+    font-family: "Lato", "Open Sans", sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+  }
+}

@@ -1,7 +1,0 @@
-@import "mixins";
-
-.courses {
-  background-color: #FFFFFF;
-  @include globalPadding();
-  padding-left: 64px;
-}
