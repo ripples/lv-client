@@ -7,7 +7,7 @@ class Courses extends React.Component {
   render() {
     return (
       <div className="courses">
-        <div className="title">My Courses</div>
+        <h1>My Courses</h1>
         <CourseList courses={this.props.courses}/>
       </div>
     );
