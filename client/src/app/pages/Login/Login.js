@@ -32,7 +32,6 @@ class Login extends Component {
             <div className="login-wrap">
               <div className="login-form-header">
                 <Logo size="16px"/>
-                <div className="divider"></div>
                 <img src="/images/logo.png"/>
               </div>
               {this.props.children}

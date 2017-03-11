@@ -7,13 +7,12 @@ class LectureItem extends React.Component {
       <div className="lecture-item">
         <Link to={`/courses/${this.props.courseId}/lecture/${this.props.lectureId}`}>
           <div className="thumbnail">
-              {
-                (this.props.justThumb) ? null : (
-                  <div className="thumbnail-caption">
-                    <h5>{(new Date(this.props.date * 1000)).toDateString()}</h5>
-                  </div>
-                )
-              }
+            <div className="thumbnail-timestamp">
+              <h5>00:00</h5>
+            </div>
+              <div className="thumbnail-caption">
+                <h5>{(new Date(this.props.date * 1000)).toDateString()}</h5>
+              </div>
           </div>
         </Link>
       </div>

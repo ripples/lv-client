@@ -59,7 +59,7 @@ class LoginForm extends Component {
           <button
             type="submit"
             disabled={!(this.state.email && this.state.password)}
-            className="button accent outline">
+            className="button accent outline login">
             LOG IN
           </button>
         </form>

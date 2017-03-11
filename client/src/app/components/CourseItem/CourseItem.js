@@ -61,7 +61,7 @@ class CourseItem extends React.Component {
             })
           }
           <div className="see-all-lectures">
-            <button onClick={() => this.toCoursePage()}>See All ></button>
+            <button onClick={() => this.toCoursePage()}><span>+5</span><br/>See All</button>
           </div>
         </div>
       </div>

@@ -23,17 +23,38 @@ input, button, a.button {
 
 input {
   padding: 6px 8px;
+  padding-left: 24px;
   border-radius: $border-radius;
   color: $body-color;
   border: none;
   width: 192px;
   height: 32px;
   @include transition();
+  background-repeat: no-repeat;
+  background-position: left;
+
+  &[type="text"] {
+    background-image: url("/images/user-bg.png");
+    background-size: 12px 14.4px;
+  }
+
+  &[type="password"] {
+    background-image: url("/images/pw-bg.png");
+    background-size: 10px 13.3px;
+  }
 
   &:focus {
     // border-color: $body-color;
     outline: none;
   }
+}
+
+.input-divider {
+  width: 192px;
+  height: 1px;
+  background-color: $light-gray-color;
+  text-align: center;
+  margin: auto;
 }
 
 // links
@@ -95,6 +116,27 @@ button {
 
     &.outline {
       color: $accent-color;
+
+      &.login {
+        &::after {      // Chevron login button icon
+          font-family: fontAwesome;
+          content: "\f054\00a0";
+          float: right;
+          padding-top: 4px;
+          padding-bottom: 4px;
+          font-size: 12px;
+        }
+
+        &::before {     // Janky fix to center the button text
+          font-family: fontAwesome;
+          content: "\f054\00a0";
+          float: left;
+          padding-top: 4px;
+          padding-bottom: 4px;
+          font-size: 12px;
+          opacity: 0;
+        }
+      }
 
       &:hover {
         color: #fff;

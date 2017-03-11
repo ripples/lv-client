@@ -1,6 +1,7 @@
 @import "bourbon";
 @import "neat";
 @import "mixins";
+@import "vars";
 
 .lecture-media {
     @include outer-container(90%);
@@ -13,11 +14,8 @@
         margin: 0 auto;
         width: 640px;
         height: 360px;
-        border-radius: 5px;
-        background-color: #32404e;
-        background-color: var(--dark-grey-blue-two);
-        border: solid 1px #fafafa;
-        border: solid 1px var(--white);
+        background-color: $body-color;
+        border: solid 1px $slate-grey;
         margin-top: 50px;
     }
     /*

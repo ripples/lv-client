@@ -10,6 +10,7 @@ class Course extends React.Component {
       <div className="course-page">
         <Link to="/courses">My Courses</Link> / {this.props.course.title.split(":")[0]} /
         <h1>{this.props.course.title}</h1>
+        <div className="color-div"></div>
         <LectureList course={this.props.course} params={this.props.params}/>
       </div>
     );
