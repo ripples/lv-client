@@ -65,6 +65,7 @@
       padding-left: 25px;
       padding-top: 19px;
       padding-bottom: 26px;
+      margin-right: 25px;
       width: 117px;
 	    height: 19px;
 	    font-family: OpenSans;
@@ -78,6 +79,7 @@
       color: var(--dark-grey-blue-two);
     }
     .add-users {
+      margin-left: 25px;
       width: 93px;
 	    height: 20px;
 	    border-radius: 20px;
@@ -85,7 +87,7 @@
 	    border: solid 1px #ff6a00;
     }
     .add-users-text {
-      padding-left: 19px;
+      padding-left: 13px;
       width: 59px;
 	    height: 17px;
 	    font-family: OpenSans;
@@ -128,7 +130,11 @@
       text-decoration: none;
       display: block;
     }
+    .remove-button-width {
+      width: 110px;
+    }
     .remove-button {
+      margin-left: 8px;
       width: 70px;
 	    height: 20px;
 	    border-radius: 2px;

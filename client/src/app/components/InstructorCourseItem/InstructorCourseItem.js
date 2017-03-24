@@ -29,7 +29,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -44,7 +44,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -59,7 +59,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -74,7 +74,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -89,7 +89,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -104,7 +104,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -119,7 +119,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -134,7 +134,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -149,7 +149,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -164,7 +164,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -179,7 +179,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -194,7 +194,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">REMOVE</div>
                 </button>
@@ -209,7 +209,7 @@ class InstructorCourseItem extends React.Component {
                   <option value="student">Student</option>
                 </select>
               </td>
-              <td>
+              <td className="remove-button-width">
                 <button className="remove-button">
                   <div className="remove-text">
                     <div className="remove-text">REMOVE</div>
