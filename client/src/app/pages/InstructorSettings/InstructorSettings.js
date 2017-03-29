@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import InstructorCourseList from "../../../components/InstructorCourseList/InstructorCourseList";
-import {getCoursesAction} from "./../../../libs/actions";
+import {getCoursesAction} from "../../libs/actions";
 import {Link} from "react-router";
 import InstructorCourseList from "../../components/InstructorCourseList/InstructorCourseList";
 

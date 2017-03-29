@@ -6,11 +6,10 @@
 .instructor-course-item {
   .rectangle-big {
 	  width: 840px;
-	  height: 836px;
+	  height: 100%;
     border-radius: 2px;
 	  background-color: rgba(255, 255, 255, 0.8);
-	  border: solid 1px #d9d8d7;
-    border: solid 1px var(--light-grey);
+	  border: 1px solid black;
     .course-header {
       white-space: nowrap;
       padding-left: 25px;
