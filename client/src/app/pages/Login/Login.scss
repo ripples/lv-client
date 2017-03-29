@@ -2,27 +2,67 @@
 @import "mixins";
 
 .login-page {
-  background: url(/images/login_bg.jpg);
+  // background: url(/images/login_bg.jpg);
   background-size: cover;
   background-position: 50% 50%;
   min-height: 100vh;
 
-  .login-wrap {
-    width: 80%;
-    max-width: 512px;
-    height: 432px;
-    max-height: 432px;
-    margin: 0 auto;
-    border: 1px solid rgba(20, 25, 31, .1);
-    border-radius: $border-radius;
+  .forgot {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    font-style: italic;
+    color: $steel-color;
+    margin-bottom: 16px;
     text-align: center;
+  }
+
+  .login-container {
+    width: 1024px;
+    max-width: 1024px;
+    height: 512px;
+    background-color: white;
+    text-align: center;
+    box-shadow: 0 8px 60px 0 rgba(50, 64, 78, 0.16);
+    border-radius: $border-radius;
+    margin: 0 auto;
     margin-top: 48px;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 32px 0;
+  }
+
+  .login-splash {
+    background-image: url("/images/splash.jpg");
+    background-size: cover;
+    min-width: 385px;
+    width: 100%;
+    max-width: 639px;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    display: inline-block;
+    height: 100%;
+  }
+
+  .login-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 385px;
+    height: 100%;
+    max-height: 512px;
+    margin: 0 auto;
+    display: inline-block;
+    // border: 1px solid rgba(20, 25, 31, .1);
+    // box-shadow: 0 8px 60px 0 rgba(50, 64, 78, 0.16);
+    // border-radius: $border-radius;
+    text-align: center;
+    // margin-top: 48px;
+    background-color: white;
+    padding: 48px 0;
+    vertical-align: top;
 
     .login-form-header {
-      margin-bottom: 32px;
-      height: 32px;
+      margin-bottom: 48px;
+      height: 24px;
 
       .divider {
         display: inline-block;
@@ -34,17 +74,17 @@
       }
 
       & > span {
-        font-size: 20px;
-        width: 128px;
+        font-size: 16px;
+        width: auto;
         display: inline-block;
-        margin-right: 31.5px;
+        margin-right: 11.5px;
         line-height: 32px;
         vertical-align: middle;
       }
 
       & > img {
-        width: 128px;
-        margin-left: 31.5px;
+        width: 98px;
+        margin-left: 11.5px;
         display: inline-block;
         vertical-align: middle;
       }

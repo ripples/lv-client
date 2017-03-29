@@ -21,10 +21,10 @@ const courses = (state = DefaultState.courses, action) => {
         newState[action.payload.lecture.courseId].lectures[action.payload.lecture.lectureId].images = action.payload.images;
       }
       return newState;
-    case "UPDATE_CURRENT_LECTURE_IMAGE":
+    case "UPDATE_CURRENT_IMAGES":
       let nState = {...state};
       if (Object.keys(nState).length > 0) {
-        nState[action.payload.lecture.courseId].lectures[action.payload.lecture.lectureId].currentComputerImage = action.payload.image;
+        nState[action.payload.lecture.courseId].lectures[action.payload.lecture.lectureId].currentImages = action.payload.newImages;
       }
       return nState;
     default:

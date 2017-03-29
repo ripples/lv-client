@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import InstructorCourseList from "../../../components/InstructorCourseList/InstructorCourseList";
 import {getCoursesAction} from "./../../../libs/actions";
 import {Link} from "react-router";
+import InstructorCourseList from "../../components/InstructorCourseList/InstructorCourseList";
 
 class InstructorSettings extends React.Component {
   componentWillMount() {
@@ -14,7 +15,7 @@ class InstructorSettings extends React.Component {
         <div className="my-courses">
         <Link to="/courses">My Courses</Link> <span>/</span>
         </div>
-        <h1 className="course-options">Course Instructor Options</h1>
+        <h1>Course Instructor Options</h1>
         <InstructorCourseList courses={this.props.courses}/>
       </div>
     );

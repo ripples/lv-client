@@ -3,10 +3,9 @@
 import React, {Component} from "react";
 import {isEmail} from "validator";
 import {Link} from "react-router";
-
-import {requestResetEmail} from "../../../libs/auth";
-import FormError from "../../../components/FormError/formError";
-import {handleChange} from "../../../utils/react";
+import {requestResetEmail} from "../../libs/auth";
+import FormError from "../../components/FormError/formError";
+import {handleChange} from "../../utils/react";
 
 class ForgotForm extends Component {
   constructor(props) {

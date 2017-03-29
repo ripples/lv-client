@@ -23,8 +23,8 @@ class LectureMedia extends React.Component {
         </div>
         <div className="container">
           <div className="video-wrapper">
-            <InputView imageSrc={lecture.currentComputerImage ?
-                BASE_URL + lecture.currentComputerImage : "/images/no-image-found.png"
+            <InputView imageSrc={(lecture.currentImages && lecture.currentImages.computer) ?
+                BASE_URL + lecture.currentImages.computer : "/images/no-image-found.png"
               }
             />
             <ThumbnailControl/>

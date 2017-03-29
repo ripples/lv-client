@@ -1,11 +1,22 @@
 .course-list {
-  padding-left: 0px;
+  padding-top: 35px;
+  padding-left: 0;
+  display: inline-block;
+  float: left;
+  overflow-x: hidden;
 
   li {
     list-style-type: none;
+    margin-bottom: 64px;
+    display: inline-block;
+    float: left;
 
-    .course-item {
-      margin-bottom: 30px;
+    .see-all-lectures {
+      height: 144px;
+      width: 244px;
+      background: #aaaaaa;
+      display: inline-block;
+      float: right;
     }
   }
 }

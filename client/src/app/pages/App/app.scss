@@ -1,8 +1,17 @@
 @import "mixins";
 
 .root-app {
-  background-color: #FAFAFA;
+  background-color: white;
   min-height: 100vh;
+
+  .breadcrumbs {
+    font-size: 14px;
+    padding: 16px 0 25px 32px;
+    color: $steel-color;
+    :visited {
+      color: inherit;
+    }
+  }
 }
 
 // general styles

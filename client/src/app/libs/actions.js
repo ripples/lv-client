@@ -39,54 +39,47 @@ export function getLectureImagesAction(lecture) {
 }
 
 /**
- * Action to handle initializing computer image
+ * Action to handle initializing ivisible mages by clearing them
  * TODO error handling.... .catch( error => {})
  * @param {object} lecture - which lecture to init the image for
- * @return {Function} Function to dispatch the action to the reducer
+ * @return {function} Function to dispatch the action to the reducer
  */
 export function initImageAction(lecture) {
   return function(dispatch) {
     dispatch({
-      type: "UPDATE_CURRENT_LECTURE_IMAGE",
+      type: "UPDATE_CURRENT_IMAGES",
       payload: {
         lecture,
-        image: ""
+        newImages: {}
       }
     });
   };
 }
 
-function getNextImage(lecture, images, newTime, dispatch) {
-  const currentTime = Number(lecture.timestamp) + Number(newTime);
+function binarySearch(arr, val, compare) {
   let mid;
   let low = 0;
-  let high = images.length - 1;
-
-  // Binary search
+  let high = arr.length - 1;
   while (high - low > 1) {
     mid = Math.floor((high + low) / 2);
-    if (Number(images[mid].split("-")[2]) < currentTime) {
+    if (compare(arr[mid], val)) {
       low = mid;
     } else {
       high = mid;
     }
   }
+  return arr[low];
+}
 
-  if (Number(images[low].split("-")[2]) > currentTime) {
-    return;
+function getNextImage(lecture, newTimeStamp, images, type) {
+  const currentTime = Number(lecture.timestamp) + Number(newTimeStamp);
+  let nextImage = binarySearch(images, currentTime, (fileName, time) => {
+    return Number(fileName.split("-")[2]) < time;
+  });
+  if (Number(nextImage.split("-")[2]) > currentTime) {
+    return "";
   }
-
-  const imageFound = "/media/" + lecture.semester + "/" + lecture.courseId + "/" + lecture.lectureId + "/images/computer/full/" + images[low];
-
-  if (lecture.currentComputerImage !== imageFound) {
-    dispatch({
-      type: "UPDATE_CURRENT_LECTURE_IMAGE",
-      payload: {
-        lecture,
-        image: imageFound
-      }
-    });
-  }
+  return "/media/" + lecture.semester + "/" + lecture.courseId + "/" + lecture.lectureId + "/images/" + type + "/full/" + nextImage;
 }
 
 /**
@@ -102,6 +95,15 @@ export function updateVideoTimeStampAction(lecture, newTime) {
       dispatch(getLectureImagesAction(lecture));
       return;
     }
-    getNextImage(lecture, lecture.images.computer[0], newTime, dispatch);
+    dispatch({
+      type: "UPDATE_CURRENT_IMAGES",
+      payload: {
+        lecture,
+        newImages: {
+          computer: getNextImage(lecture, newTime, lecture.images.computer[0], "computer"),
+          whiteboard: getNextImage(lecture, newTime, lecture.images.whiteboard[0], "whiteboard")
+        }
+      }
+    });
   };
 }

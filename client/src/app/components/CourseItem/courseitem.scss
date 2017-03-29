@@ -4,13 +4,16 @@
 @import "mixins";
 
 .course-item {
-  $leftPad: 20px;
+  $leftPad: 32px;
 
   h4 {
     padding-left: $leftPad;
   }
 
   .course-link {
+    margin: 0;
+    margin-bottom: 10px;
+
     a {
       color: $body-color;
       text-decoration: none;
@@ -30,6 +33,7 @@
     margin:0; //TODO: replace with omega
     max-width: none;  //TODO: replace with omega
     padding-left: $leftPad;
+    white-space: nowrap;
   }
 
   .color-code {
@@ -42,12 +46,23 @@
 
   .see-all-lectures {
     height: $lecture-thumbnail-height;
-    @include gridResponsive();
-    
+    width: 244px;
+    box-shadow: $item-shadow;
+    background-color: #fff;
+    display: inline-block;
+    @include transition();
+    // @include gridResponsive();
+
     button {
-      max-width: 120px;
       width: 100%;
+      height: 100%;
+      border-radius: $border-radius;
+      border: none;
       @include verticalAlign();
+    }
+
+    &:hover {
+      transform: scale(1.05);
     }
   }
 }

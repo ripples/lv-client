@@ -1,11 +1,10 @@
 "use strict";
 
 import React, {PropTypes, Component} from "react";
-import {Link, withRouter} from "react-router";
-
-import {login} from "../../../libs/auth";
-import FormError from "../../../components/FormError/formError";
-import {handleChange} from "../../../utils/react";
+import {withRouter} from "react-router";
+import {login} from "../../libs/auth";
+import FormError from "../../components/FormError/formError";
+import {handleChange} from "../../utils/react";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -45,6 +44,7 @@ class LoginForm extends Component {
               required="required"
             />
           </div>
+          <div className="input-divider"></div>
           <div className="input-group">
             <input
               type="password"
@@ -59,12 +59,10 @@ class LoginForm extends Component {
             type="submit"
             disabled={!(this.state.email && this.state.password)}
             className="button accent outline">
-            Log In
+            LOG IN
           </button>
         </form>
-        <div style={{fontStyle: "italic", margin: "16px 0", fontSize: "14px"}}>- or -</div>
-        <a href="#" className="button accent">Sign Up</a>
-        <Link to="/forgot" className="forgot">forgot your password?</Link>
+        <a href="#" className="button accent">SIGN UP</a>
       </div>
     );
   }

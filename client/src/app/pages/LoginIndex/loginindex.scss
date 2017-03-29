@@ -1,0 +1,14 @@
+@import "vars";
+@import "mixins";
+
+.login-form {
+  position: relative;
+
+  .input-divider {
+    width: 192px;
+    height: 1px;
+    background-color: $light-gray-color;
+    text-align: center;
+    margin: auto;
+  }
+}
