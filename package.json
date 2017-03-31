@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "watch": "npm rebuild node-sass; ./node_modules/.bin/gulp watch",
     "build-prod": "npm rebuild node-sass; ./node_modules/.bin/gulp build:prod",
-    "build-dev": "npm rebuild node-sass; ./node_modules/.bin/gulp build:dev"
+    "build-dev": "npm rebuild node-sass; ./node_modules/.bin/gulp build:dev",
+    "doc": "esdoc -c esdoc.json"
   },
   "dependencies": {
     "axios": "^0.15.3",
@@ -53,6 +54,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^6.1.0",
+    "esdoc": "^0.5.2",
     "eslint": "^2.13.1",
     "eslint-config-google": "^0.5.0",
     "eslint-plugin-react": "^5.1.1"

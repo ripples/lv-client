@@ -23,3 +23,6 @@ client/dist/*
 
 # logo
 client/src/images/logo.png
+
+#esdoc
+esdoc

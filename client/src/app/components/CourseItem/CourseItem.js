@@ -3,9 +3,20 @@ import {Link} from "react-router";
 import LectureItem from "../../components/LectureItem/LectureItem";
 import Colors from "../../constants/ColorConstants";
 
+/**
+ * Thumbnail of course item
+ */
 class CourseItem extends React.Component {
+  /**
+   * constructor
+   * @param {object} props
+   */
   constructor(props) {
     super(props);
+    /**
+     * @type {object}
+     * @property {integer} number of lectures
+     */
     this.state = {
       numberOfLectures: Math.floor((window.innerWidth - 256) / 264) - 1
     };
