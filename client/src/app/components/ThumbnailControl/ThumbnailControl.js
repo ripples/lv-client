@@ -33,9 +33,9 @@ class ThumbnailControl extends React.Component {
 
 ThumbnailControl.propTypes = {
   thumbnails: React.PropTypes.arrayOf(React.PropTypes.shape({
-    src: React.PropTypes.string.isRequired,
-    timestamp: React.PropTypes.number.isRequired
-  })).isRequired
+    src: React.PropTypes.string,
+    timestamp: React.PropTypes.number
+  }))
 };
 
 export default ThumbnailControl;

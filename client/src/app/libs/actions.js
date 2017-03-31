@@ -76,19 +76,18 @@ export function updateVideoTimeStampAction(lecture, newTime) {
     const computerImages = lecture.images.computer[0];
     const whiteboardImages = lecture.images.whiteboard[0];
     const currentTime = Number(lecture.timestamp) + Number(newTime);
-
     dispatch({
       type: "UPDATE_CURRENT_IMAGES",
       payload: {
         lecture,
         newImages: {
           computer: {
-            full: getNextImages(lecture, currentTime, computerImages)[0],
-            thumbs: getNextImages(lecture, currentTime, computerImages, 5)
+            full: getNextImages(lecture, currentTime, computerImages, true)[0].src,
+            thumbs: getNextImages(lecture, currentTime, computerImages, false, 5)
           },
           whiteboard: {
-            full: getNextImages(lecture, currentTime, whiteboardImages)[0],
-            thumbs: getNextImages(lecture, currentTime, whiteboardImages, 5)
+            full: getNextImages(lecture, currentTime, whiteboardImages, true)[0].src,
+            thumbs: getNextImages(lecture, currentTime, whiteboardImages, false, 5)
           }
         }
       }
@@ -101,20 +100,24 @@ export function updateVideoTimeStampAction(lecture, newTime) {
  * @param {Object} lecture - lecture data
  * @param {Number} currentTime - current timestamp of video
  * @param {Array<String>} images - sorted list of image names
+ * @param {Boolean} isFullImage - is this a full image or a whiteboard
  * @param {Number} [count = 1] - number of images to return
  * @return {Array<String>} list of image routes strings
  */
-function getNextImages(lecture, currentTime, images, count = 1) {
+function getNextImages(lecture, currentTime, images, isFullImage, count = 1) {
   const nextImageIndex = binarySearch(images, currentTime, (fileName, time) => {
     return new ImageFile(fileName).timestamp < time;
   });
   const nextImages = images.slice(nextImageIndex, nextImageIndex + count);
-
+  let imageSize = isFullImage ? "full" : "thumb";
   return nextImages.map(imageName => {
     const image = new ImageFile(imageName);
-    if (image.timestamp > currentTime) {
+    if (count === 1 && image.timestamp > currentTime) {
       return "";
     }
-    return `/media/${lecture.semester}/${lecture.courseId}/${lecture.lectureId}/images/${image.name}`;
+    return {
+      src: `/media/${lecture.semester}/${lecture.courseId}/${lecture.lectureId}/images/${image.type}/${imageSize}/${image.name}`,
+      timestamp: image.timestamp - Number(lecture.timestamp)
+    };
   });
 }

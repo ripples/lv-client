@@ -22,7 +22,7 @@ class Lecture extends React.Component {
   }
 
   render() {
-    if (!this.props.course) {
+    if (!this.props.course.lectures) {
       return (<div></div>);
     }
     return (
@@ -59,7 +59,7 @@ const mapStateToProps = (state, ownProps) => {
   const params = ownProps.params;
   const course = state.courses[params.courseId];
   if (!course || Object.keys(course).length === 0) {
-    return {course: null};
+    return {course: {}, lecture: {}};
   }
 
   return {

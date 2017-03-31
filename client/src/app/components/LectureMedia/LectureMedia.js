@@ -16,6 +16,22 @@ class LectureMedia extends React.Component {
 
   render() {
     const lecture = this.props.lecture;
+    let computerSrc = "/images/no-image-found.png";
+    let thumbSrc = Array(5).fill({
+      src: "/images/no-image-found-thumb.png",
+      timestamp: 0
+    });
+    if (lecture.currentImages) {
+      if (lecture.currentImages.computer.full) {
+        computerSrc = BASE_URL + lecture.currentImages.computer.full;
+      }
+      thumbSrc = lecture.currentImages.computer.thumbs.map(thumb => {
+        return {
+          src: BASE_URL + thumb.src,
+          timestamp: thumb.timestamp
+        };
+      });
+    }
     return (
       <div className="lecture-media">
         <div className="container">
@@ -28,11 +44,8 @@ class LectureMedia extends React.Component {
         </div>
         <div className="container">
           <div className="video-wrapper">
-            <ImageView imageSrc={(lecture.currentImages && lecture.currentImages.computer.full) ?
-                BASE_URL + lecture.currentImages.computer.full : "/images/no-image-found.png"
-              }
-            />
-            <ThumbnailControl thumbnails={lecture.currentImages.computer.thumbs}/>
+            <ImageView imageSrc={ computerSrc } />
+            <ThumbnailControl thumbnails={ thumbSrc }/>
           </div>
         </div>
       </div>

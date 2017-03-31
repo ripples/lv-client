@@ -41,6 +41,5 @@ export class ImageFile {
     this.type = imageData[0];
     this.cameraNumber = Number(imageData[1]);
     this.timestamp = Number(imageData[2]);
-    this.size = imageData.length > 3 ? "thumb" : "full";
   }
 }
