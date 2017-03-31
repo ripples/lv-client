@@ -4,7 +4,7 @@ import LectureItem from "../../components/LectureItem/LectureItem";
 import Colors from "../../constants/ColorConstants";
 
 /**
- * Thumbnail of course item
+ * Represents a course as a row of lectures
  */
 class CourseItem extends React.Component {
   /**
@@ -15,7 +15,7 @@ class CourseItem extends React.Component {
     super(props);
     /**
      * @type {object}
-     * @property {integer} number of lectures
+     * @property {integer} numberOfLectures The number of lectures in a course
      */
     this.state = {
       numberOfLectures: Math.floor((window.innerWidth - 256) / 264) - 1
