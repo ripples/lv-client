@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import LectureMedia from "../../components/LectureMedia/LectureMedia";
 import {getLectureImagesAction, initImageAction, updateVideoTimeStampAction} from "../../libs/actions";
 import {lectureNameToDateString} from "../../utils/media";
+import {UserTypesEnum} from "../../constants/StateConstants";
 
 class Lecture extends React.Component {
 
@@ -57,7 +58,7 @@ Lecture.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   const params = ownProps.params;
-  const course = state.courses[params.courseId];
+  const course = state.courses[UserTypesEnum.STUDENT][params.courseId];
   if (!course || Object.keys(course).length === 0) {
     return {course: {}, lecture: {}};
   }

@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import CourseList from "../../components/CourseList/CourseList";
+import {UserTypesEnum} from "../../constants/StateConstants";
 
 class Courses extends React.Component {
 
@@ -20,7 +21,7 @@ Courses.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    courses: state.courses
+    courses: state.courses[UserTypesEnum.STUDENT] || {}
   };
 };
 

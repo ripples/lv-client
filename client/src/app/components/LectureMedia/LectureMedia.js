@@ -21,7 +21,7 @@ class LectureMedia extends React.Component {
       src: "/images/no-image-found-thumb.png",
       timestamp: 0
     });
-    if (lecture.currentImages) {
+    if (lecture.currentImages && Object.keys(lecture.currentImages).length > 0) {
       if (lecture.currentImages.computer.full) {
         computerSrc = BASE_URL + lecture.currentImages.computer.full;
       }

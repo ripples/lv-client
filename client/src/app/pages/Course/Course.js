@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import LectureList from "../../components/LectureList/LectureList";
+import {UserTypesEnum} from "../../constants/StateConstants";
 
 class Course extends React.Component {
 
@@ -20,8 +21,9 @@ Course.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  const course = state.courses[UserTypesEnum.STUDENT][ownProps.params.courseId];
   return {
-    course: (typeof state.courses[ownProps.params.courseId] === "undefined") ? {title: " : "} : state.courses[ownProps.params.courseId]
+    course: course || {title: " : "}
   };
 };
 

@@ -116,7 +116,7 @@ function getNextImages(lecture, currentTime, images, isFullImage, count = 1) {
       return "";
     }
     return {
-      src: `/media/${lecture.semester}/${lecture.courseId}/${lecture.lectureId}/images/${image.type}/${imageSize}/${image.name}`,
+      src: `/media/${lecture.semester}/${lecture.courseId}/${lecture.lectureId}/images/${imageSize}/${image.name}`,
       timestamp: image.timestamp - Number(lecture.timestamp)
     };
   });
