@@ -1,5 +1,8 @@
+"use strict";
+
 import {getCourses} from "./courses";
 import {getImages} from "./media";
+import {ImageFile, binarySearch} from "../utils/media";
 
 /**
  * Action to handle getting user's courses from the DB
@@ -56,37 +59,11 @@ export function initImageAction(lecture) {
   };
 }
 
-function binarySearch(arr, val, compare) {
-  let mid;
-  let low = 0;
-  let high = arr.length - 1;
-  while (high - low > 1) {
-    mid = Math.floor((high + low) / 2);
-    if (compare(arr[mid], val)) {
-      low = mid;
-    } else {
-      high = mid;
-    }
-  }
-  return arr[low];
-}
-
-function getNextImage(lecture, newTimeStamp, images, type) {
-  const currentTime = Number(lecture.timestamp) + Number(newTimeStamp);
-  let nextImage = binarySearch(images, currentTime, (fileName, time) => {
-    return Number(fileName.split("-")[2]) < time;
-  });
-  if (Number(nextImage.split("-")[2]) > currentTime) {
-    return "";
-  }
-  return "/media/" + lecture.semester + "/" + lecture.courseId + "/" + lecture.lectureId + "/images/" + type + "/full/" + nextImage;
-}
-
 /**
  * Action to handle getting lecture image names
  * TODO error handling.... .catch( error => {})
  * @param {object} lecture - lecture object with info
- * @param {number} newTime - new TimeStamp time
+ * @param {String | Number} newTime - new TimeStamp time
  * @return {function} to pass dispatch to
  */
 export function updateVideoTimeStampAction(lecture, newTime) {
@@ -95,15 +72,52 @@ export function updateVideoTimeStampAction(lecture, newTime) {
       dispatch(getLectureImagesAction(lecture));
       return;
     }
+
+    const computerImages = lecture.images.computer[0];
+    const whiteboardImages = lecture.images.whiteboard[0];
+    const currentTime = Number(lecture.timestamp) + Number(newTime);
     dispatch({
       type: "UPDATE_CURRENT_IMAGES",
       payload: {
         lecture,
         newImages: {
-          computer: getNextImage(lecture, newTime, lecture.images.computer[0], "computer"),
-          whiteboard: getNextImage(lecture, newTime, lecture.images.whiteboard[0], "whiteboard")
+          computer: {
+            full: getNextImages(lecture, currentTime, computerImages, true)[0].src,
+            thumbs: getNextImages(lecture, currentTime, computerImages, false, 5)
+          },
+          whiteboard: {
+            full: getNextImages(lecture, currentTime, whiteboardImages, true)[0].src,
+            thumbs: getNextImages(lecture, currentTime, whiteboardImages, false, 5)
+          }
         }
       }
     });
   };
+}
+
+/**
+ * Gets the next images based on the current timestamp
+ * @param {Object} lecture - lecture data
+ * @param {Number} currentTime - current timestamp of video
+ * @param {Array<String>} images - sorted list of image names
+ * @param {Boolean} isFullImage - is this a full image or a whiteboard
+ * @param {Number} [count = 1] - number of images to return
+ * @return {Array<String>} list of image routes strings
+ */
+function getNextImages(lecture, currentTime, images, isFullImage, count = 1) {
+  const nextImageIndex = binarySearch(images, currentTime, (fileName, time) => {
+    return new ImageFile(fileName).timestamp < time;
+  });
+  const nextImages = images.slice(nextImageIndex, nextImageIndex + count);
+  let imageSize = isFullImage ? "full" : "thumb";
+  return nextImages.map(imageName => {
+    const image = new ImageFile(imageName);
+    if (count === 1 && image.timestamp > currentTime) {
+      return "";
+    }
+    return {
+      src: `/media/${lecture.semester}/${lecture.courseId}/${lecture.lectureId}/images/${image.type}/${imageSize}/${image.name}`,
+      timestamp: image.timestamp - Number(lecture.timestamp)
+    };
+  });
 }

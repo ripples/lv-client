@@ -13,7 +13,7 @@ import appReducer from "./reducers/app";
 // utilities
 import {logout, requireAuth} from "./libs/auth";
 import {configureAxios} from "./libs/api";
-import {lectureNameToDate} from "./utils/react";
+import {lectureNameToDateString} from "./utils/media";
 
 // core App component
 import App from "./pages/App/App";
@@ -39,7 +39,6 @@ const store = createStore(
   composeEnhancers(middleware)
 );
 
-/* note: UI component will be used to develop/test our base styles, and will be removed before production */
 render((
   <Provider store={store}>
     <Router history={browserHistory}>
@@ -49,7 +48,7 @@ render((
           <IndexRoute component={Courses}/>
           <Route path=":courseId" name="Course">
             <IndexRoute component={Course}/>
-            <Route path="lecture/:lectureId" name="Lecture" prettifyParam={lectureNameToDate}>
+            <Route path="lecture/:lectureId" name="Lecture" prettifyParam={lectureNameToDateString}>
               <IndexRoute component={Lecture}/>
             </Route>
           </Route>

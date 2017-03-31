@@ -1,5 +1,7 @@
 import React from "react";
 import {getCourses} from "../../libs/courses.js";
+import moment from "moment";
+import "moment-duration-format";
 
 class InputThumbnail extends React.Component {
 
@@ -19,17 +21,17 @@ class InputThumbnail extends React.Component {
     return (
       <div className="thumbnail">
         <div className="thumb">
-          <img src={this.props.image} onClick={e => this.handleClickEvent(e)}/>
+          <img src={this.props.src} onClick={e => this.handleClickEvent(e)}/>
         </div>
-        {this.props.time}
+        { moment.duration(this.props.timestamp * 1000).format("hh:mm:ss") }
       </div>
     );
   }
 }
 
 InputThumbnail.propTypes = {
-  image: React.PropTypes.string,
-  time: React.PropTypes.string
+  src: React.PropTypes.string,
+  timestamp: React.PropTypes.number
 };
 
 export default InputThumbnail;

@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import LectureMedia from "../../components/LectureMedia/LectureMedia";
 import {getLectureImagesAction, initImageAction, updateVideoTimeStampAction} from "../../libs/actions";
-import {lectureNameToDate} from "../../utils/react";
+import {lectureNameToDateString} from "../../utils/media";
 
 class Lecture extends React.Component {
 
@@ -22,7 +22,7 @@ class Lecture extends React.Component {
   }
 
   render() {
-    if (this.props.course.empty) {
+    if (!this.props.course.lectures) {
       return (<div></div>);
     }
     return (
@@ -32,7 +32,7 @@ class Lecture extends React.Component {
             {this.props.course.title}
           </h1>
           <h3>
-            {lectureNameToDate(this.props.lecture.lectureId)}
+            {lectureNameToDateString(this.props.lecture.lectureId)}
           </h3>
         </div>
         <div className="lecture-body">
@@ -55,22 +55,22 @@ Lecture.propTypes = {
   updateVideoTimeStamp: React.PropTypes.func.isRequired
 };
 
-// TODO figure out a way to avoid courses ever being empty
 const mapStateToProps = (state, ownProps) => {
-  let course = state.courses[ownProps.params.courseId];
-  if (!course) {
-    return {course: {empty: true}, lecture: {empty: true}};
+  const params = ownProps.params;
+  const course = state.courses[params.courseId];
+  if (!course || Object.keys(course).length === 0) {
+    return {course: {}, lecture: {}};
   }
-  let lecture = {
-    ...course.lectures[ownProps.params.lectureId],
-    title: ownProps.params.lectureId,
-    lectureId: ownProps.params.lectureId,
-    courseId: ownProps.params.courseId,
-    semester: "F16"
-  };
+
   return {
     course,
-    lecture
+    lecture: {
+      ...course.lectures[params.lectureId],
+      title: params.lectureId,
+      lectureId: params.lectureId,
+      courseId: params.courseId,
+      semester: "F16"
+    }
   };
 };
 
