@@ -9,7 +9,7 @@ import Colors from "../../constants/ColorConstants";
 class CourseItem extends React.Component {
   /**
    * constructor
-   * @param {object} props
+   * @param {object} props props passed down from page
    */
   constructor(props) {
     super(props);
