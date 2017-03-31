@@ -1,33 +1,38 @@
 import React from "react";
-import VideoView from "components/VideoView/VideoView";
-import InputView from "components/InputView/InputView";
-import ThumbnailControl from "components/ThumbnailControl/ThumbnailControl";
+import VideoView from "../../components/VideoView/VideoView";
+import ImageView from "../ImageView/ImageView";
+import ThumbnailControl from "../../components/ThumbnailControl/ThumbnailControl";
 import {BASE_URL} from "../../constants/ApiConstants";
 
 class LectureMedia extends React.Component {
+  constructor(props) {
+    super(props);
+    this.updateVideoTimeStamp = this.updateVideoTimeStamp.bind(this);
+  }
+
+  updateVideoTimeStamp(newTimeStamp) {
+    this.props.updateVideoTimeStamp(this.props.lecture, newTimeStamp);
+  }
 
   render() {
-    let updateVideoTimeStamp = newTimeStamp => {
-      this.props.updateVideoTimeStamp(this.props.lecture, newTimeStamp);
-    };
-    let lecture = this.props.lecture;
+    const lecture = this.props.lecture;
     return (
       <div className="lecture-media">
         <div className="container">
           <div className="video-wrapper">
             <VideoView
               videoSrc={`${BASE_URL}/media/${lecture.semester}/${lecture.courseId}/${lecture.lectureId}/video`}
-              updateVideoTimeStamp={updateVideoTimeStamp}
+              updateVideoTimeStamp={this.updateVideoTimeStamp}
             />
           </div>
         </div>
         <div className="container">
           <div className="video-wrapper">
-            <InputView imageSrc={(lecture.currentImages && lecture.currentImages.computer) ?
-                BASE_URL + lecture.currentImages.computer : "/images/no-image-found.png"
+            <ImageView imageSrc={(lecture.currentImages && lecture.currentImages.computer.full) ?
+                BASE_URL + lecture.currentImages.computer.full : "/images/no-image-found.png"
               }
             />
-            <ThumbnailControl/>
+            <ThumbnailControl thumbnails={lecture.currentImages.computer.thumbs}/>
           </div>
         </div>
       </div>

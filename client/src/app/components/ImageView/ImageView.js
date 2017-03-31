@@ -1,6 +1,6 @@
 import React from "react";
 
-class InputView extends React.Component {
+class ImageView extends React.Component {
 
   render() {
     return (
@@ -19,8 +19,8 @@ class InputView extends React.Component {
   }
 }
 
-InputView.propTypes = {
+ImageView.propTypes = {
   imageSrc: React.PropTypes.string
 };
 
-export default InputView;
+export default ImageView;
