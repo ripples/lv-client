@@ -42,18 +42,39 @@ export function getLectureImagesAction(lecture) {
 }
 
 /**
- * Action to handle initializing ivisible mages by clearing them
+ * Initializes store for new lecture
+ * Clears lingering images
+ * Resets video time
  * TODO error handling.... .catch( error => {})
  * @param {object} lecture - which lecture to init the image for
  * @return {function} Function to dispatch the action to the reducer
  */
-export function initImageAction(lecture) {
+export function initMediaAction(lecture) {
   return function(dispatch) {
     dispatch({
       type: "UPDATE_CURRENT_IMAGES",
       payload: {
         lecture,
         newImages: {}
+      }
+    });
+    dispatch({
+      type: "CLEAR_VIDEO_TIME"
+    });
+  };
+}
+
+/**
+ * Updates the current video time
+ * @param {String | Number} newTime - new TimeStamp time
+ * @return {Function} to pass dispatch to
+ */
+export function updateVideoTimeAction(newTime) {
+  return function(dispatch) {
+    dispatch({
+      type: "UPDATE_VIDEO_TIME",
+      payload: {
+        newTime
       }
     });
   };
@@ -66,7 +87,7 @@ export function initImageAction(lecture) {
  * @param {String | Number} newTime - new TimeStamp time
  * @return {function} to pass dispatch to
  */
-export function updateVideoTimeStampAction(lecture, newTime) {
+export function getNextImagesNamesAction(lecture, newTime) {
   return function(dispatch) {
     if (!lecture.images) {
       dispatch(getLectureImagesAction(lecture));

@@ -1,5 +1,4 @@
 import React from "react";
-import {getCourses} from "../../libs/courses.js";
 import moment from "moment";
 import "moment-duration-format";
 
@@ -7,16 +6,10 @@ class InputThumbnail extends React.Component {
 
   handleClickEvent(clickEvent) {
     clickEvent.preventDefault();
-    // just getting testing ready
-    getCourses().then(
-      response => {
-        console.log(response.data);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    console.log("clicked");
+    this.props.onThumbnailClicked(this.props.timestamp);
   }
+
   render() {
     return (
       <div className="thumbnail">
@@ -31,7 +24,8 @@ class InputThumbnail extends React.Component {
 
 InputThumbnail.propTypes = {
   src: React.PropTypes.string,
-  timestamp: React.PropTypes.number
+  timestamp: React.PropTypes.number,
+  onThumbnailClicked: React.PropTypes.func.isRequired
 };
 
 export default InputThumbnail;

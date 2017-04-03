@@ -1,5 +1,9 @@
+"use strict";
+
 import React from "react";
 import InputThumbnail from "../../components/InputThumbnail/InputThumbnail";
+import {updateVideoTimeAction} from "../../libs/actions";
+import {connect} from "react-redux";
 
 class ThumbnailControl extends React.Component {
   constructor(props) {
@@ -20,7 +24,13 @@ class ThumbnailControl extends React.Component {
         </div>
         {
           this.props.thumbnails.map((thumbnail, i) => {
-            return <InputThumbnail key={i} src={thumbnail.src} timestamp={thumbnail.timestamp}/>;
+            return (
+              <InputThumbnail
+                key={`${thumbnail.timestamp}${i}`}
+                src={thumbnail.src}
+                timestamp={thumbnail.timestamp}
+                onThumbnailClicked={this.props.updateVideoTime}
+              />);
           })
         }
         <div className="arrow" onClick={this.handleArrowClick}>
@@ -35,7 +45,14 @@ ThumbnailControl.propTypes = {
   thumbnails: React.PropTypes.arrayOf(React.PropTypes.shape({
     src: React.PropTypes.string,
     timestamp: React.PropTypes.number
-  }))
+  })),
+  updateVideoTime: React.PropTypes.func.isRequired
 };
 
-export default ThumbnailControl;
+function mapDispatchToProps(dispatch) {
+  return {
+    updateVideoTime: newTime => dispatch(updateVideoTimeAction(newTime))
+  };
+}
+
+export default connect(null, mapDispatchToProps)(ThumbnailControl);

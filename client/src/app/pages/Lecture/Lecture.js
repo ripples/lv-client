@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import LectureMedia from "../../components/LectureMedia/LectureMedia";
-import {getLectureImagesAction, initImageAction, updateVideoTimeStampAction} from "../../libs/actions";
+import {getLectureImagesAction, initMediaAction, getNextImagesNamesAction} from "../../libs/actions";
 import {lectureNameToDateString} from "../../utils/media";
 
 class Lecture extends React.Component {
@@ -38,7 +38,7 @@ class Lecture extends React.Component {
         <div className="lecture-body">
           <LectureMedia
             lecture={this.props.lecture}
-            updateVideoTimeStamp={this.props.updateVideoTimeStamp}
+            getNextImageNames={this.props.getNextImageNames}
           />
         </div>
       </div>
@@ -52,7 +52,7 @@ Lecture.propTypes = {
   course: React.PropTypes.object.isRequired,
   getLectureImages: React.PropTypes.func.isRequired,
   initImage: React.PropTypes.func.isRequired,
-  updateVideoTimeStamp: React.PropTypes.func.isRequired
+  getNextImageNames: React.PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -76,9 +76,9 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    initImage: lecture => dispatch(initImageAction(lecture)),
+    initImage: lecture => dispatch(initMediaAction(lecture)),
     getLectureImages: lecture => dispatch(getLectureImagesAction(lecture)),
-    updateVideoTimeStamp: (lecture, newTime) => dispatch(updateVideoTimeStampAction(lecture, newTime))
+    getNextImageNames: (lecture, newTime) => dispatch(getNextImagesNamesAction(lecture, newTime))
   };
 };
 

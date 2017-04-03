@@ -7,11 +7,11 @@ import {BASE_URL} from "../../constants/ApiConstants";
 class LectureMedia extends React.Component {
   constructor(props) {
     super(props);
-    this.updateVideoTimeStamp = this.updateVideoTimeStamp.bind(this);
+    this.onVideoTimeUpdate = this.onVideoTimeUpdate.bind(this);
   }
 
-  updateVideoTimeStamp(newTimeStamp) {
-    this.props.updateVideoTimeStamp(this.props.lecture, newTimeStamp);
+  onVideoTimeUpdate(newTimeStamp) {
+    this.props.getNextImageNames(this.props.lecture, newTimeStamp);
   }
 
   render() {
@@ -38,14 +38,16 @@ class LectureMedia extends React.Component {
           <div className="video-wrapper">
             <VideoView
               videoSrc={`${BASE_URL}/media/${lecture.semester}/${lecture.courseId}/${lecture.lectureId}/video`}
-              updateVideoTimeStamp={this.updateVideoTimeStamp}
+              onVideoTimeUpdate={this.onVideoTimeUpdate}
             />
           </div>
         </div>
         <div className="container">
           <div className="video-wrapper">
             <ImageView imageSrc={ computerSrc } />
-            <ThumbnailControl thumbnails={ thumbSrc }/>
+            <ThumbnailControl
+              thumbnails={ thumbSrc }
+            />
           </div>
         </div>
       </div>
@@ -55,7 +57,7 @@ class LectureMedia extends React.Component {
 
 LectureMedia.propTypes = {
   lecture: React.PropTypes.object.isRequired,
-  updateVideoTimeStamp: React.PropTypes.func.isRequired
+  getNextImageNames: React.PropTypes.func.isRequired
 };
 
 export default LectureMedia;
