@@ -2,11 +2,11 @@ import React from "react";
 import {connect} from "react-redux";
 import Breadcrumbs from "react-breadcrumbs";
 import Header from "../../components/Header/header";
-import {getCoursesAction} from "./../../libs/actions";
+import {getCourses} from "./../../actions/courses";
 
 class App extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getCourses();
   }
 
@@ -41,7 +41,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCourses: () => dispatch(getCoursesAction())
+    getCourses: () => dispatch(getCourses())
   };
 };
 

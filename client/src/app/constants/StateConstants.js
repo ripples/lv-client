@@ -8,5 +8,9 @@
 export const DefaultState = {
   user: {},
   courses: {},
-  media: {}
+  media: {
+    imageNames: null,
+    newVideoTime: null,
+    currentImages: null
+  }
 };

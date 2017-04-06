@@ -11,42 +11,34 @@ class LectureMedia extends React.Component {
   }
 
   onVideoTimeUpdate(newTimeStamp) {
-    this.props.getNextImageNames(this.props.lecture, newTimeStamp);
+    this.props.getNextImageNames(newTimeStamp);
   }
 
   render() {
     const lecture = this.props.lecture;
-    let computerSrc = "/images/no-image-found.png";
-    let thumbSrc = Array(5).fill({
-      src: "/images/no-image-found-thumb.png",
-      timestamp: 0
-    });
-    if (lecture.currentImages) {
-      if (lecture.currentImages.computer.full) {
-        computerSrc = BASE_URL + lecture.currentImages.computer.full;
-      }
-      thumbSrc = lecture.currentImages.computer.thumbs.map(thumb => {
-        return {
-          src: BASE_URL + thumb.src,
-          timestamp: thumb.timestamp
-        };
-      });
-    }
+    const media = this.props.media;
+    const semester = this.props.semester;
+    const courseId = this.props.courseId;
+
+    const fullImage = media.currentImages.computer.full;
+    const thumbnails = media.currentImages.computer.thumbs;
     return (
       <div className="lecture-media">
         <div className="container">
           <div className="video-wrapper">
             <VideoView
-              videoSrc={`${BASE_URL}/media/${lecture.semester}/${lecture.courseId}/${lecture.lectureId}/video`}
+              videoSrc={`${BASE_URL}/media/${semester}/${courseId}/${lecture.id}/video`}
               onVideoTimeUpdate={this.onVideoTimeUpdate}
             />
           </div>
         </div>
         <div className="container">
           <div className="video-wrapper">
-            <ImageView imageSrc={ computerSrc } />
+            <ImageView
+              src={fullImage.src}
+            />
             <ThumbnailControl
-              thumbnails={ thumbSrc }
+              thumbnails={thumbnails}
             />
           </div>
         </div>
@@ -57,6 +49,9 @@ class LectureMedia extends React.Component {
 
 LectureMedia.propTypes = {
   lecture: React.PropTypes.object.isRequired,
+  media: React.PropTypes.object.isRequired,
+  semester: React.PropTypes.string.isRequired,
+  courseId: React.PropTypes.string.isRequired,
   getNextImageNames: React.PropTypes.func.isRequired
 };
 

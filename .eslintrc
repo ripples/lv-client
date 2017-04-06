@@ -21,8 +21,8 @@
   "plugins": [
     "react"
   ],
-  "parser-options": {
-    "ecmaVersion": 6,
+  "parserOptions": {
+    "ecmaVersion": 8,
     "ecmaFeatures": {
       "jsx": true,
       "spread": true

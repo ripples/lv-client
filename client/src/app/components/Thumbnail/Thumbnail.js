@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import "moment-duration-format";
 
-class InputThumbnail extends React.Component {
+class Thumbnail extends React.Component {
 
   handleClickEvent(clickEvent) {
     clickEvent.preventDefault();
@@ -16,16 +16,16 @@ class InputThumbnail extends React.Component {
         <div className="thumb">
           <img src={this.props.src} onClick={e => this.handleClickEvent(e)}/>
         </div>
-        { moment.duration(this.props.timestamp * 1000).format("hh:mm:ss") }
+        { moment.duration(this.props.timestamp * 1000).format("h:mm:ss", {trim: false}) }
       </div>
     );
   }
 }
 
-InputThumbnail.propTypes = {
+Thumbnail.propTypes = {
   src: React.PropTypes.string,
   timestamp: React.PropTypes.number,
   onThumbnailClicked: React.PropTypes.func.isRequired
 };
 
-export default InputThumbnail;
+export default Thumbnail;

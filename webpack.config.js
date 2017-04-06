@@ -18,7 +18,7 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: "babel",
         query: {
-          presets: ["es2015", "react"],
+          presets: ["latest", "react"],
           plugins: [
             ["module-alias", [
               {src: "./client/src/app/components", expose: "components"},
