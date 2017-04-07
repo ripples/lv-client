@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "extends": [
     "google",
     "plugin:react/recommended"
@@ -9,14 +10,16 @@
     "URL": true
   },
   "rules": {
-    "quotes": 1,
+    "quotes": ["warn", "double"],
     "max-len": [1, 150],
     "operator-linebreak": [1, "before"],
     "no-loop-func": [0],
     "no-debugger": 1,
     "no-return-assign": "off",
     "linebreak-style": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "comma-dangle": 0,
+    "arrow-parens": 0
   },
   "plugins": [
     "react"
@@ -25,6 +28,7 @@
     "ecmaVersion": 6,
     "ecmaFeatures": {
       "jsx": true,
+      "modules": true,
       "spread": true
     }
   }

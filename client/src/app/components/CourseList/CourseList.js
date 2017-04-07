@@ -1,7 +1,15 @@
 import React from "react";
 import CourseItem from "../../components/CourseItem/CourseItem";
 
+/**
+ * A List of courses that contain CourseItems
+ * @type {React.Component}
+ */
 class CourseList extends React.Component {
+  /**
+   * render
+   * @return {ReactElement} markup
+   */
   render() {
     return (
         <ul className="course-list">
@@ -17,10 +25,16 @@ class CourseList extends React.Component {
         </ul>
     );
   }
-}
 
-CourseList.propTypes = {
-  courses: React.PropTypes.object.isRequired
-};
+  /**
+   * propTypes Declaration
+   * @property {object} courses courses to be displayed
+   */
+  static get propTypes() {
+    return {
+      courses: React.PropTypes.object.isRequired
+    };
+  }
+}
 
 export default CourseList;

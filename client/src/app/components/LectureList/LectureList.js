@@ -2,7 +2,15 @@ import React from "react";
 import {Link} from "react-router";
 import LectureItem from "components/LectureItem/LectureItem";
 
+/**
+ * List of lectures for a course
+ */
 class LectureList extends React.Component {
+
+  /**
+   * render
+   * @return {ReactElement} markup
+   */
   render() {
     const courseId = this.props.params.courseId;
     return (
@@ -35,11 +43,18 @@ class LectureList extends React.Component {
       </div>
     );
   }
-}
 
-LectureList.propTypes = {
-  course: React.PropTypes.object.isRequired,
-  params: React.PropTypes.object
-};
+  /**
+   * propTypes Declaration
+   * @property {object} course The given course
+   * @property {object} [params] Optional parameters
+   */
+  static get propTypes() {
+    return {
+      course: React.PropTypes.object.isRequired,
+      params: React.PropTypes.object
+    };
+  }
+}
 
 export default LectureList;

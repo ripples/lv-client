@@ -1,6 +1,13 @@
 import React from "react";
 
+/**
+ * Institution Logo
+ */
 class Logo extends React.Component {
+  /**
+   * render
+   * @return {ReactElement} markup
+   */
   render() {
     return (
       <span className="logo" style={{fontFamily: "'Lato', sans-serif", fontSize: this.props.size || "16px"}}>
@@ -8,10 +15,16 @@ class Logo extends React.Component {
       </span>
     );
   }
-}
 
-Logo.propTypes = {
-  size: React.PropTypes.string
-};
+  /**
+   * propTypes Declaration
+   * @property {string} size Size of the logo
+   */
+  static get propTypes() {
+    return {
+      size: React.PropTypes.string
+    };
+  }
+}
 
 export default Logo;

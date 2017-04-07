@@ -1,6 +1,13 @@
 import React, {Component} from "react";
 
+/**
+ * Used for Errors
+ */
 class FormError extends Component {
+  /**
+   * render
+   * @return {ReactElement} markup
+   */
   render() {
     return (
       <div className="form-error">
@@ -8,10 +15,16 @@ class FormError extends Component {
       </div>
     );
   }
-}
 
-FormError.propTypes = {
-  error: React.PropTypes.string.isRequired
-};
+  /**
+   * propTypes Declaration
+   * @property {string} error The error passed down
+   */
+  static get propTypes() {
+    return {
+      error: React.PropTypes.string.isRequired
+    };
+  }
+}
 
 export default FormError;

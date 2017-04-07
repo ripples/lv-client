@@ -9,7 +9,7 @@ import Colors from "../../constants/ColorConstants";
 class CourseItem extends React.Component {
   /**
    * constructor
-   * @param {object} props
+   * @param {object} props properties passed down
    */
   constructor(props) {
     super(props);
@@ -23,24 +23,40 @@ class CourseItem extends React.Component {
     this.updateNumberOfLectures = this.updateNumberOfLectures.bind(this);
   }
 
+  /**
+   * React method, Allows for lectures to be resized dynamically
+   */
   componentDidMount() {
     window.addEventListener("resize", this.updateNumberOfLectures);
   }
 
+  /**
+   * React method, Allows for lectures to be resized dynamically
+   */
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateNumberOfLectures);
   }
 
+  /**
+   * Sends the user to the course page
+   */
   toCoursePage() {
     this.context.router.push(`/courses/${this.props.course.id}`);
   }
 
+  /**
+   * Changes the number of lectures on the screen.
+   */
   updateNumberOfLectures() {
     this.setState({
       numberOfLectures: Math.floor((window.innerWidth - 256) / 264) - 1
     });
   }
 
+  /**
+   * render
+   * @return {ReactElement} markup
+   */
   render() {
     const colorList = [Colors.BLUE, Colors.PURPLE, Colors.YELLOW, Colors.GREEN];
     const lectures = Object.keys(this.props.lectures);
@@ -78,15 +94,28 @@ class CourseItem extends React.Component {
       </div>
     );
   }
+
+  /**
+   * propTypes Declaration
+   * @property {object} course The given course
+   * @property {object} lectures This is a lecture
+   */
+  static get propTypes() {
+    return {
+      course: React.PropTypes.object.isRequired, // TODO: define shape
+      lectures: React.PropTypes.object.isRequired
+    };
+  }
+
+  /**
+   * contextTypes Declaration
+   * @property {object} router Reference to React Router
+   */
+  static get contextTypes() {
+    return {
+      router: React.PropTypes.object.isRequired
+    };
+  }
 }
-
-CourseItem.propTypes = {
-  course: React.PropTypes.object.isRequired, // TODO: define shape
-  lectures: React.PropTypes.object.isRequired
-};
-
-CourseItem.contextTypes = {
-  router: React.PropTypes.object.isRequired
-};
 
 export default CourseItem;
