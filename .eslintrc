@@ -20,14 +20,7 @@
     "no-case-declarations": "off",
     "comma-dangle": 0,
     "arrow-parens": 0,
-    "require-jsdoc": ["warn", {
-        "require": {
-            "FunctionDeclaration": true,
-            "MethodDefinition": true,
-            "ClassDeclaration": true,
-            "ArrowFunctionExpression": true
-        }
-    }]
+    "require-jsdoc": 1
   },
   "plugins": [
     "react"
