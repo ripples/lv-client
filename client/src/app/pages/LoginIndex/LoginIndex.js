@@ -6,6 +6,9 @@ import {login} from "../../libs/auth";
 import FormError from "../../components/FormError/formError";
 import {handleChange} from "../../utils/react";
 
+/**
+ * Login Form
+ */
 class LoginForm extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +32,10 @@ class LoginForm extends Component {
     });
   }
 
+  /**
+   * render
+   * @return {ReactElement} markup
+   */
   render() {
     const loginError = this.state.error ? <FormError error={this.state.error}/> : null;
     return (

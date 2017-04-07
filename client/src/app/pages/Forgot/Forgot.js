@@ -7,6 +7,10 @@ import {requestResetEmail} from "../../libs/auth";
 import FormError from "../../components/FormError/formError";
 import {handleChange} from "../../utils/react";
 
+/**
+ * TODO more documentation
+ * Form for if student forgets password
+ */
 class ForgotForm extends Component {
   constructor(props) {
     super(props);
@@ -68,6 +72,10 @@ class ForgotForm extends Component {
     );
   }
 
+  /**
+   * render
+   * @return {ReactElement} markup
+   */
   render() {
     const error = this.buildFormErrorIfNecessary();
     const form = this.buildSuccessOrResetForm(error);

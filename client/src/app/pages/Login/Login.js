@@ -6,7 +6,14 @@ import {isLoggedIn} from "../../libs/auth";
 import Header from "../../components/Header/header";
 import Logo from "../../components/Logo/logo";
 
+/**
+ * Login Page
+ */
 class Login extends Component {
+  /**
+   * constructor
+   * @param {object} props properties passed down
+   */
   constructor(props) {
     super(props);
     this.handleAuthed = this.handleAuthed.bind(this);
@@ -22,6 +29,10 @@ class Login extends Component {
     }
   }
 
+  /**
+   * render
+   * @return {ReactElement} markup
+   */
   render() {
     return (
       <div className="login-page">

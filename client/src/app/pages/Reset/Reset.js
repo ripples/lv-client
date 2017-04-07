@@ -6,6 +6,9 @@ import {resetPassword} from "../../libs/auth";
 import FormError from "../../components/FormError/formError";
 import {handleChange} from "../../utils/react";
 
+/**
+ * Form to reset password
+ */
 class Reset extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +34,10 @@ class Reset extends Component {
     });
   }
 
+  /**
+   * render
+   * @return {ReactElement} markup
+   */
   render() {
     const error = this.state.error ? <FormError error={this.state.error}/> : null;
 
