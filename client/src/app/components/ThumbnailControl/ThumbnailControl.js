@@ -1,24 +1,10 @@
 import React from "react";
-import InputThumbnail from "components/InputThumbnail/InputThumbnail";
-
-const placeholderData = () => {
-  return {
-    image: "https://i.imgur.com/4mXH4XM.jpg",
-    time: "00:0"
-  };
-};
+import InputThumbnail from "../../components/InputThumbnail/InputThumbnail";
 
 class ThumbnailControl extends React.Component {
   constructor(props) {
     super(props);
-    let x = [];
-    for (let c = 0; c < 5; c++) {
-      x[c] = placeholderData();
-      x[c].time += c;
-    }
-    this.state = {
-      data: x
-    };
+    this.handleArrowClick = this.handleArrowClick.bind(this);
   }
 
   handleArrowClick(clickEvent) {
@@ -29,17 +15,15 @@ class ThumbnailControl extends React.Component {
   render() {
     return (
       <div className="thumbnail-control">
-        <div className="arrow" onClick={e => this.handleArrowClick(e)}>
+        <div className="arrow" onClick={this.handleArrowClick}>
           &lt;
         </div>
         {
-          this.state.data.map(
-            (e, i) => {
-              return <InputThumbnail key={i} image={e.image} time={e.time}/>;
-            }
-          )
+          this.props.thumbnails.map((thumbnail, i) => {
+            return <InputThumbnail key={i} src={thumbnail.src} timestamp={thumbnail.timestamp}/>;
+          })
         }
-        <div className="arrow" onClick={e => this.handleArrowClick(e)}>
+        <div className="arrow" onClick={this.handleArrowClick}>
           &gt;
         </div>
     </div>
@@ -47,6 +31,11 @@ class ThumbnailControl extends React.Component {
   }
 }
 
-ThumbnailControl.propTypes = {};
+ThumbnailControl.propTypes = {
+  thumbnails: React.PropTypes.arrayOf(React.PropTypes.shape({
+    src: React.PropTypes.string,
+    timestamp: React.PropTypes.number
+  }))
+};
 
 export default ThumbnailControl;
