@@ -6,12 +6,15 @@ class InstructorCourseList extends React.Component {
     return (
       <ul className="instructor-courselist">
         {
-          Object.keys(this.props.courses).map((key, i) => {
-            return (
-              <li key={i}>
-                <InstructorCourseItem data={this.props.courses[key]}/>
-              </li>
-            );
+          Object.keys(this.props.courses).map(num => {
+            return Object.keys(this.props.courses[num]).map((key, i) => {
+              let o = this.props.courses[num][key];
+              return (
+                <li key={i}>
+                  <InstructorCourseItem data={o}/>
+                </li>
+              );
+            });
           })
         }
       </ul>
