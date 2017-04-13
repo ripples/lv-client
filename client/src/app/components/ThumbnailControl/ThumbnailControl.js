@@ -15,7 +15,7 @@ class ThumbnailControl extends React.Component {
   render() {
     return (
       <div className="thumbnail-control">
-        <div className="arrow" onClick={this.handleArrowClick}>
+        <div className="leftarrow" onClick={this.handleArrowClick}>
           &lt;
         </div>
         {
@@ -23,7 +23,7 @@ class ThumbnailControl extends React.Component {
             return <InputThumbnail key={i} src={thumbnail.src} timestamp={thumbnail.timestamp}/>;
           })
         }
-        <div className="arrow" onClick={this.handleArrowClick}>
+        <div className="rightarrow" onClick={this.handleArrowClick}>
           &gt;
         </div>
     </div>
