@@ -1,5 +1,6 @@
 import React from "react";
 import videojs from "video.js";
+import {connect} from "react-redux";
 
 class VideoView extends React.Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class VideoView extends React.Component {
     };
     this.player = videojs(this.videoNode, videoJsOptions, () => {
       this.player.on("timeupdate", () => {
-        this.props.updateVideoTimeStamp(this.player.currentTime());
+        this.props.onVideoTimeUpdate(this.player.currentTime());
       });
     });
   }
@@ -23,6 +24,12 @@ class VideoView extends React.Component {
   componentWillUnmount() {
     if (this.player) {
       this.player.dispose();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.newVideoTime !== this.props.newVideoTime) {
+      this.player.currentTime(nextProps.newVideoTime);
     }
   }
 
@@ -42,7 +49,15 @@ class VideoView extends React.Component {
 
 VideoView.propTypes = {
   videoSrc: React.PropTypes.string.isRequired,
-  updateVideoTimeStamp: React.PropTypes.func.isRequired
+  onVideoTimeUpdate: React.PropTypes.func.isRequired,
+  newVideoTime: React.PropTypes.number
 };
 
-export default VideoView;
+function mapStateToProps(state) {
+  const media = state.media;
+  return {
+    newVideoTime: media.newVideoTime
+  };
+}
+
+export default connect(mapStateToProps, null)(VideoView);

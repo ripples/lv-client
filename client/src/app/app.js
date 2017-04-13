@@ -6,7 +6,7 @@ import {Router, Route, browserHistory, IndexRedirect, IndexRoute} from "react-ro
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import thunkMiddleware from "redux-thunk";
-import promise from "redux-promise-middleware";
+import "babel-polyfill";
 
 import appReducer from "./reducers/app";
 
@@ -32,11 +32,12 @@ configureAxios();
 // TODO: wrap in dev env var
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const mountNode = document.getElementById("lvapp");
-const middleware = applyMiddleware(promise(), thunkMiddleware);
 const store = createStore(
   appReducer,
   {},
-  composeEnhancers(middleware)
+  composeEnhancers(applyMiddleware(
+    thunkMiddleware
+  ))
 );
 
 render((

@@ -6,13 +6,11 @@ class ImageView extends React.Component {
     return (
       <div>
         <div className="video-view">
-          {this.props.imageSrc ?
-            <img
-              src={this.props.imageSrc}
-              height={"358"}
-              width={"638"}
-            />
-            : "No Image Found" }
+          <img
+            src={this.props.src}
+            height={"358"}
+            width={"638"}
+          />
         </div>
     </div>
     );
@@ -20,7 +18,7 @@ class ImageView extends React.Component {
 }
 
 ImageView.propTypes = {
-  imageSrc: React.PropTypes.string
+  src: React.PropTypes.string.isRequired
 };
 
 export default ImageView;

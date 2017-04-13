@@ -7,65 +7,51 @@ import {BASE_URL} from "../../constants/ApiConstants";
 class LectureMedia extends React.Component {
   constructor(props) {
     super(props);
-    this.updateVideoTimeStamp = this.updateVideoTimeStamp.bind(this);
+    this.onVideoTimeUpdate = this.onVideoTimeUpdate.bind(this);
   }
 
-  updateVideoTimeStamp(newTimeStamp) {
-    this.props.updateVideoTimeStamp(this.props.lecture, newTimeStamp);
+  onVideoTimeUpdate(newTimeStamp) {
+    this.props.getNextImageNames(newTimeStamp);
   }
 
   render() {
     const lecture = this.props.lecture;
-    let computerSrc = "/images/no-image-found.png";
-    let whiteboardSrc = "/images/no-image-found.png";
-    let computerThumbSrc = Array(5).fill({
-      src: "/images/no-image-found-thumb.png",
-      timestamp: 0
-    });
-    let whiteboardThumbSrc = Array(5).fill({
-      src: "/images/no-image-found-thumb.png",
-      timestamp: 0
-    });
-    if (lecture.currentImages) {
-      if (lecture.currentImages.computer.full) {
-        computerSrc = BASE_URL + lecture.currentImages.computer.full;
-      }
-      if (lecture.currentImages.whiteboard.full) {
-        whiteboardSrc = BASE_URL + lecture.currentImages.whiteboard.full;
-      }
-      computerThumbSrc = lecture.currentImages.computer.thumbs.map(thumb => {
-        return {
-          src: BASE_URL + thumb.src,
-          timestamp: thumb.timestamp
-        };
-      });
-      whiteboardThumbSrc = lecture.currentImages.whiteboard.thumbs.map(thumb => {
-        return {
-          src: BASE_URL + thumb.src,
-          timestamp: thumb.timestamp
-        };
-      });
-    }
+    const media = this.props.media;
+    const semester = this.props.semester;
+    const courseId = this.props.courseId;
+
+    const fullComputerImage = media.currentImages.computer.full;
+    const fullWhiteboardImage = media.currentImages.whiteboard.full;
+    const computerThumbnails = media.currentImages.computer.thumbs;
+    const whiteboardThumbnails = media.currentImages.whiteboard.thumbs;
     return (
       <div className="lecture-media">
         <div className="container">
           <div className="video-wrapper">
             <VideoView
-              videoSrc={`${BASE_URL}/media/${lecture.semester}/${lecture.courseId}/${lecture.lectureId}/video`}
-              updateVideoTimeStamp={this.updateVideoTimeStamp}
+              videoSrc={`${BASE_URL}/media/${semester}/${courseId}/${lecture.id}/video`}
+              onVideoTimeUpdate={this.onVideoTimeUpdate}
             />
           </div>
         </div>
         <div className="container">
           <div className="video-wrapper">
-            <ImageView imageSrc={ computerSrc } />
-            <ThumbnailControl thumbnails={ computerThumbSrc }/>
+            <ImageView
+              src={fullComputerImage.src}
+            />
+            <ThumbnailControl
+              thumbnails={computerThumbnails}
+            />
           </div>
         </div>
         <div className="container">
           <div className="video-wrapper">
-            <ImageView imageSrc={ whiteboardSrc } />
-            <ThumbnailControl thumbnails={ whiteboardThumbSrc }/>
+            <ImageView
+              src={fullWhiteboardImage.src}
+            />
+            <ThumbnailControl
+              thumbnails={whiteboardThumbnails}
+            />
           </div>
         </div>
       </div>
@@ -75,7 +61,10 @@ class LectureMedia extends React.Component {
 
 LectureMedia.propTypes = {
   lecture: React.PropTypes.object.isRequired,
-  updateVideoTimeStamp: React.PropTypes.func.isRequired
+  media: React.PropTypes.object.isRequired,
+  semester: React.PropTypes.string.isRequired,
+  courseId: React.PropTypes.string.isRequired,
+  getNextImageNames: React.PropTypes.func.isRequired
 };
 
 export default LectureMedia;
