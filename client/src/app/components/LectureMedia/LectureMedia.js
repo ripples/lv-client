@@ -17,7 +17,12 @@ class LectureMedia extends React.Component {
   render() {
     const lecture = this.props.lecture;
     let computerSrc = "/images/no-image-found.png";
-    let thumbSrc = Array(5).fill({
+    let whiteboardSrc = "/images/no-image-found.png";
+    let computerThumbSrc = Array(5).fill({
+      src: "/images/no-image-found-thumb.png",
+      timestamp: 0
+    });
+    let whiteboardThumbSrc = Array(5).fill({
       src: "/images/no-image-found-thumb.png",
       timestamp: 0
     });
@@ -25,7 +30,16 @@ class LectureMedia extends React.Component {
       if (lecture.currentImages.computer.full) {
         computerSrc = BASE_URL + lecture.currentImages.computer.full;
       }
-      thumbSrc = lecture.currentImages.computer.thumbs.map(thumb => {
+      if (lecture.currentImages.whiteboard.full) {
+        whiteboardSrc = BASE_URL + lecture.currentImages.whiteboard.full;
+      }
+      computerThumbSrc = lecture.currentImages.computer.thumbs.map(thumb => {
+        return {
+          src: BASE_URL + thumb.src,
+          timestamp: thumb.timestamp
+        };
+      });
+      whiteboardThumbSrc = lecture.currentImages.whiteboard.thumbs.map(thumb => {
         return {
           src: BASE_URL + thumb.src,
           timestamp: thumb.timestamp
@@ -45,7 +59,13 @@ class LectureMedia extends React.Component {
         <div className="container">
           <div className="video-wrapper">
             <ImageView imageSrc={ computerSrc } />
-            <ThumbnailControl thumbnails={ thumbSrc }/>
+            <ThumbnailControl thumbnails={ computerThumbSrc }/>
+          </div>
+        </div>
+        <div className="container">
+          <div className="video-wrapper">
+            <ImageView imageSrc={ whiteboardSrc } />
+            <ThumbnailControl thumbnails={ whiteboardThumbSrc }/>
           </div>
         </div>
       </div>

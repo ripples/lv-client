@@ -20,9 +20,7 @@ class InputThumbnail extends React.Component {
   render() {
     return (
       <div className="thumbnail">
-        <div className="thumb">
-          <img src={this.props.src} onClick={e => this.handleClickEvent(e)}/>
-        </div>
+        <img className="thumb" src={this.props.src} onClick={e => this.handleClickEvent(e)}/>
         { moment.duration(this.props.timestamp * 1000).format("hh:mm:ss") }
       </div>
     );
