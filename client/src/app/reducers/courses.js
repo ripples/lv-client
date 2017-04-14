@@ -29,6 +29,13 @@ const courses = (state = DefaultState.courses, action) => {
         studentCourses[lecture.courseId].lectures[lecture.lectureId].currentImages = action.payload.newImages;
       }
       return newState;
+
+    case "GET_STUDENTS_FULFILLED":
+      newState = {...state};
+      console.log("state", newState);
+      console.log("payload", action.payload);
+      return newState;
+
     default:
       return state;
   }

@@ -1,12 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
-import {getCoursesAction} from "../../libs/actions";
+import {getUsersForInstructorAction} from "../../libs/actions";
 import {Link} from "react-router";
 import InstructorCourseList from "../../components/InstructorCourseList/InstructorCourseList";
 
 class InstructorSettings extends React.Component {
   componentWillMount() {
-    this.props.getCourses();
+    console.log("TOM BRADY");
+    this.props.getUsersForInstructor();
   }
   render() {
     return (
@@ -23,18 +24,21 @@ class InstructorSettings extends React.Component {
 
 InstructorSettings.propTypes = {
   courses: React.PropTypes.array.isRequired,
-  getCourses: React.PropTypes.func.isRequired
+  users: React.PropTypes.array.isRequired,
+  getCourses: React.PropTypes.func.isRequired,
+  getUsersForInstructor: React.PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCourses: () => dispatch(getCoursesAction())
+    getUsersForInstructor: () => dispatch(getUsersForInstructorAction())
   };
 };
 
 const mapStateToProps = state => {
   return {
-    courses: state.courses
+    courses: state.courses,
+    users: state.users
   };
 };
 

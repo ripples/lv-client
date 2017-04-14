@@ -1,6 +1,7 @@
 "use strict";
 
 import {getCourses} from "./courses";
+import {getInstructorCoursesUsers} from "./instructor";
 import {getImages} from "./media";
 import {ImageFile, binarySearch} from "../utils/media";
 
@@ -15,6 +16,19 @@ export function getCoursesAction() {
       response => {
         dispatch({
           type: "GET_COURSES_FULFILLED",
+          payload: response.data
+        });
+      }
+    );
+  };
+}
+
+export function getUsersForInstructorAction() {
+  return function(dispatch) {
+    getInstructorCoursesUsers().then(
+      response => {
+        dispatch({
+          type: "GET_STUDENTS_FULFILLED",
           payload: response.data
         });
       }
