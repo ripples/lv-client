@@ -7,7 +7,7 @@ import media from "./media";
 import user from "./user";
 
 /**
- * @type {Redux.Reducer<S>}
+ * @type {Reducer<S>}
  */
 const appReducer = combineReducers({
   courses,

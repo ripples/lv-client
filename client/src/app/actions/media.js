@@ -80,21 +80,25 @@ export function getNextImageNames(courseId, lectureId, newTime) {
     const lectureData = course.lectures[lectureId];
     const semester = course.semester;
 
-    const computerImages = media.imageNames.computer[0];
-    const whiteboardImages = media.imageNames.whiteboard[0];
+    const computerImages = media.imageNames.computer;
+    const whiteboardImages = media.imageNames.whiteboard;
     const currentTime = Number(lectureData.timestamp) + Number(newTime);
     return dispatch({
       type: "UPDATE_CURRENT_IMAGES",
       payload: {
         newImages: {
-          computer: {
-            full: getNextImages(semester, courseId, lectureId, lectureData, currentTime, computerImages, true)[0],
-            thumbs: getNextImages(semester, courseId, lectureId, lectureData, currentTime, computerImages, false, 5)
-          },
-          whiteboard: {
-            full: getNextImages(semester, courseId, lectureId, lectureData, currentTime, whiteboardImages, true)[0],
-            thumbs: getNextImages(semester, courseId, lectureId, lectureData, currentTime, whiteboardImages, false, 5)
-          }
+          computer: Object.keys(computerImages).map(mediaIndex => {
+            return {
+              full: getNextImages(semester, courseId, lectureId, lectureData, currentTime, computerImages[mediaIndex], true)[0],
+              thumbs: getNextImages(semester, courseId, lectureId, lectureData, currentTime, computerImages[mediaIndex], false, 5)
+            };
+          }),
+          whiteboard: Object.keys(whiteboardImages).map(mediaIndex => {
+            return {
+              full: getNextImages(semester, courseId, lectureId, lectureData, currentTime, whiteboardImages[mediaIndex], true)[0],
+              thumbs: getNextImages(semester, courseId, lectureId, lectureData, currentTime, whiteboardImages[mediaIndex], false, 5)
+            };
+          })
         }
       }
     });

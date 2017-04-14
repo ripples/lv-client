@@ -44,7 +44,7 @@ class Lecture extends React.Component {
             {this.props.course.title}
           </h1>
           <h3>
-            {lectureNameToDateString(this.props.lecture.lectureId)}
+            {lectureNameToDateString(this.props.lecture.id)}
           </h3>
         </div>
         <div className="lecture-body">

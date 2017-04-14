@@ -4,12 +4,17 @@ import ImageView from "../ImageView/ImageView";
 import ThumbnailControl from "../../components/ThumbnailControl/ThumbnailControl";
 import {BASE_URL} from "../../constants/ApiConstants";
 
+
 class LectureMedia extends React.Component {
   constructor(props) {
     super(props);
     this.onVideoTimeUpdate = this.onVideoTimeUpdate.bind(this);
   }
 
+  /**
+   * Callback for getting next image based on new video timestamp
+   * @param {Number} newTimeStamp - new video timestamp
+   */
   onVideoTimeUpdate(newTimeStamp) {
     this.props.getNextImageNames(newTimeStamp);
   }
@@ -20,10 +25,8 @@ class LectureMedia extends React.Component {
     const semester = this.props.semester;
     const courseId = this.props.courseId;
 
-    const fullComputerImage = media.currentImages.computer.full;
-    const fullWhiteboardImage = media.currentImages.whiteboard.full;
-    const computerThumbnails = media.currentImages.computer.thumbs;
-    const whiteboardThumbnails = media.currentImages.whiteboard.thumbs;
+    const computerImages = media.currentImages.computer;
+    const whiteboardImages = media.currentImages.whiteboard;
     return (
       <div className="lecture-media">
         <div className="container">
@@ -34,26 +37,40 @@ class LectureMedia extends React.Component {
             />
           </div>
         </div>
-        <div className="container">
-          <div className="video-wrapper">
-            <ImageView
-              src={fullComputerImage.src}
-            />
-            <ThumbnailControl
-              thumbnails={computerThumbnails}
-            />
-          </div>
-        </div>
-        <div className="container">
-          <div className="video-wrapper">
-            <ImageView
-              src={fullWhiteboardImage.src}
-            />
-            <ThumbnailControl
-              thumbnails={whiteboardThumbnails}
-            />
-          </div>
-        </div>
+        {
+          Object.keys(computerImages).map(mediaIndex => {
+            const images = computerImages[mediaIndex];
+            return (
+              <div className="container" key={`computer-${mediaIndex}`}>
+                <div className="video-wrapper">
+                  <ImageView
+                    src={images.full.src}
+                  />
+                  <ThumbnailControl
+                    thumbnails={images.thumbs}
+                  />
+                </div>
+              </div>
+            );
+          })
+        }
+        {
+          Object.keys(whiteboardImages).map(mediaIndex => {
+            const images = whiteboardImages[mediaIndex];
+            return (
+              <div className="container" key={`whiteboard-${mediaIndex}`}>
+                <div className="video-wrapper">
+                  <ImageView
+                    src={images.full.src}
+                  />
+                  <ThumbnailControl
+                    thumbnails={images.thumbs}
+                  />
+                </div>
+              </div>
+            );
+          })
+        }
       </div>
     );
   }
