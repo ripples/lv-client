@@ -4,7 +4,6 @@ import ImageView from "../ImageView/ImageView";
 import ThumbnailControl from "../../components/ThumbnailControl/ThumbnailControl";
 import {BASE_URL} from "../../constants/ApiConstants";
 
-
 class LectureMedia extends React.Component {
   constructor(props) {
     super(props);

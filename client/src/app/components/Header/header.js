@@ -17,14 +17,20 @@ class Header extends React.Component {
       <div className="header">
         <div className="left">
           <span></span>
-          <Link to="/"><Logo size="20px"/></Link>
+          <Link to="/">
+            <Logo size="20px"/>
+          </Link>
         </div>
         <div className="right">
           {
             (this.context.router.isActive("/login")) ? null : (
               <div>
                 <button className="header-button" onClick={() => this.toInstructorPage()}>INSTRUCTOR SETTINGS</button>
-                <button className="header-button" onClick={() => this.doLogout()}>LOGOUT</button>
+                <button className="header-button" >
+                  <Link to="/logout">
+                    LOGOUT
+                  </Link>
+                </button>
               </div>
             )
           }

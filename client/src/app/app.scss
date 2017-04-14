@@ -137,7 +137,9 @@ button {
     color: $steel-color;
     width: auto;
     height: 100%;
-
+    & a {
+      color: inherit;
+    }
     &:focus {
       color: $body-color;
     }
