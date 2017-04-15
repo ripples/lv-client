@@ -21,8 +21,9 @@ bundleoutput.txt
 # build
 client/dist/*
 
-# logo
+# dynamic resource files 
 client/src/images/logo.png
+client/src/images/splash.jpg
 
 #esdoc
 esdoc
