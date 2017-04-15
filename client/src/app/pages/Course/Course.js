@@ -7,7 +7,7 @@ class Course extends React.Component {
   render() {
     return (
       <div className="course-page">
-        <h1>{this.props.course.title}</h1>
+        <h1>{this.props.course.name}</h1>
         <LectureList course={this.props.course} params={this.props.params}/>
       </div>
     );

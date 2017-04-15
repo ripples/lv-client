@@ -54,7 +54,7 @@ class CourseItem extends React.Component {
         />
         <h4 className="course-link">
           <Link to={`/courses/${this.props.course.id}`}>
-            {this.props.course.title}
+            {this.props.course.name}
           </Link>
         </h4>
         <div className="lecture-list">

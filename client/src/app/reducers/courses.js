@@ -9,6 +9,7 @@ const courses = (state = DefaultState.courses, action) => {
       newState = {...DefaultState.courses};
       Object.keys(action.payload).forEach(key => {
         let course = action.payload[key];
+        course.name = course.name || course.id;
         newState[course.id] = {...course};
       });
       return newState;
