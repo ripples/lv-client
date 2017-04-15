@@ -38,7 +38,7 @@ export class ImageFile {
     this.name = imageName;
 
     const imageData = imageName.split("-");
-    this.type = imageData[0];
+    this.type = imageData[0].toLowerCase();
     this.cameraNumber = Number(imageData[1]);
     this.timestamp = Number(imageData[2]);
   }
