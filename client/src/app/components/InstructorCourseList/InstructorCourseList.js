@@ -11,7 +11,7 @@ class InstructorCourseList extends React.Component {
               let o = this.props.courses[num][key];
               return (
                 <li key={i}>
-                  <InstructorCourseItem data={o}/>
+                  <InstructorCourseItem course={o}/>
                 </li>
               );
             });

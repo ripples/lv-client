@@ -31,9 +31,15 @@ const courses = (state = DefaultState.courses, action) => {
       return newState;
 
     case "GET_STUDENTS_FULFILLED":
-      newState = {...state};
-      console.log("state", newState);
-      console.log("payload", action.payload);
+      newState = {...Object.keys(state).map(key => {
+        return Object.keys(state[key]).map(course => {
+          state[key][course].users = action.payload.find(e => {
+            return state[key][course].id === e.course_id;
+          }).students;
+          return state[key][course];
+        });
+      })};
+      console.log("newState", state);
       return newState;
 
     default:

@@ -24,7 +24,6 @@ class InstructorSettings extends React.Component {
 
 InstructorSettings.propTypes = {
   courses: React.PropTypes.array.isRequired,
-  users: React.PropTypes.array.isRequired,
   getCourses: React.PropTypes.func.isRequired,
   getUsersForInstructor: React.PropTypes.func.isRequired
 };
@@ -37,8 +36,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    courses: state.courses,
-    users: state.users
+    courses: state.courses
   };
 };
 
