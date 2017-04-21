@@ -99,57 +99,27 @@
 	    text-align: center;
 	    color: #ff6a00;
     }
-    table {
+    .users-list {
       width: 760px;
 	    border-radius: 2px;
       padding-left: 25px;
 	    border: solid 1px #32404e;
 	    border: solid 1px var(--dark-grey-blue-two);
     }
-    td, th {
+    tr {
+      width: 760px;
+    }
+    td {
       border: 1px solid #dddddd;
       text-align: left;
       padding: 8px;
+      width: 200px;
     }
-    .dropbtn {
-      cursor: pointer;
-    }
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f9f9f9;
-    }
-    .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-    }
-    .remove-button-width {
-      width: 110px;
-    }
-    .remove-button {
-      margin-left: 8px;
-      width: 70px;
-	    height: 20px;
-	    border-radius: 2px;
-	    border: solid 1px #e74c3c;
-    }
-    .remove-text {
-      width: 48px;
-	    height: 17px;
-	    font-family: OpenSans;
-	    font-size: 12px;
-	    font-weight: normal;
-	    font-style: normal;
-	    font-stretch: normal;
-	    line-height: normal;
-	    letter-spacing: normal;
-	    color: #e74c3c;
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      width: 25%;
     }
   }
 }

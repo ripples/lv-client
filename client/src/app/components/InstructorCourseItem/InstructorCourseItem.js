@@ -1,10 +1,11 @@
 import React from "react";
-// import InstructorUserItem from "../../components/InstructorUserItem/InstructorUserItem";
+import InstructorUserItem from "../../components/InstructorUserItem/InstructorUserItem";
 
 class InstructorCourseItem extends React.Component {
   render() {
+    const course = this.props.course;
     var courseTitle = "raj";
-    if (typeof this.props.course !== "undefined") {
+    if (typeof course !== "undefined") {
       courseTitle = this.props.course.title;
     }
     return (
@@ -20,19 +21,20 @@ class InstructorCourseItem extends React.Component {
           </div>
           <table className="users-list">
             <tr>
-              <th>USERS</th>
+              <th className = "users-text">USERS</th>
               <th>PRIVILEGE LEVEL</th>
-              <th></th>
+              <th>EMAIL</th>
+              <th>REMOVE</th>
             </tr>
-            {/*
-              Object.keys(this.props.users).map((key, i) => {
+            <tr>
+            {
+              (typeof course.users === "undefined") ? null : course.users.map(user => {
                 return (
-                  <tr key={i}>
-                    <InstructorUserItem user={this.props.users[key]}/>
-                  </tr>
+                  <InstructorUserItem user={user} />
                 );
               })
-            */}
+            }
+            </tr>
         </table>
         </div>
       </div>
@@ -41,8 +43,7 @@ class InstructorCourseItem extends React.Component {
 }
 
 InstructorCourseItem.propTypes = {
-  course: React.PropTypes.object,
-  users: React.PropTypes.array
+  course: React.PropTypes.object
 };
 
 export default InstructorCourseItem;
