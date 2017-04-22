@@ -27,7 +27,7 @@ class Reset extends Component {
     resetPassword(token, this.state.password).then(() => {
       this.setState({reset: true});
     }).catch(err => {
-      this.setState({error: err.error});
+      this.setState({error: err.response.data.error});
     });
   }
 
