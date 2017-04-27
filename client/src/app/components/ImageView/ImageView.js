@@ -4,15 +4,9 @@ class ImageView extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="video-view">
-          <img
-            src={this.props.src}
-            height={"358"}
-            width={"638"}
-          />
-        </div>
-    </div>
+      <img className="image-view"
+          src={this.props.src}
+      />
     );
   }
 }

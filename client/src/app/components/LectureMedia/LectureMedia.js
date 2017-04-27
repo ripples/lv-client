@@ -1,7 +1,6 @@
 import React from "react";
 import VideoView from "../../components/VideoView/VideoView";
 import ImageView from "../ImageView/ImageView";
-import ThumbnailControl from "../../components/ThumbnailControl/ThumbnailControl";
 import {BASE_URL} from "../../constants/ApiConstants";
 
 class LectureMedia extends React.Component {
@@ -28,7 +27,7 @@ class LectureMedia extends React.Component {
     const whiteboardImages = media.currentImages.whiteboard;
     return (
       <div className="lecture-media">
-        <div className="container">
+        <div className="focused-screen">
           <div className="video-wrapper">
             <VideoView
               videoSrc={`${BASE_URL}/media/${semester}/${courseId}/${lecture.id}/video`}
@@ -36,40 +35,36 @@ class LectureMedia extends React.Component {
             />
           </div>
         </div>
-        {
-          Object.keys(computerImages).map(mediaIndex => {
-            const images = computerImages[mediaIndex];
-            return (
-              <div className="container" key={`computer-${mediaIndex}`}>
-                <div className="video-wrapper">
-                  <ImageView
-                    src={images.full.src}
-                  />
-                  <ThumbnailControl
-                    thumbnails={images.thumbs}
-                  />
+        <div className="secondary-screens">
+          {
+            Object.keys(computerImages).map(mediaIndex => {
+              const images = computerImages[mediaIndex];
+              return (
+                <div className="container" key={`computer-${mediaIndex}`}>
+                  <div className="video-wrapper">
+                    <ImageView
+                      src={images.full.src}
+                    />
+                  </div>
                 </div>
-              </div>
-            );
-          })
-        }
-        {
-          Object.keys(whiteboardImages).map(mediaIndex => {
-            const images = whiteboardImages[mediaIndex];
-            return (
-              <div className="container" key={`whiteboard-${mediaIndex}`}>
-                <div className="video-wrapper">
-                  <ImageView
-                    src={images.full.src}
-                  />
-                  <ThumbnailControl
-                    thumbnails={images.thumbs}
-                  />
+              );
+            })
+          }
+          {
+            Object.keys(whiteboardImages).map(mediaIndex => {
+              const images = whiteboardImages[mediaIndex];
+              return (
+                <div className="container" key={`whiteboard-${mediaIndex}`}>
+                  <div className="video-wrapper">
+                    <ImageView
+                      src={images.full.src}
+                    />
+                  </div>
                 </div>
-              </div>
-            );
-          })
-        }
+              );
+            })
+          }
+        </div>
       </div>
     );
   }

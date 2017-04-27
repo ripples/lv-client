@@ -5,8 +5,6 @@ import {connect} from "react-redux";
 class VideoView extends React.Component {
   componentDidMount() {
     const videoJsOptions = {
-      height: 358,
-      width: 638,
       autoPlay: true,
       controls: true,
       sources: [{
@@ -35,14 +33,10 @@ class VideoView extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="video-view">
-          <video
-            ref={node => this.videoNode = node}
-            className="video-js vjs-default-skin vjs-big-play-centered">
-          </video>
-        </div>
-      </div>
+      <video height="100%" width="100%"
+        ref={node => this.videoNode = node}
+        className="video-js vjs-default-skin vjs-big-play-centered">
+      </video>
     );
   }
 }
