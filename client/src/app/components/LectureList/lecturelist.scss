@@ -6,30 +6,29 @@
 
   .lecture-row{
     @include row();
-    //display: block;
-    display: flex;
-    padding: 10px;
-    .lecture-info{
-      position: relative;
-      //top: 50%;
-      transform: translateY(20%);
-      h5{
-        font-size: 28px;
-        margin: 0px;
-        font-weight: lighter;
-        //text-align: center;
-      }
-      h6{
-        font-weight: lighter;
-        font-size: 16px;
-        margin: 0px;
-        //text-align: center;
-      }
-    }
-    .lecture-info:hover {
+  }
+  .lecture-info{
+    margin-left: 245px;
+    padding-left: 50px;
+    padding-top: 28px;
+    display: none;
+
+    h5{
+      font-size: 28px;
+      margin: 0px;
       font-weight: lighter;
-      text-decoration: underline;
-      cursor: pointer;
+      //text-align: center;
     }
+    h6{
+      font-weight: lighter;
+      font-size: 16px;
+      margin: 0px;
+      //text-align: center;
+    }
+  }
+  .lecture-info:hover {
+    font-weight: lighter;
+    text-decoration: underline;
+    cursor: pointer;
   }
 }

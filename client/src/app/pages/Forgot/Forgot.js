@@ -57,12 +57,13 @@ class ForgotForm extends Component {
             required="required"
           />
         </div>
+        <div className="input-divider"></div>
         {error}
         <button
           type="submit"
           disabled={!this.state.email}
           className="button accent outline">
-          Reset
+          SEND RESET EMAIL
         </button>
       </form>
     );
@@ -77,8 +78,8 @@ class ForgotForm extends Component {
         {form}
         <Link
           to="/login"
-          className="button accent outline forgot">
-          Login
+          className="button accent">
+          LOGIN
         </Link>
       </div>
     );

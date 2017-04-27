@@ -1,14 +1,22 @@
 @import "mixins";
-@import "bourbon";
-@import "neat";
+// @import "bourbon";
+// @import "neat";
 
 .course-page{
   @include globalPadding();
-  @include outer-container(90%);
+  // @include outer-container(90%);
+
   h1{
       margin-top: 0px;
       margin-bottom: 25px;
   }
+
+  .color-div {
+    width: 384px;
+    height: 2px;
+    background-color: blue;
+  }
+
   a {
     text-decoration: none;
     color: black;

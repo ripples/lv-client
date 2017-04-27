@@ -21,7 +21,7 @@ class LectureList extends React.Component {
                     compact={true}
                     justThumb={true}
                   />
-                <div className="lecture-info">
+                  <div className="lecture-info">
                     <h5><Link to={`/courses/${courseId}/lecture/${lecture}`}>{lecture}</Link></h5>
                     <h6><Link to={`/courses/${courseId}/lecture/${lecture}`}> {
                         (new Date(this.props.course.lectures[lecture].timestamp)).toDateString()
